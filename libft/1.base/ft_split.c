@@ -6,29 +6,29 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:30:44 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/03/07 00:30:02 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/24 18:55:47 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-static int	allocator(char const *s, int row, char b)
+static int	allocator(char const *s, int row, char *set)
 {
 	int	len;
 	int	i;
 
 	len = 0;
 	i = 0;
-	while (s[i] == b)
+	while (ft_strchr(set, s[i]))
 		i++;
 	while (row--)
 	{
-		while (s[i] != b)
+		while (!ft_strchr(set, s[i]))
 			i++;
-		while (s[i] == b && s[i])
+		while (ft_strchr(set, s[i]) && s[i])
 			i++;
 	}
-	while (s[i] != b && s[i])
+	while (!ft_strchr(set, s[i]) && s[i])
 	{
 		len++;
 		i++;
@@ -36,7 +36,7 @@ static int	allocator(char const *s, int row, char b)
 	return (len + 1);
 }
 
-static int	words(char const *s, char b)
+static int	words(char const *s, char *set)
 {
 	int	cnt;
 	int	i;
@@ -45,38 +45,36 @@ static int	words(char const *s, char b)
 	i = 0;
 	if (s[i] == '\0')
 		return (0);
-	if (b == '\0')
-		return (TRUE);
-	while (s[i] == b)
+	while (ft_strchr(set, s[i]))
 		i++;
 	while (s[i])
 	{
 		cnt++;
-		while (s[i] != b && s[i])
+		while (!ft_strchr(set, s[i]) && s[i])
 			i++;
-		while (s[i] == b)
+		while (ft_strchr(set, s[i]))
 			i++;
 	}
 	return (cnt);
 }
 
-static char	*stricpy(char *dest, char const *src, char b, int index)
+static char	*stricpy(char *dest, char const *src, char *set, int index)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	while (src[j] == b)
+	while (ft_strchr(set, src[i]))
 		j++;
 	while (index--)
 	{
-		while (src[j] != b && src[j])
+		while (!ft_strchr(set, src[i]) && src[j])
 			j++;
-		while (src[j] == b)
+		while (ft_strchr(set, src[i]))
 			j++;
 	}
-	while (src[j] != b && src[j])
+	while (!ft_strchr(set, src[i]) && src[j])
 		dest[i++] = src[j++];
 	dest[i] = '\0';
 	return (dest);
@@ -97,30 +95,30 @@ static char	**check_free(char **arr, int i)
 	return (arr);
 }
 
-char	**ft_split(char const *s, char b)
+char	**ft_split(char const *s, char *set)
 {
 	char	**arr;
 	int		i;
 
 	if (!s)
 		return (NULL);
-	arr = (char **)malloc(sizeof(char *) * (words(s, b) + 1));
+	arr = (char **)malloc(sizeof(char *) * (words(s, set) + 1));
 	if (!arr)
 		return (NULL);
 	i = 0;
-	while (i < words(s, b))
+	while (i < words(s, set))
 	{
-		arr[i] = (char *)malloc(allocator(s, i, b));
+		arr[i] = (char *)malloc(allocator(s, i, set));
 		if (!arr[i])
 			return (check_free(arr, i));
 		i++;
 	}
 	i = 0;
-	while (i < words(s, b))
+	while (i < words(s, set))
 	{
-		arr[i] = stricpy(arr[i], s, b, i);
+		arr[i] = stricpy(arr[i], s, set, i);
 		i++;
 	}
-	arr[words(s, b)] = NULL;
+	arr[words(s, set)] = NULL;
 	return (arr);
 }

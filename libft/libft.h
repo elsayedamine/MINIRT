@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/24 15:44:35 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/24 19:12:51 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,7 @@
 typedef struct s_list
 {
 	void			*content;
-	char			*raw;
-	char			**arr;
-	int				type;
 	struct s_list	*next;
-	struct s_list	*child;
 }					t_list;
 
 typedef struct s_lst
@@ -95,7 +91,7 @@ int		ft_atoi(const char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s, char const *set);
-char	**ft_split(char const *s, char b);
+char	**ft_split(char const *s, char *set);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_insert_char(char *str, int index, char c);

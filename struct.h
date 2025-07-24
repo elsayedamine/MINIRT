@@ -1,4 +1,36 @@
-/* ************************************************************************** */
+
+typedef struct s_vec3
+{
+	float	x;
+	float	y;
+	float	z;
+}			t_vec3;
+typedef struct s_class
+{
+	int		class;
+	void	*data;
+}			t_class;
+typedef struct s_object
+{
+	int		class;
+	float	ratio;
+	float	fov;
+	float	d;	
+	float	h;
+	t_color	rgb;
+	t_vec3	crd;
+	t_vec3	vct;
+}			t_object;
+
+typedef struct s_minirt
+{
+	t_win	win;
+	t_pars	pars;
+	t_list	*members;
+}			t_minirt;
+ 
+
+#endif/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
@@ -6,7 +38,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:35:25 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/24 17:01:40 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/24 23:20:29 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,69 +75,3 @@ typedef struct s_color
 	int			g_interp;
 	int			b_interp;
 }				t_color;
-
-typedef struct s_coordinates
-{
-	float	x;
-	float	y;
-	float	z;
-}			t_coord;
-
-typedef struct s_ambiance
-{
-	int		ratio;
-	t_color	rgb;
-}			t_ambiance;
-
-typedef struct s_camera
-{
-	t_coord	crd;
-	t_coord	vct;
-	float	fov;	
-}			t_camera;
-
-typedef struct s_light
-{
-	t_coord	crd;
-	t_color	rgb;
-	float	ratio;
-}			t_light;
-
-typedef struct s_settings
-{
-	t_ambiance	amb;
-	t_camera	cam;
-	t_light		light;	
-}			t_settings;
-
-typedef struct s_sphere
-{
-	t_coord	crd;
-	float	d;
-	t_color	rgb;
-}			t_sphere;
-
-typedef struct s_plan
-{
-	t_coord	crd;
-	t_coord	vct;
-	t_color	rgb;
-}			t_plan;
-
-typedef struct s_cylindre
-{
-	t_coord	crd;
-	t_coord	vct;
-	t_color	rgb;
-	float	d;
-	float	h;
-}			t_cylinder;
-
-typedef struct s_minirt
-{
-	t_win	win;
-	t_pars	pars;
-}			t_minirt;
- 
-
-#endif

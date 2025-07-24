@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/24 16:36:39 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/24 23:12:13 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,25 @@
 /*                 ENUMS                    */
 /* **************************************** */
 
-//
+typedef enum e_type
+{
+    AMBIANCE,
+    CAMERA,
+    LIGHT,
+    SPHERE,
+    CYLINDER,
+    PLAN,
+    LAST_SHAPE
+}           t_type;
+
+typedef enum e_token_type {
+	UNKNOWN,
+	VECTOR,
+	RGB,
+	RATIO,
+	FOV,
+	FLOAT
+}	t_token_type;
 
 /* **************************************** */
 /*             STRUCTURES                   */
@@ -52,5 +70,9 @@
 void	init_window(t_minirt *vars);
 int		retrieve_data(t_minirt *vars, char *filename);
 int		valid_filename(char *s);
+int	    fill_data(t_minirt *vars, char *data, int shape);
+double	ft_atof(const char *str);
+int	classifier(const char *s);
+
 
 #endif

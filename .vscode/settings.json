@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "minirt.h": "c"
+        "minirt.h": "c",
+        "libft.h": "c",
+        "chrono": "c",
+        "functional": "c"
     }
 }
