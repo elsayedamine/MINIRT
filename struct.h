@@ -1,51 +1,21 @@
-
-typedef struct s_vec3
-{
-	float	x;
-	float	y;
-	float	z;
-}			t_vec3;
-typedef struct s_class
-{
-	int		class;
-	void	*data;
-}			t_class;
-typedef struct s_object
-{
-	int		class;
-	float	ratio;
-	float	fov;
-	float	d;	
-	float	h;
-	t_color	rgb;
-	t_vec3	crd;
-	t_vec3	vct;
-}			t_object;
-
-typedef struct s_minirt
-{
-	t_win	win;
-	t_pars	pars;
-	t_list	*members;
-}			t_minirt;
- 
-
-#endif/* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/24 16:35:25 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/24 23:20:29 by aelsayed         ###   ########.fr       */
+/*   Created: 2025/07/25 16:48:09 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/07/25 18:18:19 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef STRUCT_H
 # define STRUCT_H
 
 # include "miniRT.h"
+
 typedef struct s_window
 {
 	void		*mlx;
@@ -75,3 +45,37 @@ typedef struct s_color
 	int			g_interp;
 	int			b_interp;
 }				t_color;
+typedef struct s_vec3
+{
+	float	x;
+	float	y;
+	float	z;
+}			t_vec3;
+typedef struct s_class
+{
+	int		class;
+	void	*data;
+}			t_class;
+typedef struct s_object
+{
+	int		class;
+	float	ratio;
+	float	fov;
+	float	d;	
+	float	h;
+	t_color	rgb;
+	t_vec3	crd;
+	t_vec3	n_vct;
+	t_vec3	o_vct;
+}			t_object;
+
+typedef struct s_minirt
+{
+	t_win	win;
+	t_pars	pars;
+	t_list	*members;
+}			t_minirt;
+ 
+
+#endif
+

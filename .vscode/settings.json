@@ -3,6 +3,15 @@
         "minirt.h": "c",
         "libft.h": "c",
         "chrono": "c",
-        "functional": "c"
+        "functional": "c",
+        "struct.h": "c",
+        "array": "c",
+        "charconv": "c",
+        "compare": "c",
+        "ratio": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "variant": "c"
     }
 }

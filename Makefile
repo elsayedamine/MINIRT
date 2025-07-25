@@ -1,6 +1,6 @@
 NAME = miniRT
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra #-Werror
 LIB_DIR = ./libft
 lib = $(LIB_DIR)/libft.a
 
@@ -8,6 +8,12 @@ sources = \
 		main.c \
 		window.c \
 		parsing.c \
+		error.c \
+		utils.c \
+		get_color.c \
+		fill_shapes.c \
+		fill_settings.c \
+		tokenizer.c \
 
 object = $(sources:.c=.o)
 
