@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 17:29:51 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 21:34:53 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,10 @@ typedef struct s_object
 	float	fov;
 	float	d;
 	float	h;
-	t_vec3	crd;
-	t_vec3	n_vct;
-	t_vec3	o_vct;
-	t_color	rgb;
+	t_vec3	*crd;
+	t_vec3	*n_vct;
+	t_vec3	*o_vct;
+	t_color	*rgb;
 }			t_object;
 
 typedef struct s_minirt
@@ -129,7 +129,7 @@ void		init_window(t_minirt *vars);
 int			extract_data(t_minirt *vars, char *filename);
 int			valid_filename(char *s);
 float		ft_atof(char *str);
-void		*classifier(char *s, int *type, t_vec3 *v, t_color *c);
+void		*classifier(char *s, int *type, int class);
 int			throw_error(int err);
 t_object	*new_object(void);
 void		print_members(t_list *lst, void (*f)(t_object *));

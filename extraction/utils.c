@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 22:16:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 17:29:51 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 21:57:16 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,27 @@ float	ft_atof(char *str)
 			str++;
 		}
 	}
-	return (first_part + (second_part / divisor));
+	return (sign * (first_part + (second_part / divisor)));
 }
 
 void	print_data(t_object *obj)
 {
-	printf("\t class  : %s:%d\n", g_strs[obj->class], obj->class);
+	printf("\t class : %s:%d\n", g_strs[obj->class], obj->class);
 	printf("ratio    : %.1f\n", obj->ratio);
 	printf("fov      : %.1f\n", obj->fov);
 	printf("diameter : %.1f\n", obj->d);
 	printf("height   : %.1f\n", obj->h);
-	printf("rgb      : %d,%d,%d\n", obj->rgb.r, obj->rgb.g, obj->rgb.b);
-	printf("crd      : %.1f,%.1f,%.1f\n", obj->crd.x, obj->crd.y, obj->crd.z);
-	printf("n_nvt    : %.1f,%.1f,%.1f\n", \
-		obj->n_vct.x, obj->n_vct.y, obj->n_vct.z);
-	printf("o_vct    : %.1f,%.1f,%.1f\n", \
-		obj->o_vct.x, obj->o_vct.y, obj->o_vct.z);
+	if (obj->class != 1)
+		printf("rgb      : %d,%d,%d\n", obj->rgb->r, obj->rgb->g, obj->rgb->b);
+	if (obj->class != 0)
+		printf("crd      : %.1f,%.1f,%.1f\n", obj->crd->x, \
+			obj->crd->y, obj->crd->z);
+	if (obj->class == PLAN)
+		printf("n_nvt    : %.1f,%.1f,%.1f\n", \
+			obj->n_vct->x, obj->n_vct->y, obj->n_vct->z);
+	if (obj->class == CYLINDER || obj->class == CAMERA)
+		printf("o_vct    : %.1f,%.1f,%.1f\n", \
+			obj->o_vct->x, obj->o_vct->y, obj->o_vct->z);
 	printf("\n");
 }
 

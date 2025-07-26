@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 22:48:49 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 17:19:23 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 21:56:34 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,29 @@ int	split_3_parts(char *s, char part1[8], char part2[8], char part3[8])
 	return (part3[j] = '\0', (s[i] == '\0'));
 }
 
-void	*classifier(char *s, int *type, t_vec3 *v, t_color *c)
+void	*classifier(char *s, int *type, int class)
 {
-	char	p1[8];
-	char	p2[8];
-	char	p3[8];
+	char	p[3][8];
+	float	f;
+	float	*fp;
+	t_vec3	*v;
+	t_color	*c;
 
-	if (s && split_3_parts(s, p1, p2, p3))
+	fp = &f;
+	v = (t_vec3 *)malloc(sizeof(t_vec3));
+	c = (t_color *)malloc(sizeof(t_color));
+	if (!v || !c)
+		return (free(v), free(c), NULL);
+	if (s && split_3_parts(s, p[0], p[1], p[2]))
 	{
-		if (is_int(p1) && is_int(p2) && is_int(p3) && \
-			fill_rgb(c, p1, p2, p3) < 5)
-			return (*type = fill_rgb(c, p1, p2, p3), c);
-		v->x = ft_atof(p1);
-		v->y = ft_atof(p2);
-		v->z = ft_atof(p3);
-		if (!isnan(v->x) && !isnan(v->y) && !isnan(v->z))
+		if (class == RGB && is_int(p[0]) && is_int(p[1]) && is_int(p[2]) && \
+			fill_rgb(c, p[0], p[1], p[2]) < 5)
+			return (*type = fill_rgb(c, p[0], p[1], p[2]), c);
+		v->x = ft_atof(p[0]);
+		v->y = ft_atof(p[1]);
+		v->z = ft_atof(p[2]);
+		if ((class == VECTOR || class == ORIENT) && \
+			!isnan(v->x) && !isnan(v->y) && !isnan(v->z))
 		{
 			if (v->x >= -1.0 && v->x <= 1.0 && \
 				v->y >= -1.0 && v->y <= 1.0 && \
@@ -107,7 +115,7 @@ void	*classifier(char *s, int *type, t_vec3 *v, t_color *c)
 			return (*type = VECTOR, v);
 		}
 	}
-	else if (s && fill_float(&v->x, s) >= 5)
-		return (*type = fill_float(&v->x, s), &v->x);
+	else if (s && fill_float(fp, s) >= 5)
+		return (*type = fill_float(fp, s), fp);
 	return (*type = UNKNOWN, NULL);
 }
