@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 22:48:49 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 22:03:28 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 22:21:22 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,12 @@ void	*classifier(char *s, int *type, int class)
 	{
 		if (class == RGB && is_int(p[0]) && is_int(p[1]) && is_int(p[2]) && \
 			fill_rgb(c, p[0], p[1], p[2]) < 5)
-			return (*type = fill_rgb(c, p[0], p[1], p[2]), c);
+			return (*type = fill_rgb(c, p[0], p[1], p[2]), free(v), c);
 		if (fill_vector(v, p, class, type) == TRUE)
-			return (v);
+			return (free(c), v);
 	}
 	else if (s && fill_float(fp, s) >= 5)
-		return (*type = fill_float(fp, s), fp);
-	return (*type = UNKNOWN, NULL);
+		return (*type = fill_float(fp, s), free(v), free(c), \
+			fp);
+	return (*type = UNKNOWN, free(v), free(c), NULL);
 }

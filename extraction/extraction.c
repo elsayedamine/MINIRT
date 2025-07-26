@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 19:40:48 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 22:39:22 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ t_object	*new_object(void)
 	obj->fov = -2.0;
 	obj->h = -2.0;
 	obj->ratio = -2.0;
+	obj->n_vct = NULL;
+	obj->o_vct = NULL;
+	obj->rgb = NULL;
+	obj->crd = NULL;
 	return (obj);
 }
 
@@ -72,7 +76,7 @@ int	extract_data(t_minirt *vars, char *filename)
 	{
 		obj = new_object();
 		if (assign_object(vars, file[i++], obj) == FALSE)
-			return (close(fd), free(obj), FALSE);
+			return (close(fd), free_objects(obj), ft_free("2", file), FALSE);
 	}
-	return (close(fd), TRUE);
+	return (close(fd), ft_free("2", file), TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:29:26 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 20:25:06 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 22:35:56 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,42 @@ int	valid_filename(char *s)
 	return (0);
 }
 
+void	free_objects(void *object)
+{
+	t_object *obj = (t_object *)object;
+
+	if (obj->class == AMBIANCE)
+		free(obj->rgb);
+	if (obj->class == CAMERA)
+	{
+		free(obj->crd);
+		free(obj->o_vct);
+	}
+	if (obj->class == LIGHT)
+	{
+		free(obj->crd);
+		free(obj->rgb);
+	}
+	if (obj->class == SPHERE)
+	{
+		free(obj->crd);
+		free(obj->rgb);
+	}
+	if (obj->class == PLAN)
+	{
+		free(obj->crd);
+		free(obj->n_vct);
+		free(obj->rgb);
+	}
+	if (obj->class == CYLINDER)
+	{
+		free(obj->crd);
+		free(obj->o_vct);
+		free(obj->rgb);
+	}
+	free(object);
+}
+
 int	main(int ac, char **av)
 {
 	t_minirt	vars;
@@ -38,10 +74,10 @@ int	main(int ac, char **av)
 	{
 		if (extract_data(&vars, av[1]) == FALSE)
 			return (130);
-		print_members(vars.members, print_data);
+		// print_members(vars.members, print_data);
 		// init_window(&vars);
 		// rendering(&vars, &parser);
-		ft_lstclear(&vars.members, free);
+		ft_lstclear(&vars.members, free_objects);
 		return (0);
 	}
 	printfd(2, "Invalid Argument: Stop Playing Around\n");

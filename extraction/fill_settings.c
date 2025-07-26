@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:36:35 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 21:56:42 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 22:46:16 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,7 @@ int	fill_light(char *line, t_object *obj)
 	obj->ratio = *(float *)data;
 	data = classifier(fields[3], &type, RGB);
 	obj->rgb = (t_color *)data;
-	if (type != RGB && (type != RGB1 || \
-		obj->rgb->r < 0 || obj->rgb->g < 0 || obj->rgb->b < 0))
+	if (type != RGB && (type != RGB1 || obj->rgb->r < 0 || obj->rgb->g < 0 || obj->rgb->b < 0))
 		return (ft_free("2", fields), throw_error(LIGHT), 1);
 	return (ft_free("2", fields), 0);
 }

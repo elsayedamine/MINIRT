@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 22:04:28 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 22:16:34 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int			throw_error(int err);
 t_object	*new_object(void);
 void		print_members(t_list *lst, void (*f)(t_object *));
 void		print_data(t_object *obj);
-
+void		free_objects(void *object);
 //
 
 // fillers
