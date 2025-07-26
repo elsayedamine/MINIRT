@@ -1,6 +1,6 @@
 NAME = miniRT
 CC = cc
-CFLAGS = -Wall -Wextra #-Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LIB_DIR = ./libft
 lib = $(LIB_DIR)/libft.a
 

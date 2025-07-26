@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 22:48:49 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/25 19:15:15 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 12:04:20 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,20 @@ int	split_3_parts(char *s, char part1[8], char part2[8], char part3[8])
 		part3[j++] = s[i++];
 	return (part3[j] = '\0', (s[i] == '\0'));
 }
-
+int	is_strict_int(char *s)
+{
+	if (!s || !*s)
+		return (0);
+	if (*s == '-' || *s == '+')
+		s++;
+	while (*s)
+	{
+		if (*s < '0' || *s > '9')
+			return (0);
+		s++;
+	}
+	return (1);
+}
 void	*classifier(char *s, int *type)
 {
 	char	p1[8], p2[8], p3[8];
@@ -49,6 +62,16 @@ void	*classifier(char *s, int *type)
 
 	if (split_3_parts(s, p1, p2, p3))
 	{
+		if (is_strict_int(p1) && is_strict_int(p2) && is_strict_int(p3))
+		{
+			c->r = ft_atoi(p1);
+			c->g = ft_atoi(p2);
+			c->b = ft_atoi(p3);
+			if (c->r >= -1 && c->r <= 1 && c->g >= -1 && c->g <= 1 && c->b >= -1 && c->b <= 1)
+				return (*type = RGB1, c);
+			if (c->r >= 0 && c->r <= 255 && c->g >= 0 && c->g <= 255 && c->b >= 0 && c->b <= 255)
+				return (*type = RGB, c);
+		}
 		v->x = ft_atof(p1);
 		v->y = ft_atof(p2);
 		v->z = ft_atof(p3);
@@ -60,11 +83,6 @@ void	*classifier(char *s, int *type)
 				return (*type = ORIENT, v);
 			return (*type = VECTOR, v);
 		}
-		c->r = ft_atoi(p1);
-		c->g = ft_atoi(p2);
-		c->b = ft_atoi(p3);
-		if (c->r >= 0 && c->r <= 255 && c->g >= 0 && c->g <= 255 && c->b >= 0 && c->b <= 255)
-			return (*type = RGB, c);
 	}
 	else
 	{

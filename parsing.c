@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/25 19:04:05 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 12:00:39 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ int	valid_filename(char *s)
 	}
 	return (0);
 }
+
+void	print_members(t_list *lst, void (*f)(t_object *));
+void	print_data(t_object *obj);
 
 int	retrieve_data(t_minirt *vars, char *filename)
 {
@@ -49,24 +52,25 @@ int	retrieve_data(t_minirt *vars, char *filename)
 		if (!file[i][0])
 			continue ;
 		if (!ft_strncmp("A ", file[i], 2))
-			err = fill_ambiance(vars, file[i], obj);
+			err += fill_ambiance(vars, file[i], obj);
 		else if (!ft_strncmp("C ", file[i], 2))
-			err = fill_camera(vars, file[i], obj);
+			err += fill_camera(vars, file[i], obj);
 		else if (!ft_strncmp("L ", file[i], 2))
-			err = fill_light(vars, file[i], obj);
+			err += fill_light(vars, file[i], obj);
 		else if (!ft_strncmp("sp ", file[i], 3))
-			err = fill_sphere(vars, file[i], obj);
+			err += fill_sphere(vars, file[i], obj);
 		else if (!ft_strncmp("cy ", file[i], 3))
-			err = fill_cylinder(vars, file[i], obj);
+			err += fill_cylinder(vars, file[i], obj);
 		else if (!ft_strncmp("pl ", file[i], 3))
-			err = fill_plan(vars, file[i], obj);
+			err += fill_plan(vars, file[i], obj);
 		else
-			return (free(obj), ft_lstclear(&vars->members, free), FALSE);
+			return (printf("ERRRRRRROOOOOR\n"));
 		if (err)
-			return (ft_lstclear(&vars->members, free), FALSE);
+			return (ft_lstclear(&vars->members, free), printfd(1, "ERROR\n"), FALSE);
 		ft_lstadd_back(&vars->members, ft_lstnew(obj));
 	}
 	close(vars->pars.fd);
+	print_members(vars->members, print_data);
 	return (TRUE);
 }
 
@@ -84,4 +88,3 @@ t_object	*new_object(void)
 	obj->ratio = -2.0;
 	return (obj); 
 }
-

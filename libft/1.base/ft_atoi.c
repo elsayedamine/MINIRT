@@ -19,6 +19,7 @@ int	ft_atoi(char const *str)
 	long			n;
 
 	sign = 1;
+	n = 0;
 	ft_init(2, &i, &n);
 	while (ft_strchr(WHITE, str[i]))
 		i++;

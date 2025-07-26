@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 17:00:40 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/25 19:10:29 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 12:13:18 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,49 +17,37 @@ int	fill_plan(t_minirt *vars, char *line, t_object *obj)
 	(void)vars;
 	char	**fields;
 	void	*data;
-	int		type1;
-	int		type2;
-	int		type3;
+	int		type;
+	t_color	*c;
 
 	fields = ft_split(line, WHITE);
 	if (fields && fields[1])
 	{
-		data = classifier(fields[1], &type1);
-		if (type1 == VECTOR)
+		data = classifier(fields[1], &type);
+		if (type == VECTOR || type == ORIENT || type == RGB || type == RGB1)
 			obj->crd = *(t_vec3 *)data;
-		else if (type1 == ORIENT)
-			obj->n_vct = *(t_vec3 *)data;
-		else if (type1 == RGB)
-			obj->rgb = *(t_color *)data;
 		else
-			return (ft_free("2", fields), free(obj), throw_error(AMBIANCE), 1);
+			return (ft_free("2", fields), throw_error(PLAN), 1);
 	}
 	if (fields && fields[2])
 	{
-		data = classifier(fields[2], &type2);
-		if (type1 == VECTOR && type1 != type2)
-			obj->crd = *(t_vec3 *)data;
-		else if (type2 == ORIENT && type1 != type2)
+		data = classifier(fields[2], &type);
+		if (type == ORIENT || type == RGB1)
 			obj->n_vct = *(t_vec3 *)data;
-		else if (type2 == RGB && type1 != type2)
-			obj->rgb = *(t_color *)data;
 		else
-			return (ft_free("2", fields), free(obj), throw_error(AMBIANCE), 1);
+			return (ft_free("2", fields), throw_error(PLAN), 1);
 	}
 	if (fields && fields[3])
 	{
-		data = classifier(fields[3], &type3);
-		if (type1 == VECTOR && type1 != type2 && type1 != type3)
-			obj->crd = *(t_vec3 *)data;
-		else if (type3 == ORIENT && type1 != type2 && type1 != type3)
-			obj->n_vct = *(t_vec3 *)data;
-		else if (type3 == RGB && type1 != type2 && type1 != type3)
+		data = classifier(fields[3], &type);
+		c = (t_color *)data;
+		if (type == RGB || (type == RGB1 && c->r >= 0 && c->g >= 0 && c->b >= 0))
 			obj->rgb = *(t_color *)data;
 		else
-			return (ft_free("2", fields), free(obj), throw_error(AMBIANCE), 1);
+			return (ft_free("2", fields), throw_error(PLAN), 1);
 		obj->class = PLAN;
 	}
-	return (ft_free("2", fields), free(obj), 0);
+	return (ft_free("2", fields), 0);
 }
 
 int	fill_cylinder(t_minirt *vars, char *line, t_object *obj)
@@ -67,61 +55,55 @@ int	fill_cylinder(t_minirt *vars, char *line, t_object *obj)
 	(void)vars;
 	char	**fields;
 	void	*data;
-	int		type1;
-	int		type2;
-	int		type3;
+	int		type;
+	t_color	*c;
 
 	fields = ft_split(line, WHITE);
 	if (fields && fields[1])
 	{
-		data = classifier(fields[1], &type1);
-		if (type1 == VECTOR)
+		data = classifier(fields[1], &type);
+		if (type == VECTOR || type == ORIENT || type == RGB || type == RGB1)
 			obj->crd = *(t_vec3 *)data;
-		else if (type1 == ORIENT)
-			obj->o_vct = *(t_vec3 *)data;
-		else if (type1 == RGB)
-			obj->rgb = *(t_color *)data;
-		else if (type1 >= RATIO && obj->d == -2.0)
-			obj->d = *(float *)data;
-		else if (type1 >= RATIO && obj->h == -2.0)
-			obj->h = *(float *)data;
 		else
-			return (ft_free("2", fields), free(obj), throw_error(AMBIANCE), 1);
+			return (ft_free("2", fields), throw_error(CYLINDER), 1);
 	}
 	if (fields && fields[2])
 	{
-		data = classifier(fields[2], &type2);
-		if (type1 == VECTOR && type1 != type2)
-			obj->crd = *(t_vec3 *)data;
-		else if (type2 == ORIENT && type1 != type2)
+		data = classifier(fields[2], &type);
+		if (type == ORIENT || type == RGB1)
 			obj->o_vct = *(t_vec3 *)data;
-		else if (type2 == RGB && type1 != type2)
-			obj->rgb = *(t_color *)data;
-		else if (type2 >= RATIO && obj->d == -2.0)
-			obj->d = *(float *)data;
-		else if (type2 >= RATIO && obj->h == -2.0)
-			obj->h = *(float *)data;
 		else
-			return (ft_free("2", fields), free(obj), throw_error(AMBIANCE), 1);
+			return (ft_free("2", fields), throw_error(CYLINDER), 1);
 	}
 	if (fields && fields[3])
 	{
-		data = classifier(fields[3], &type3);
-		if (type1 == VECTOR && type1 != type2 && type1 != type3)
-			obj->crd = *(t_vec3 *)data;
-		else if (type3 == ORIENT && type1 != type2 && type1 != type3)
-			obj->o_vct = *(t_vec3 *)data;
-		else if (type3 == RGB && type1 != type2 && type1 != type3)
-			obj->rgb = *(t_color *)data;
-		else if (type3 >= RATIO && obj->d == -2.0)
+		data = classifier(fields[3], &type);
+		if (type >= RATIO)
 			obj->d = *(float *)data;
-		else if (type3 >= RATIO && obj->h == -2.0)
-			obj->h = *(float *)data;
 		else
-			return (ft_free("2", fields), free(obj), throw_error(AMBIANCE), 1);
+			return (ft_free("2", fields), throw_error(CYLINDER), 1);
 		obj->class = CYLINDER;
 	}
-	return (ft_free("2", fields), free(obj), 0);
+	if (fields && fields[4])
+	{
+		data = classifier(fields[4], &type);
+		if (type >= RATIO)
+			obj->h = *(float *)data;
+		else
+			return (ft_free("2", fields), throw_error(CYLINDER), 1);
+		obj->class = CYLINDER;
+	}
+	if (fields && fields[5])
+	{
+		data = classifier(fields[5], &type);
+		c = (t_color *)data;
+		if (type == RGB || (type == RGB1 && c->r >= 0 && c->g >= 0 && c->b >= 0))
+			obj->h = *(float *)data;
+		else
+			return (ft_free("2", fields), throw_error(CYLINDER), 1);
+		obj->class = CYLINDER;
+	}
+	return (ft_free("2", fields), 0);
 }
 
 int	fill_sphere(t_minirt *vars, char *line, t_object *obj)
@@ -129,47 +111,35 @@ int	fill_sphere(t_minirt *vars, char *line, t_object *obj)
 	(void)vars;
 	char	**fields;
 	void	*data;
-	int		type1;
-	int		type2;
-	int		type3;
+	int		type;
+	t_color	*c;
 
 	fields = ft_split(line, WHITE);
 	if (fields && fields[1])
 	{
-		data = classifier(fields[1], &type1);
-		if (type1 == VECTOR)
+		data = classifier(fields[1], &type);
+		if (type == VECTOR || type == ORIENT || type == RGB || type == RGB1)
 			obj->crd = *(t_vec3 *)data;
-		else if (type1 >= RATIO)
-			obj->d = *(float *)data;
-		else if (type1 == RGB)
-			obj->rgb = *(t_color *)data;
 		else
-			return (ft_free("2", fields), free(obj), throw_error(AMBIANCE), 1);
+			return (ft_free("2", fields), throw_error(SPHERE), 1);
 	}
 	if (fields && fields[2])
 	{
-		data = classifier(fields[2], &type2);
-		if (type2 == VECTOR && type1 != type2)
-			obj->crd = *(t_vec3 *)data;
-		else if (type2 >= RATIO && type1 < RATIO)
+		data = classifier(fields[2], &type);
+		if (type >= RATIO)
 			obj->d = *(float *)data;
-		else if (type2 == RGB && type1 != type2)
-			obj->rgb = *(t_color *)data;
 		else
-			return (ft_free("2", fields), free(obj), throw_error(AMBIANCE), 1);
+			return (ft_free("2", fields), throw_error(LIGHT), 1);
 	}
 	if (fields && fields[3])
 	{
-		data = classifier(fields[3], &type3);
-		if (type3 == VECTOR && type1 != type3 && type2 != type3)
-			obj->crd = *(t_vec3 *)data;
-		else if (type3 >= RATIO && type1 < RATIO && type2 < RATIO)
-			obj->d = *(float *)data;
-		else if (type3 == RGB && type1 != type3 && type2 != type3)
+		data = classifier(fields[3], &type);
+		c = (t_color *)data;
+		if (type == RGB || (type == RGB1 && c->r >= 0 && c->g >= 0 && c->b >= 0))
 			obj->rgb = *(t_color *)data;
 		else
-			return (ft_free("2", fields), free(obj), throw_error(AMBIANCE), 1);
+			return (ft_free("2", fields), throw_error(CAMERA), 1);
 		obj->class = SPHERE;
 	}
-	return (ft_free("2", fields), free(obj), 0);
+	return (ft_free("2", fields), 0);
 }

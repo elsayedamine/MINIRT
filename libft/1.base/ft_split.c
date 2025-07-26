@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:30:44 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/24 18:55:47 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 09:47:50 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ static int	words(char const *s, char *set)
 	i = 0;
 	if (s[i] == '\0')
 		return (0);
-	while (ft_strchr(set, s[i]))
+	while (s[i] && ft_strchr(set, s[i]))
 		i++;
 	while (s[i])
 	{
 		cnt++;
-		while (!ft_strchr(set, s[i]) && s[i])
+		while (s[i] && !ft_strchr(set, s[i]))
 			i++;
-		while (ft_strchr(set, s[i]))
+		while (s[i] && ft_strchr(set, s[i]))
 			i++;
 	}
 	return (cnt);
@@ -65,16 +65,16 @@ static char	*stricpy(char *dest, char const *src, char *set, int index)
 
 	i = 0;
 	j = 0;
-	while (ft_strchr(set, src[i]))
+	while (ft_strchr(set, src[j]))
 		j++;
-	while (index--)
+	while (index-- && src[j])
 	{
-		while (!ft_strchr(set, src[i]) && src[j])
+		while (src[j] && !ft_strchr(set, src[j]))
 			j++;
-		while (ft_strchr(set, src[i]))
+		while (src[j] && ft_strchr(set, src[j]))
 			j++;
 	}
-	while (!ft_strchr(set, src[i]) && src[j])
+	while (src[j] && !ft_strchr(set, src[j]))
 		dest[i++] = src[j++];
 	dest[i] = '\0';
 	return (dest);

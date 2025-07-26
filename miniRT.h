@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/25 19:15:26 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 12:15:22 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 /*                 ENUMS                    */
 /* **************************************** */
 
+extern char strs[7][12];
+
 typedef enum e_type
 {
 	AMBIANCE,
@@ -53,6 +55,7 @@ typedef enum e_token_type {
 	VECTOR,
 	ORIENT,
 	RGB,
+	RGB1,
 	RATIO,
 	FOV,
 	FLOAT
@@ -68,21 +71,23 @@ typedef enum e_token_type {
 /*           FUNCTION PROTOTYPES            */
 /* **************************************** */
 
-void	    init_window(t_minirt *vars);
-int		    retrieve_data(t_minirt *vars, char *filename);
-int		    valid_filename(char *s);
-int	        fill_data(t_minirt *vars, char *data, int shape);
-double	    ft_atof(const char *str);
-void        *classifier(char *s, int *type);
-int         throw_error(int err);
+void		init_window(t_minirt *vars);
+int			retrieve_data(t_minirt *vars, char *filename);
+int			valid_filename(char *s);
+double		ft_atof(const char *str);
+void		*classifier(char *s, int *type);
+int			throw_error(int err);
 t_object	*new_object(void);
+void		print_members(t_list *lst, void (*f)(t_object *));
+void		print_data(t_object *obj);
+
 //
 //
-int	fill_plan(t_minirt *vars, char *data, t_object *obj);
-int	fill_sphere(t_minirt *vars, char *data, t_object *obj);
-int	fill_cylinder(t_minirt *vars, char *data, t_object *obj);
-int	fill_ambiance(t_minirt *vars, char *data, t_object *obj);
-int	fill_light(t_minirt *vars, char *data, t_object *obj);
-int	fill_camera(t_minirt *vars, char *data, t_object *obj);
+int			fill_plan(t_minirt *vars, char *data, t_object *obj);
+int			fill_sphere(t_minirt *vars, char *data, t_object *obj);
+int			fill_cylinder(t_minirt *vars, char *data, t_object *obj);
+int			fill_ambiance(t_minirt *vars, char *data, t_object *obj);
+int			fill_light(t_minirt *vars, char *data, t_object *obj);
+int			fill_camera(t_minirt *vars, char *data, t_object *obj);
 
 #endif
