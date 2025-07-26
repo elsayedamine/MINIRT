@@ -12,9 +12,9 @@
 
 #include "miniRT.h"
 
-void    init_window(t_minirt *vars)
+void	init_window(t_minirt *vars)
 {
-		vars->win.mlx = mlx_init();
+	vars->win.mlx = mlx_init();
 	if (!vars->win.mlx)
 		return (printfd(2, "Failure in X connection!\n"), exit(2));
 	vars->win.win = mlx_new_window(vars->win.mlx, M_WIDTH, M_HEIGHT,

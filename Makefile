@@ -7,13 +7,13 @@ lib = $(LIB_DIR)/libft.a
 sources = \
 		main.c \
 		window.c \
-		parsing.c \
-		error.c \
-		utils.c \
-		get_color.c \
-		fill_shapes.c \
-		fill_settings.c \
-		tokenizer.c \
+		extraction/extraction.c \
+		extraction/error.c \
+		extraction/utils.c \
+		extraction/get_color.c \
+		extraction/fill_shapes.c \
+		extraction/fill_settings.c \
+		extraction/classifier.c \
 
 object = $(sources:.c=.o)
 

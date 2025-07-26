@@ -6,23 +6,40 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:29:26 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 11:14:38 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 17:30:19 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-char	strs[7][12] = {"AMBIANCE", "CAMERA", "LIGHT", "SPHERE", "CYLINDER", "PLAN", "LAST_SHAPE"};
+char	g_strs[7][12] = {"AMBIANCE", "CAMERA", "LIGHT", \
+	"SPHERE", "CYLINDER", "PLAN", "LAST_SHAPE"}; // only for printing
 
-int main(int ac, char **av)
+int	valid_filename(char *s)
+{
+	int	l;
+
+	l = ft_strlen(s) - 1;
+	if (l + 1 >= 4)
+	{
+		if (!ft_strncmp(&s[l - 2], ".rt", 3))
+			return (1);
+		else
+			return (0);
+	}
+	return (0);
+}
+
+int	main(int ac, char **av)
 {
 	t_minirt	vars;
 
 	if (ac == 2 && valid_filename(av[1]))
 	{
-		if (retrieve_data(&vars, av[1]) == FALSE)
-			return (3);
-		init_window(&vars);
+		if (extract_data(&vars, av[1]) == FALSE)
+			return (130);
+		print_members(vars.members, print_data);
+		// init_window(&vars);
 		// rendering(&vars, &parser);
 		return (0);
 	}

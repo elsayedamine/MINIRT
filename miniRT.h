@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 12:15:22 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 17:29:51 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <math.h>
-# include "minilibx/mlx.h"
+# include "../minilibx/mlx.h"
 
 /* **************************************** */
 /*              DEFINITIONS                 */
@@ -37,7 +37,7 @@
 /*                 ENUMS                    */
 /* **************************************** */
 
-extern char strs[7][12];
+extern char	g_strs[7][12]; // for printing members
 
 typedef enum e_type
 {
@@ -47,10 +47,12 @@ typedef enum e_type
 	SPHERE,
 	CYLINDER,
 	PLAN,
-	LAST_SHAPE
-}           t_type;
+	LAST_SHAPE,
+	ERR = -1
+}	t_type;
 
-typedef enum e_token_type {
+typedef enum e_token_type
+{
 	UNKNOWN,
 	VECTOR,
 	ORIENT,
@@ -65,17 +67,69 @@ typedef enum e_token_type {
 /*             STRUCTURES                   */
 /* **************************************** */
 
-# include "struct.h"
+typedef struct s_window
+{
+	void		*mlx;
+	void		*win;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}				t_win;
+
+typedef struct s_color
+{
+	int			r;
+	int			g;
+	int			b;
+	int			r2;
+	int			g2;
+	int			b2;
+	int			r_interp;
+	int			g_interp;
+	int			b_interp;
+}				t_color;
+typedef struct s_vec3
+{
+	float	x;
+	float	y;
+	float	z;
+}			t_vec3;
+typedef struct s_class
+{
+	int		class;
+	void	*data;
+}			t_class;
+
+typedef struct s_object
+{
+	int		class;
+	float	ratio;
+	float	fov;
+	float	d;
+	float	h;
+	t_vec3	crd;
+	t_vec3	n_vct;
+	t_vec3	o_vct;
+	t_color	rgb;
+}			t_object;
+
+typedef struct s_minirt
+{
+	t_win	win;
+	t_list	*members;
+}			t_minirt;
 
 /* **************************************** */
 /*           FUNCTION PROTOTYPES            */
 /* **************************************** */
 
 void		init_window(t_minirt *vars);
-int			retrieve_data(t_minirt *vars, char *filename);
+int			extract_data(t_minirt *vars, char *filename);
 int			valid_filename(char *s);
-double		ft_atof(const char *str);
-void		*classifier(char *s, int *type);
+float		ft_atof(char *str);
+void		*classifier(char *s, int *type, t_vec3 *v, t_color *c);
 int			throw_error(int err);
 t_object	*new_object(void);
 void		print_members(t_list *lst, void (*f)(t_object *));
@@ -83,11 +137,11 @@ void		print_data(t_object *obj);
 
 //
 //
-int			fill_plan(t_minirt *vars, char *data, t_object *obj);
-int			fill_sphere(t_minirt *vars, char *data, t_object *obj);
-int			fill_cylinder(t_minirt *vars, char *data, t_object *obj);
-int			fill_ambiance(t_minirt *vars, char *data, t_object *obj);
-int			fill_light(t_minirt *vars, char *data, t_object *obj);
-int			fill_camera(t_minirt *vars, char *data, t_object *obj);
+int			fill_plan(char *data, t_object *obj);
+int			fill_sphere(char *data, t_object *obj);
+int			fill_cylinder(char *data, t_object *obj);
+int			fill_ambiance(char *data, t_object *obj);
+int			fill_light(char *data, t_object *obj);
+int			fill_camera(char *data, t_object *obj);
 
 #endif

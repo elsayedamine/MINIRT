@@ -6,11 +6,11 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 22:14:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/25 19:07:30 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 17:17:18 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "miniRT.h"
+#include "../miniRT.h"
 
 int	parse_component(char **str, int *component)
 {
