@@ -14,6 +14,7 @@ sources = \
 		extraction/fill_shapes.c \
 		extraction/fill_settings.c \
 		extraction/classifier.c \
+		extraction/fillers.c \
 
 object = $(sources:.c=.o)
 

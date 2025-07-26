@@ -6,39 +6,11 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 22:48:49 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 21:56:34 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 22:03:28 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../miniRT.h"
-
-int	fill_rgb(t_color *c, char p1[8], char p2[8], char p3[8])
-{
-	c->r = ft_atoi(p1);
-	c->g = ft_atoi(p2);
-	c->b = ft_atoi(p3);
-	if (c->r >= -1 && c->r <= 1 && c->g >= -1 && \
-		c->g <= 1 && c->b >= -1 && c->b <= 1)
-		return (RGB1);
-	if (c->r >= 0 && c->r <= 255 && c->g >= 0 && \
-		c->g <= 255 && c->b >= 0 && c->b <= 255)
-		return (RGB);
-	return (5);
-}
-
-int	fill_float(float *f, char *s)
-{
-	*f = ft_atof(s);
-	if (isnan(*f))
-		return (UNKNOWN);
-	if (*f >= 0.0 && *f <= 1.0)
-		return (RATIO);
-	if (*f > 0.0 && *f <= 180.0)
-		return (FOV);
-	if (*f > 0.0)
-		return (FLOAT);
-	return (UNKNOWN);
-}
 
 int	is_int(char *s)
 {
@@ -102,18 +74,8 @@ void	*classifier(char *s, int *type, int class)
 		if (class == RGB && is_int(p[0]) && is_int(p[1]) && is_int(p[2]) && \
 			fill_rgb(c, p[0], p[1], p[2]) < 5)
 			return (*type = fill_rgb(c, p[0], p[1], p[2]), c);
-		v->x = ft_atof(p[0]);
-		v->y = ft_atof(p[1]);
-		v->z = ft_atof(p[2]);
-		if ((class == VECTOR || class == ORIENT) && \
-			!isnan(v->x) && !isnan(v->y) && !isnan(v->z))
-		{
-			if (v->x >= -1.0 && v->x <= 1.0 && \
-				v->y >= -1.0 && v->y <= 1.0 && \
-				v->z >= -1.0 && v->z <= 1.0)
-				return (*type = ORIENT, v);
-			return (*type = VECTOR, v);
-		}
+		if (fill_vector(v, p, class, type) == TRUE)
+			return (v);
 	}
 	else if (s && fill_float(fp, s) >= 5)
 		return (*type = fill_float(fp, s), fp);

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 21:34:53 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/26 22:04:28 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,12 +136,16 @@ void		print_members(t_list *lst, void (*f)(t_object *));
 void		print_data(t_object *obj);
 
 //
-//
+
+// fillers
 int			fill_plan(char *data, t_object *obj);
 int			fill_sphere(char *data, t_object *obj);
 int			fill_cylinder(char *data, t_object *obj);
 int			fill_ambiance(char *data, t_object *obj);
 int			fill_light(char *data, t_object *obj);
 int			fill_camera(char *data, t_object *obj);
+int			fill_rgb(t_color *c, char p1[8], char p2[8], char p3[8]);
+int			fill_float(float *f, char *s);
+int			fill_vector(t_vec3 *v, char p[3][8], int class, int *type);
 
 #endif
