@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 22:39:22 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:53:57 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,12 @@ t_object	*new_object(void)
 
 int	assign_object(t_minirt *vars, char *file, t_object *obj)
 {
-	int			err;
+	static int		err = 0;
 	static int	seen[3];
 
-	err = 0;
 	ft_strcompress(file);
 	if (!file[0])
-		return (TRUE);
+		return (free(obj), TRUE);
 	if (!ft_strncmp("A ", file, 2) && !seen[0]++)
 		err = fill_ambiance(file, obj);
 	else if (!ft_strncmp("C ", file, 2) && !seen[1]++)
@@ -53,9 +52,11 @@ int	assign_object(t_minirt *vars, char *file, t_object *obj)
 	else if (!ft_strncmp("pl ", file, 3))
 		err = fill_plan(file, obj);
 	else
-		return (ft_lstclear(&vars->members, free), throw_error(ERR), FALSE);
+		return (ft_lstclear(&vars->members, free_objects), \
+			free_objects(obj), throw_error(ERR), FALSE);
 	if (err)
-		return (ft_lstclear(&vars->members, free), FALSE);
+		return (ft_lstclear(&vars->members, free_objects), \
+			free_objects(obj), FALSE);
 	return (ft_lstadd_back(&vars->members, ft_lstnew(obj)), TRUE);
 }
 
@@ -76,7 +77,8 @@ int	extract_data(t_minirt *vars, char *filename)
 	{
 		obj = new_object();
 		if (assign_object(vars, file[i++], obj) == FALSE)
-			return (close(fd), free_objects(obj), ft_free("2", file), FALSE);
+			return (close(fd), ft_free("2", file), FALSE);
+
 	}
 	return (close(fd), ft_free("2", file), TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:29:26 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 22:35:56 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:23:35 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,15 @@ void	free_objects(void *object)
 		free(obj->crd);
 		free(obj->o_vct);
 	}
-	if (obj->class == LIGHT)
-	{
-		free(obj->crd);
-		free(obj->rgb);
-	}
-	if (obj->class == SPHERE)
+	if (obj->class >= LIGHT)
 	{
 		free(obj->crd);
 		free(obj->rgb);
 	}
 	if (obj->class == PLAN)
-	{
-		free(obj->crd);
 		free(obj->n_vct);
-		free(obj->rgb);
-	}
 	if (obj->class == CYLINDER)
-	{
-		free(obj->crd);
 		free(obj->o_vct);
-		free(obj->rgb);
-	}
 	free(object);
 }
 
