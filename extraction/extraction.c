@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/27 19:14:34 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/27 19:34:05 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,6 @@ int	assign_object(t_minirt *vars, char *file, t_object *obj)
 	return (ft_lstadd_back(&vars->members, ft_lstnew(obj)), 1);
 }
 
-void	init_data(t_minirt *vars)
-{
-	vars->amb.ratio = -2.0f;
-	vars->amb.rgb = NULL;
-	vars->cam.crd = NULL;
-	vars->cam.o_vct = NULL;
-	vars->cam.fov = -2.0f;
-}
-
 int	extract_data(t_minirt *vars, char *filename)
 {
 	int			i;
@@ -94,7 +85,6 @@ void	cleanup(t_minirt *vars, int n)
 		ft_lstclear(&vars->members, free_objects);
 	if (2 & n)
 		free(vars->amb.rgb), free(vars->cam.crd), free(vars->cam.o_vct);
-			
 	// if (4 & n)
 		//
 	// if (8 & n)
