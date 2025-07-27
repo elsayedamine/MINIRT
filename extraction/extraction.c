@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/27 16:53:57 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/27 19:14:34 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	assign_object(t_minirt *vars, char *file, t_object *obj)
 	if (!file[0])
 		return (free(obj), TRUE);
 	if (!ft_strncmp("A ", file, 2) && !seen[0]++)
-		err = fill_ambiance(file, obj);
+		err = fill_ambiance(file, vars);
 	else if (!ft_strncmp("C ", file, 2) && !seen[1]++)
-		err = fill_camera(file, obj);
+		err = fill_camera(file, vars);
 	else if (!ft_strncmp("L ", file, 2) && !seen[2]++)
 		err = fill_light(file, obj);
 	else if (!ft_strncmp("sp ", file, 3))
@@ -52,12 +52,21 @@ int	assign_object(t_minirt *vars, char *file, t_object *obj)
 	else if (!ft_strncmp("pl ", file, 3))
 		err = fill_plan(file, obj);
 	else
-		return (ft_lstclear(&vars->members, free_objects), \
-			free_objects(obj), throw_error(ERR), FALSE);
-	if (err)
-		return (ft_lstclear(&vars->members, free_objects), \
-			free_objects(obj), FALSE);
-	return (ft_lstadd_back(&vars->members, ft_lstnew(obj)), TRUE);
+		return (cleanup(vars, 3), free_objects(obj), throw_error(ERR), 0);
+	if (err == 1)
+		return (cleanup(vars, 3), free_objects(obj), 0);
+	if (err == 2)
+		return (free(obj), TRUE);
+	return (ft_lstadd_back(&vars->members, ft_lstnew(obj)), 1);
+}
+
+void	init_data(t_minirt *vars)
+{
+	vars->amb.ratio = -2.0f;
+	vars->amb.rgb = NULL;
+	vars->cam.crd = NULL;
+	vars->cam.o_vct = NULL;
+	vars->cam.fov = -2.0f;
 }
 
 int	extract_data(t_minirt *vars, char *filename)
@@ -65,7 +74,6 @@ int	extract_data(t_minirt *vars, char *filename)
 	int			i;
 	int			fd;
 	char		**file;
-	t_object	*obj;
 
 	vars->members = NULL;
 	fd = open(filename, O_RDONLY);
@@ -73,12 +81,22 @@ int	extract_data(t_minirt *vars, char *filename)
 		return (perror("Failed to open file"), FALSE);
 	file = ft_read(fd, filename);
 	i = 0;
+	init_data(vars);
 	while (file[i])
-	{
-		obj = new_object();
-		if (assign_object(vars, file[i++], obj) == FALSE)
+		if (assign_object(vars, file[i++], new_object()) == FALSE)
 			return (close(fd), ft_free("2", file), FALSE);
-
-	}
 	return (close(fd), ft_free("2", file), TRUE);
+}
+
+void	cleanup(t_minirt *vars, int n)
+{
+	if (1 & n)
+		ft_lstclear(&vars->members, free_objects);
+	if (2 & n)
+		free(vars->amb.rgb), free(vars->cam.crd), free(vars->cam.o_vct);
+			
+	// if (4 & n)
+		//
+	// if (8 & n)
+		//
 }

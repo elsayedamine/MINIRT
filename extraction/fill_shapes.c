@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 17:00:40 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 22:46:21 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/27 19:28:11 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	fill_plan(char *line, t_object *obj)
 	int		type;
 
 	fields = ft_split(line, WHITE);
-	if (!fields)
-		return (1);
+	if (!fields || ft_arrlen(fields) > 4)
+		return (ft_free("2", fields), throw_error(PLAN), 1);
 	obj->class = PLAN;
 	data = classifier(fields[1], &type, VECTOR);
 	if (!data || !(type <= RGB1))
@@ -44,8 +44,8 @@ int	fill_cylinder(char *line, t_object *obj)
 	int		type;
 
 	fields = ft_split(line, WHITE);
-	if (!fields)
-		return (1);
+	if (!fields || ft_arrlen(fields) > 6)
+		return (ft_free("2", fields), throw_error(CYLINDER), 1);
 	obj->class = CYLINDER;
 	data = classifier(fields[1], &type, VECTOR);
 	if (!data || !(type <= RGB1))
@@ -77,8 +77,9 @@ int	fill_sphere(char *line, t_object *obj)
 	int		type;
 
 	fields = ft_split(line, WHITE);
-	if (!fields)
-		return (1);
+	if (!fields || ft_arrlen(fields) > 4)
+		return (ft_free("2", fields), throw_error(SPHERE), 1);
+	obj->class = SPHERE;
 	data = classifier(fields[1], &type, VECTOR);
 	if (!data || !(type <= RGB1))
 		return (ft_free("2", fields), throw_error(SPHERE), 1);
@@ -91,6 +92,5 @@ int	fill_sphere(char *line, t_object *obj)
 	if (!(type == RGB || (type == RGB1 && obj->rgb->r >= 0 && obj->rgb->g >= 0 && obj->rgb->b >= 0)))
 		return (ft_free("2", fields), throw_error(SPHERE), 1);
 	obj->rgb = (t_color *)data;
-	obj->class = SPHERE;
 	return (ft_free("2", fields), 0);
 }

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 22:16:34 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/27 19:09:43 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,25 @@ typedef struct s_object
 	t_color	*rgb;
 }			t_object;
 
+typedef struct s_camera
+{
+	t_vec3	*crd;
+	t_vec3	*o_vct;
+	float	fov;
+}			t_camera;
+
+typedef struct s_ambiance
+{
+	float	ratio;
+	t_color	*rgb;
+}			t_ambiance;
+
 typedef struct s_minirt
 {
 	t_win	win;
 	t_list	*members;
+	t_camera cam;
+	t_ambiance amb;
 }			t_minirt;
 
 /* **************************************** */
@@ -135,15 +150,18 @@ t_object	*new_object(void);
 void		print_members(t_list *lst, void (*f)(t_object *));
 void		print_data(t_object *obj);
 void		free_objects(void *object);
+void		cleanup(t_minirt *vars, int n);
+void		init_data(t_minirt *vars);
+
 //
 
 // fillers
 int			fill_plan(char *data, t_object *obj);
 int			fill_sphere(char *data, t_object *obj);
 int			fill_cylinder(char *data, t_object *obj);
-int			fill_ambiance(char *data, t_object *obj);
+int			fill_ambiance(char *data, t_minirt *vars);
 int			fill_light(char *data, t_object *obj);
-int			fill_camera(char *data, t_object *obj);
+int			fill_camera(char *data, t_minirt *vars);
 int			fill_rgb(t_color *c, char p1[8], char p2[8], char p3[8]);
 int			fill_float(float *f, char *s);
 int			fill_vector(t_vec3 *v, char p[3][8], int class, int *type);

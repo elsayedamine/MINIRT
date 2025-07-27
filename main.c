@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:29:26 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/27 16:55:35 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/27 19:31:24 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	main(int ac, char **av)
 		print_members(vars.members, print_data);
 		// init_window(&vars);
 		// rendering(&vars, &parser);
-		ft_lstclear(&vars.members, free_objects);
+		cleanup(&vars, 3);
 		return (0);
 	}
 	printfd(2, "Invalid Argument: Stop Playing Around\n");
