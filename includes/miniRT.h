@@ -177,4 +177,17 @@ int			fill_rgb(t_color *c, char p1[8], char p2[8], char p3[8]);
 int			fill_float(float *f, char *s);
 int			fill_vector(t_vec3 *v, char p[3][8], int class, int *type);
 
+// vectors
+float dot(t_vec3 vec1, t_vec3 vec2);
+t_vec3 cross(t_vec3 vec1, t_vec3 vec2);
+t_vec3 vec_op_vec(t_vec3 vec1, t_vec3 vec2, float (*op)(float, float));
+t_vec3 sc_op_vec(float sc, t_vec3 vec2, float (*op)(float, float));
+t_vec3	init_vec(float x, float y, float z);
+float magnitude(t_vec3 vec);
+t_vec3 normalize(t_vec3 vec);
+float add(float a, float b);
+float mul(float a, float b);
+float div(float a, float b);
+float sub(float a, float b);
+
 #endif
