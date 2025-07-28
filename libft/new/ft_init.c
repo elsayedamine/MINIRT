@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include <libft.h>
 
 // function that expects only the address of an integer or a character
 void	ft_init(int count, ...)

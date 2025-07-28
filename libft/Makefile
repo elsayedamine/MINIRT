@@ -3,6 +3,7 @@ CFLAGS = -Wall -Wextra -Werror
 AR = ar rcs
 RM = rm -rf
 NAME = libft.a
+INC = -I../includes
 SOURCES = \
 		2.printfd/fd_numbers.c \
 		2.printfd/fd_pointers.c \
@@ -97,6 +98,9 @@ SOURCES = \
 OBJECTS = $(SOURCES:.c=.o)
 
 all: $(NAME)
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 $(NAME): $(OBJECTS)
 	$(AR) $(NAME) $(OBJECTS)

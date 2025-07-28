@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include <libft.h>
 
 t_list	*ft_lstndup(t_list *head, t_list *stop)
 {

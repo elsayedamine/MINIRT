@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include <libft.h>
 
 t_list	*ft_lstgetnode(t_list *lst, size_t pos)
 {

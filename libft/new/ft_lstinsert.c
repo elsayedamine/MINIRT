@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include <libft.h>
 
 void	ft_lstinsert(t_list *pos, t_list *insert)
 {

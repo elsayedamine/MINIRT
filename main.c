@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include <miniRT.h>
 
 char	g_strs[7][12] = {"AMBIANCE", "CAMERA", "LIGHT", \
 	"SPHERE", "CYLINDER", "PLAN", "LAST_SHAPE"}; // only for printing

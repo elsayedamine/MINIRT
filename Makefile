@@ -1,38 +1,42 @@
 NAME = miniRT
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-LIB_DIR = ./libft
-lib = $(LIB_DIR)/libft.a
+INC = -I./includes
+LIB = -L./minilibx-linux -L./libft -lft -lmlx_Linux -lXext -lX11 -lm
+LIBFT_PATH = ./libft/libft.a
 
 sources = \
 		main.c \
-		window.c \
-		extraction/extraction.c \
-		extraction/error.c \
-		extraction/utils.c \
-		extraction/get_color.c \
-		extraction/fill_shapes.c \
-		extraction/fill_settings.c \
-		extraction/classifier.c \
-		extraction/fillers.c \
+		src/window.c \
+		src/extraction/extraction.c \
+		src/extraction/error.c \
+		src/extraction/utils.c \
+		src/extraction/get_color.c \
+		src/extraction/fill_shapes.c \
+		src/extraction/fill_settings.c \
+		src/extraction/classifier.c \
+		src/extraction/fillers.c \
 
 object = $(sources:.c=.o)
 
 all: $(NAME) 
 
-$(lib):
-	make all -C $(LIB_DIR)
+$(LIBFT_PATH):
+	make all -C ./libft
 
-$(NAME): $(object) $(lib)
-	$(CC) $(CFLAGS) $(object) ./libft/libft.a -lmlx -lXext -lX11 -lm -o $(NAME)
+%.o: %.c
+	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+
+$(NAME): $(object) $(LIBFT_PATH)
+	$(CC) $(CFLAGS) $(object) $(LIB) -o $(NAME)
 
 clean:
 	rm -rf $(object)
-	make clean -C $(LIB_DIR)
+	make clean -C ./libft
 
 fclean: clean
 	rm -rf $(NAME)
-	make fclean -C $(LIB_DIR)
+	make fclean -C ./libft
 
 re: fclean all
 
