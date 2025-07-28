@@ -32,6 +32,7 @@
 # define M_WIDTH 1920
 # define M_HEIGHT 1080
 # define M_THETA 0.76842396884
+# define RAD 0.0174533
 
 /* **************************************** */
 /*                 ENUMS                    */
@@ -117,10 +118,10 @@ typedef struct s_object
 
 typedef struct s_camera
 {
-	t_vec3	*crd;
-	t_vec3	*fw;
-	t_vec3	*rt;
-	t_vec3	*up;	
+	t_vec3	crd;
+	t_vec3	fw;
+	t_vec3	rt;
+	t_vec3	up;	
 	float	fov;
 }			t_camera;
 
@@ -130,12 +131,14 @@ typedef struct s_ambiance
 	t_color	*rgb;
 }			t_ambiance;
 
-typedef struct s_rays
+typedef struct s_projection
 {
+	float projection_plane_w;
+	float projection_plane_h;
 	t_vec3 origin;
-	t_vec3 **arr;
+	t_vec3 **rays;
 	int bounce_count;
-} t_rays;
+} t_projection;
 
 typedef struct s_minirt
 {
@@ -143,7 +146,7 @@ typedef struct s_minirt
 	t_list	*members;
 	t_camera cam;
 	t_ambiance amb;
-	t_rays rays;
+	t_projection plane;
 }			t_minirt;
 
 /* **************************************** */
