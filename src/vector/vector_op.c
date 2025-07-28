@@ -5,6 +5,11 @@ float dot(t_vec3 vec1, t_vec3 vec2)
 	return (vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z);
 }
 
+float distance(t_vec3 vec1, t_vec3 vec2)
+{
+    return (sqrt(pow(vec1.x - vec2.x, 2) + pow(vec1.y - vec2.y, 2) + pow(vec1.z - vec2.z, 2)));
+}
+
 t_vec3 cross(t_vec3 vec1, t_vec3 vec2)
 {
 	t_vec3 out;

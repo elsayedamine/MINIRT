@@ -62,6 +62,7 @@ int	main(int ac, char **av)
 		if (extract_data(&vars, av[1]) == FALSE)
 			return (130);
 		print_members(vars.members, print_data);
+		setup(&vars);
 		// init_window(&vars);
 		// rendering(&vars, &parser);
 		cleanup(&vars, 3);

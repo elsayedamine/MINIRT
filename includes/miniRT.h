@@ -130,21 +130,20 @@ typedef struct s_ambiance
 	t_color	*rgb;
 }			t_ambiance;
 
-typedef struct s_mat3
+typedef struct s_rays
 {
-	t_vec3	x;
-	t_vec3	y;
-	t_vec3	z;
-}				t_mat3;
+	t_vec3 origin;
+	t_vec3 **arr;
+	int bounce_count;
+} t_rays;
 
 typedef struct s_minirt
 {
-	int		width;
-	int		height;
 	t_win	win;
 	t_list	*members;
 	t_camera cam;
 	t_ambiance amb;
+	t_rays rays;
 }			t_minirt;
 
 /* **************************************** */
