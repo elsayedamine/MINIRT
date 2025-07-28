@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/27 17:06:15 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:21:17 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,10 @@ char	**ft_read(int fd, char *filename);
 
 // linked lists
 t_list	*ft_lstnew(void *content);
-void	ft_lstadd_front(t_list **lst, t_list *new);
+void	ft_lstadd_front(t_list **lst, t_list *new_lst);
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
-void	ft_lstadd_back(t_list **lst, t_list *new);
+void	ft_lstadd_back(t_list **lst, t_list *new_lst);
 void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, int (*f)(char const *, ...));
@@ -140,8 +140,8 @@ void	ft_lstinsert(t_list *pos, t_list *insert);
 
 // linked lists for ints
 t_lst	*lst_new(int content);
-void	lst_addback(t_lst **lst, t_lst *new);
-void	lst_addfront(t_lst **lst, t_lst *new);
+void	lst_addback(t_lst **lst, t_lst *new_lst);
+void	lst_addfront(t_lst **lst, t_lst *new_lst);
 void	lst_clear(t_lst **lst);
 t_lst	*lst_last(t_lst *lst);
 int		lst_size(t_lst *lst);

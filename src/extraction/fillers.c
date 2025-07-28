@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:03:36 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/27 19:33:43 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:26:58 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,3 @@ int	fill_vector(t_vec3 *v, char p[3][8], int class, int *type)
 	return (FALSE);
 }
 
-void	init_data(t_minirt *vars)
-{
-	vars->amb.ratio = -2.0f;
-	vars->amb.rgb = NULL;
-	vars->cam.crd = NULL;
-	vars->cam.fw = NULL;
-	vars->cam.fov = -2.0f;
-}

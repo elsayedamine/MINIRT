@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/27 19:09:43 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:45:00 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_vec3
 	float	y;
 	float	z;
 }			t_vec3;
+
 typedef struct s_class
 {
 	int		class;
@@ -110,10 +111,10 @@ typedef struct s_object
 	float	fov;
 	float	d;
 	float	h;
-	t_vec3	*crd;
-	t_vec3	*n_vct;
-	t_vec3	*o_vct;
-	t_color	*rgb;
+	t_vec3	crd;
+	t_vec3	n_vct;
+	t_vec3	o_vct;
+	t_color	rgb;
 }			t_object;
 
 typedef struct s_camera
@@ -128,7 +129,7 @@ typedef struct s_camera
 typedef struct s_ambiance
 {
 	float	ratio;
-	t_color	*rgb;
+	t_color	rgb;
 }			t_ambiance;
 
 typedef struct s_projection
@@ -157,14 +158,12 @@ void		init_window(t_minirt *vars);
 int			extract_data(t_minirt *vars, char *filename);
 int			valid_filename(char *s);
 float		ft_atof(char *str);
-void		*classifier(char *s, int *type, int class);
+t_object	classifier(char *s, int *type, int class);
 int			throw_error(int err);
 t_object	*new_object(void);
 void		print_members(t_list *lst, void (*f)(t_object *));
 void		print_data(t_object *obj);
-void		free_objects(void *object);
 void		cleanup(t_minirt *vars, int n);
-void		init_data(t_minirt *vars);
 
 //
 
@@ -189,7 +188,7 @@ float magnitude(t_vec3 vec);
 t_vec3 normalize(t_vec3 vec);
 float add(float a, float b);
 float mul(float a, float b);
-float div(float a, float b);
+float divis(float a, float b);
 float sub(float a, float b);
 
 #endif

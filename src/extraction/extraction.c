@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/27 19:34:05 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:30:38 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@ t_object	*new_object(void)
 	obj->fov = -2.0;
 	obj->h = -2.0;
 	obj->ratio = -2.0;
-	obj->n_vct = NULL;
-	obj->o_vct = NULL;
-	obj->rgb = NULL;
-	obj->crd = NULL;
 	return (obj);
 }
 
@@ -52,9 +48,9 @@ int	assign_object(t_minirt *vars, char *file, t_object *obj)
 	else if (!ft_strncmp("pl ", file, 3))
 		err = fill_plan(file, obj);
 	else
-		return (cleanup(vars, 3), free_objects(obj), throw_error(ERR), 0);
+		return (cleanup(vars, 3), free(obj), throw_error(ERR), 0);
 	if (err == 1)
-		return (cleanup(vars, 3), free_objects(obj), 0);
+		return (cleanup(vars, 3), free(obj), 0);
 	if (err == 2)
 		return (free(obj), TRUE);
 	return (ft_lstadd_back(&vars->members, ft_lstnew(obj)), 1);
@@ -72,7 +68,6 @@ int	extract_data(t_minirt *vars, char *filename)
 		return (perror("Failed to open file"), FALSE);
 	file = ft_read(fd, filename);
 	i = 0;
-	init_data(vars);
 	while (file[i])
 		if (assign_object(vars, file[i++], new_object()) == FALSE)
 			return (close(fd), ft_free("2", file), FALSE);
@@ -82,9 +77,7 @@ int	extract_data(t_minirt *vars, char *filename)
 void	cleanup(t_minirt *vars, int n)
 {
 	if (1 & n)
-		ft_lstclear(&vars->members, free_objects);
-	if (2 & n)
-		free(vars->amb.rgb), free(vars->cam.crd), free(vars->cam.fw);
+		ft_lstclear(&vars->members, free);
 	// if (4 & n)
 		//
 	// if (8 & n)

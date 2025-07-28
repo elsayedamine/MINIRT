@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 22:16:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 21:57:16 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:29:37 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,16 @@ void	print_data(t_object *obj)
 	printf("diameter : %.1f\n", obj->d);
 	printf("height   : %.1f\n", obj->h);
 	if (obj->class != 1)
-		printf("rgb      : %d,%d,%d\n", obj->rgb->r, obj->rgb->g, obj->rgb->b);
+		printf("rgb      : %d,%d,%d\n", obj->rgb.r, obj->rgb.g, obj->rgb.b);
 	if (obj->class != 0)
-		printf("crd      : %.1f,%.1f,%.1f\n", obj->crd->x, \
-			obj->crd->y, obj->crd->z);
+		printf("crd      : %.1f,%.1f,%.1f\n", obj->crd.x, \
+			obj->crd.y, obj->crd.z);
 	if (obj->class == PLAN)
 		printf("n_nvt    : %.1f,%.1f,%.1f\n", \
-			obj->n_vct->x, obj->n_vct->y, obj->n_vct->z);
+			obj->n_vct.x, obj->n_vct.y, obj->n_vct.z);
 	if (obj->class == CYLINDER || obj->class == CAMERA)
 		printf("o_vct    : %.1f,%.1f,%.1f\n", \
-			obj->o_vct->x, obj->o_vct->y, obj->o_vct->z);
+			obj->o_vct.x, obj->o_vct.y, obj->o_vct.z);
 	printf("\n");
 }
 

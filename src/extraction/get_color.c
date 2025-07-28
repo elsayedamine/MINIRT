@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 22:14:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/26 20:49:37 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:29:53 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ int	parse_component(char **str, int *component)
 int	get_rgb(t_minirt *vars, char *str, t_object *obj)
 {
 	(void)vars;
-	if (!parse_component(&str, &obj->rgb->r))
+	if (!parse_component(&str, &obj->rgb.r))
 		return (FALSE);
 	if (*str++ != ',')
 		return (FALSE);
-	if (!parse_component(&str, &obj->rgb->g))
+	if (!parse_component(&str, &obj->rgb.g))
 		return (FALSE);
 	if (*str++ != ',')
 		return (FALSE);
-	if (!parse_component(&str, &obj->rgb->b))
+	if (!parse_component(&str, &obj->rgb.b))
 		return (FALSE);
 	if (*str)
 		return (FALSE);

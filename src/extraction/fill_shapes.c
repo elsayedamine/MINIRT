@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 17:00:40 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/27 19:28:11 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:30:12 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,83 +14,83 @@
 
 int	fill_plan(char *line, t_object *obj)
 {
-	char	**fields;
-	void	*data;
-	int		type;
+	char		**fields;
+	t_object	data;
+	int			type;
 
 	fields = ft_split(line, WHITE);
 	if (!fields || ft_arrlen(fields) > 4)
 		return (ft_free("2", fields), throw_error(PLAN), 1);
 	obj->class = PLAN;
 	data = classifier(fields[1], &type, VECTOR);
-	if (!data || !(type <= RGB1))
+	if (data.class == UNKNOWN || !(type <= RGB1))
 		return (ft_free("2", fields), throw_error(PLAN), 1);
-	obj->crd = (t_vec3 *)data;
+	obj->crd = data.crd;
 	data = classifier(fields[2], &type, ORIENT);
 	if (!(type == ORIENT))
 		return (ft_free("2", fields), throw_error(PLAN), 1);
-	obj->n_vct = (t_vec3 *)data;
+	obj->n_vct = data.crd;
 	data = classifier(fields[3], &type, RGB);
-	obj->rgb = (t_color *)data;
-	if (!(type == RGB || (type == RGB1 && obj->rgb->r >= 0 && obj->rgb->g >= 0 && obj->rgb->b >= 0)))
+	obj->rgb = data.rgb;
+	if (!(type == RGB || (type == RGB1 && obj->rgb.r >= 0 && obj->rgb.g >= 0 && obj->rgb.b >= 0)))
 		return (ft_free("2", fields), throw_error(PLAN), 1);
 	return (ft_free("2", fields), 0);
 }
 
 int	fill_cylinder(char *line, t_object *obj)
 {
-	char	**fields;
-	void	*data;
-	int		type;
+	char		**fields;
+	t_object	data;
+	int			type;
 
 	fields = ft_split(line, WHITE);
 	if (!fields || ft_arrlen(fields) > 6)
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
 	obj->class = CYLINDER;
 	data = classifier(fields[1], &type, VECTOR);
-	if (!data || !(type <= RGB1))
+	if (data.class == UNKNOWN || !(type <= RGB1))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
-	obj->crd = (t_vec3 *)data;
+	obj->crd = data.crd;
 	data = classifier(fields[2], &type, ORIENT);
 	if (!(type == ORIENT))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
-	obj->o_vct = (t_vec3 *)data;
+	obj->o_vct = data.crd;
 	data = classifier(fields[3], &type, CYLINDER);
 	if (!(type >= RATIO))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
-	obj->d = *(float *)data;
+	obj->d = data.d;
 	data = classifier(fields[4], &type, CYLINDER);
 	if (!(type >= RATIO))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
-	obj->h = *(float *)data;
+	obj->h = data.d;
 	data = classifier(fields[5], &type, RGB);
-	if (!(type == RGB || (type == RGB1 && obj->rgb->r >= 0 && obj->rgb->g >= 0 && obj->rgb->b >= 0)))
+	if (!(type == RGB || (type == RGB1 && obj->rgb.r >= 0 && obj->rgb.g >= 0 && obj->rgb.b >= 0)))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
-	obj->rgb = (t_color *)data;
+	obj->rgb = data.rgb;
 	return (ft_free("2", fields), 0);
 }
 
 int	fill_sphere(char *line, t_object *obj)
 {
-	char	**fields;
-	void	*data;
-	int		type;
+	char		**fields;
+	t_object	data;
+	int			type;
 
 	fields = ft_split(line, WHITE);
 	if (!fields || ft_arrlen(fields) > 4)
 		return (ft_free("2", fields), throw_error(SPHERE), 1);
 	obj->class = SPHERE;
 	data = classifier(fields[1], &type, VECTOR);
-	if (!data || !(type <= RGB1))
+	if (data.class == UNKNOWN || !(type <= RGB1))
 		return (ft_free("2", fields), throw_error(SPHERE), 1);
-	obj->crd = (t_vec3 *)data;
+	obj->crd = data.crd;
 	data = classifier(fields[2], &type, SPHERE);
 	if (!(type >= RATIO))
 		return (ft_free("2", fields), throw_error(SPHERE), 1);
-	obj->d = *(float *)data;
+	obj->d = data.d;
 	data = classifier(fields[3], &type, RGB);
-	if (!(type == RGB || (type == RGB1 && obj->rgb->r >= 0 && obj->rgb->g >= 0 && obj->rgb->b >= 0)))
+	obj->rgb = data.rgb;
+	if (!(type == RGB || (type == RGB1 && obj->rgb.r >= 0 && obj->rgb.g >= 0 && obj->rgb.b >= 0)))
 		return (ft_free("2", fields), throw_error(SPHERE), 1);
-	obj->rgb = (t_color *)data;
 	return (ft_free("2", fields), 0);
 }
