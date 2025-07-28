@@ -62,6 +62,6 @@ void	init_data(t_minirt *vars)
 	vars->amb.ratio = -2.0f;
 	vars->amb.rgb = NULL;
 	vars->cam.crd = NULL;
-	vars->cam.o_vct = NULL;
+	vars->cam.fw = NULL;
 	vars->cam.fov = -2.0f;
 }

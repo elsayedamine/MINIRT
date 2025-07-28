@@ -48,7 +48,7 @@ int	fill_camera(char *line, t_minirt *vars)
 	data = classifier(fields[2], &type, ORIENT);
 	if (type != ORIENT && type != RGB1)
 		return (ft_free("2", fields), throw_error(CAMERA), 1);
-	vars->cam.o_vct = (t_vec3 *)data;
+	vars->cam.fw = (t_vec3 *)data;
 	data = classifier(fields[3], &type, CAMERA);
 	if (type != FOV && type != RATIO)
 		return (ft_free("2", fields), throw_error(CAMERA), 1);

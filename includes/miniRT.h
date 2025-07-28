@@ -118,7 +118,9 @@ typedef struct s_object
 typedef struct s_camera
 {
 	t_vec3	*crd;
-	t_vec3	*o_vct;
+	t_vec3	*fw;
+	t_vec3	*rt;
+	t_vec3	*up;	
 	float	fov;
 }			t_camera;
 
@@ -128,8 +130,17 @@ typedef struct s_ambiance
 	t_color	*rgb;
 }			t_ambiance;
 
+typedef struct s_mat3
+{
+	t_vec3	x;
+	t_vec3	y;
+	t_vec3	z;
+}				t_mat3;
+
 typedef struct s_minirt
 {
+	int		width;
+	int		height;
 	t_win	win;
 	t_list	*members;
 	t_camera cam;

@@ -84,7 +84,7 @@ void	cleanup(t_minirt *vars, int n)
 	if (1 & n)
 		ft_lstclear(&vars->members, free_objects);
 	if (2 & n)
-		free(vars->amb.rgb), free(vars->cam.crd), free(vars->cam.o_vct);
+		free(vars->amb.rgb), free(vars->cam.crd), free(vars->cam.fw);
 	// if (4 & n)
 		//
 	// if (8 & n)

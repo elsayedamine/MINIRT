@@ -2,7 +2,7 @@ NAME = miniRT
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 INC = -I./includes
-LIB = -L./minilibx-linux -L./libft -lft -lmlx_Linux -lXext -lX11 -lm
+LIB = -L./mlx -L./libft -lft -lmlx_Linux -lXext -lX11 -lm
 LIBFT_PATH = ./libft/libft.a
 
 sources = \
