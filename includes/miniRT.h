@@ -204,5 +204,8 @@ void print_vec(t_vec3 vec, int nl);
 // key_hooks
 int keyhook(int key, t_minirt *vars);
 int	quit(t_minirt *vars);
+void    hook_manipulation(t_minirt *vars);
+
+
 
 #endif

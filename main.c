@@ -41,9 +41,7 @@ int	main(int ac, char **av)
 		print_members(vars.members, print_data);
 		setup(&vars);
 		raytracing(&vars);
-		mlx_key_hook(vars.win.win, keyhook, &vars);
-		mlx_hook(vars.win.win, 17, 1L << 0, quit, &vars);
-		mlx_loop(vars.win.mlx);
+		hook_manipulation(&vars);
 		cleanup(&vars, 1);
 		return (0);
 	}
