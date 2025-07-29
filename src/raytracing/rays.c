@@ -1,8 +1,8 @@
 #include <miniRT.h>
 
-typedef t_hit_info		(*t_intersect)(t_vec3 dir, t_object obj);
+typedef t_hit_info (*t_intersect)(t_vec3 origin, t_vec3 dir, t_object obj);
 
-t_hit_info get_hit_info(t_vec3 dir, t_minirt vars)
+t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt vars)
 {
 	t_list *curr;
 	t_hit_info hit_info;
@@ -26,15 +26,17 @@ t_hit_info get_hit_info(t_vec3 dir, t_minirt vars)
 	return (hit_info);
 }
 
-int	trace(int count, t_vec3 dir, t_minirt *vars)
+int	trace(t_minirt *vars, int x, int y)
 {
-	int i;
+	t_projection plane;
 	t_hit_info hit_info;
+	int i;
 
+	plane = vars->plane;
 	i = 0;
-	while (i < count)
+	while (i < plane.bounce_count)
 	{
-		hit_info = get_hit_info(dir, *vars); //get hit info, your job
+		hit_info = get_hit_info(plane.origin, plane.rays[x][y], *vars); //get hit info, your job
 		i++;
 		//process hit info, my job
 	}
@@ -51,7 +53,7 @@ void raytracing(t_minirt *vars)
 		j = 0;
 		while (j < M_HEIGHT)
 		{
-			color = trace(vars->plane.bounce_count, vars->plane.rays[i][j], vars);
+			color = trace(vars, i, j);
 			put_pixel(vars, i, j, color);
 			j++;
 		}
