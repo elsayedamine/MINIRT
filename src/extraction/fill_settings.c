@@ -25,7 +25,7 @@ int	fill_ambiance(char *line, t_minirt *vars)
 	data = classifier(fields[1], &type, AMBIANCE);
 	if (type != RATIO)
 		return (ft_free("2", fields), throw_error(AMBIANCE), 1);
-	vars->amb.ratio = data.d;
+	vars->amb.ratio = data.r;
 	data = classifier(fields[2], &type, RGB);
 	if (type != RGB && type != RGB1)
 		return (ft_free("2", fields), throw_error(AMBIANCE), 1);
@@ -53,7 +53,7 @@ int	fill_camera(char *line, t_minirt *vars)
 	data = classifier(fields[3], &type, CAMERA);
 	if (type != FOV && type != RATIO)
 		return (ft_free("2", fields), throw_error(CAMERA), 1);
-	vars->cam.fov = data.d;
+	vars->cam.fov = data.r;
 	return (ft_free("2", fields), 2);
 }
 
@@ -74,7 +74,7 @@ int	fill_light(char *line, t_object *obj)
 	data = classifier(fields[2], &type, LIGHT);
 	if (type != RATIO)
 		return (ft_free("2", fields), throw_error(LIGHT), 1);
-	obj->ratio = data.d;
+	obj->ratio = data.r;
 	data = classifier(fields[3], &type, RGB);
 	obj->rgb = data.rgb;
 	if (type != RGB && (type != RGB1 || obj->rgb.r < 0 || obj->rgb.g < 0 || obj->rgb.b < 0))

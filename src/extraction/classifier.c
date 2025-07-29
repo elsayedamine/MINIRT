@@ -64,7 +64,7 @@ t_object	classifier(char *s, int *type, int class)
 	obj.class = -1;
 	obj.ratio = -2.0f;
 	obj.fov = -2.0f;
-	obj.d = -2.0f;
+	obj.r = -2.0f;
 	obj.h = -2.0f;
 	obj.crd.x = 0;
 	obj.crd.y = 0;
@@ -87,8 +87,8 @@ t_object	classifier(char *s, int *type, int class)
 		if (fill_vector(&obj.crd, p, class, type) == TRUE)
 			return (obj);
 	}
-	else if (s && fill_float(&obj.d, s) >= 5)
-		return (*type = fill_float(&obj.d, s), \
-			obj.class = fill_float(&obj.d, s), obj);
+	else if (s && fill_float(&obj.r, s) >= 5)
+		return (*type = fill_float(&obj.r, s), \
+			obj.class = fill_float(&obj.r, s), obj);
 	return (*type = UNKNOWN, obj.class = UNKNOWN, obj);
 }

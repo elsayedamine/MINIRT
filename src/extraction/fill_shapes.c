@@ -58,11 +58,11 @@ int	fill_cylinder(char *line, t_object *obj)
 	data = classifier(fields[3], &type, CYLINDER);
 	if (!(type >= RATIO))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
-	obj->d = data.d;
+	obj->r = data.r / 2.0f;
 	data = classifier(fields[4], &type, CYLINDER);
 	if (!(type >= RATIO))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
-	obj->h = data.d;
+	obj->h = data.r;
 	data = classifier(fields[5], &type, RGB);
 	if (!(type == RGB || (type == RGB1 && obj->rgb.r >= 0 && obj->rgb.g >= 0 && obj->rgb.b >= 0)))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
@@ -87,7 +87,7 @@ int	fill_sphere(char *line, t_object *obj)
 	data = classifier(fields[2], &type, SPHERE);
 	if (!(type >= RATIO))
 		return (ft_free("2", fields), throw_error(SPHERE), 1);
-	obj->d = data.d;
+	obj->r = data.r / 2.0f;
 	data = classifier(fields[3], &type, RGB);
 	obj->rgb = data.rgb;
 	if (!(type == RGB || (type == RGB1 && obj->rgb.r >= 0 && obj->rgb.g >= 0 && obj->rgb.b >= 0)))

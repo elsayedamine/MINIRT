@@ -54,7 +54,7 @@ void	print_data(t_object *obj)
 	printf("\t class : %s:%d\n", g_strs[obj->class], obj->class);
 	printf("ratio    : %.1f\n", obj->ratio);
 	printf("fov      : %.1f\n", obj->fov);
-	printf("diameter : %.1f\n", obj->d);
+	printf("diameter : %.1f\n", obj->r);
 	printf("height   : %.1f\n", obj->h);
 	if (obj->class != 1)
 		printf("rgb      : %d,%d,%d\n", obj->rgb.r, obj->rgb.g, obj->rgb.b);

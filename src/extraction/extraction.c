@@ -20,7 +20,7 @@ t_object	*new_object(void)
 	if (!obj)
 		return (NULL);
 	obj->class = -1;
-	obj->d = -2.0;
+	obj->r = -2.0;
 	obj->fov = -2.0;
 	obj->h = -2.0;
 	obj->ratio = -2.0;

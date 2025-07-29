@@ -109,7 +109,7 @@ typedef struct s_object
 	int		class;
 	float	ratio;
 	float	fov;
-	float	d;
+	float	r;
 	float	h;
 	t_vec3	crd;
 	t_vec3	n_vct;
