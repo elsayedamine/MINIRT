@@ -198,6 +198,7 @@ float add(float a, float b);
 float mul(float a, float b);
 float divis(float a, float b);
 float sub(float a, float b);
+t_vec3	vec_add(t_vec3 a, t_vec3 b);
 
 //drawing
 void	put_pixel(t_minirt *vars, int x, int y, int color);
