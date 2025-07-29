@@ -149,7 +149,7 @@ typedef struct s_hit_info
 {
 	t_vec3 poi;
 	t_vec3 normal;
-	int color;
+	t_color color;
 	int light;
 } t_hit_info;
 
