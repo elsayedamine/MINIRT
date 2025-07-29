@@ -150,6 +150,14 @@ typedef struct s_minirt
 	t_projection plane;
 }			t_minirt;
 
+typedef struct s_hit_info
+{
+	t_vec3 poi;
+	t_vec3 normal;
+	int color;
+	int light;
+} t_hit_info;
+
 /* **************************************** */
 /*           FUNCTION PROTOTYPES            */
 /* **************************************** */
