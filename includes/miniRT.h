@@ -126,12 +126,6 @@ typedef struct s_camera
 	float	fov;
 }			t_camera;
 
-typedef struct s_ambiance
-{
-	float	ratio;
-	t_color	rgb;
-}			t_ambiance;
-
 typedef struct s_projection
 {
 	float w;
@@ -146,8 +140,9 @@ typedef struct s_minirt
 	t_win	win;
 	t_list	*members;
 	t_camera cam;
-	t_ambiance amb;
 	t_projection plane;
+	float	amb_ratio;
+	t_color	amb_rgb;
 }			t_minirt;
 
 typedef struct s_hit_info

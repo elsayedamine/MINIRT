@@ -25,11 +25,11 @@ int	fill_ambiance(char *line, t_minirt *vars)
 	data = classifier(fields[1], &type, AMBIANCE);
 	if (type != RATIO)
 		return (ft_free("2", fields), throw_error(AMBIANCE), 1);
-	vars->amb.ratio = data.r;
+	vars->amb_ratio = data.r;
 	data = classifier(fields[2], &type, RGB);
 	if (type != RGB && type != RGB1)
 		return (ft_free("2", fields), throw_error(AMBIANCE), 1);
-	vars->amb.rgb = data.rgb;
+	vars->amb_rgb = data.rgb;
 	return (ft_free("2", fields), 2);
 }
 
