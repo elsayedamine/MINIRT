@@ -1,13 +1,12 @@
 #include <miniRT.h>
 
-typedef t_hit_info (*t_intersect)(t_vec3 origin, t_vec3 dir, t_object obj);
 
 t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt vars)
 {
-	t_list *curr;
-	t_hit_info hit_info;
-	static t_intersect f[] = {
-		NULL, NULL,
+	t_list				*curr;
+	t_object			*obj;
+	t_hit_info			hit_info;
+	static t_intersect	f[] = {
 		intersect_light,
 		intersect_sphere,
 		intersect_cylinder,
@@ -15,11 +14,12 @@ t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt vars)
 		intersect_last_shape,
 	};
 
-	curr = object_list;
+	curr = vars.members;
 	while (curr)
 	{
-		hit_info = f[curr.type](dir, curr);
-		if (hit_info)
+		obj = (t_object *)curr->content;
+		hit_info = f[obj->class - 2](origin, dir, obj);
+		if (hit_info.light)
 			return (hit_info);
 		curr = curr->next;
 	}
@@ -28,19 +28,22 @@ t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt vars)
 
 int	trace(t_minirt *vars, int x, int y)
 {
-	t_projection plane;
 	t_hit_info hit_info;
 	int i;
 
-	plane = vars->plane;
 	i = 0;
-	while (i < plane.bounce_count)
+	while (i < vars->plane.bounce_count)
 	{
-		hit_info = get_hit_info(plane.origin, plane.rays[x][y], *vars); //get hit info, your job
+	 //get hit info, your job
 		i++;
 		//process hit info, my job
 	}
-	return ((255 << 24) | ((int)color.x << 16) | ((int)color.y << 8) | (int)color.z);
+	if (hit_info.light)
+		return  (0);
+	if (!hit_info.light)
+		return  (0);
+	return (1);
+	// return ((255 << 24) | ((int)color.x << 16) | ((int)color.y << 8) | (int)color.z);
 }
 
 void raytracing(t_minirt *vars)

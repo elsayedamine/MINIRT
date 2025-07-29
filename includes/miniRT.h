@@ -147,11 +147,15 @@ typedef struct s_minirt
 
 typedef struct s_hit_info
 {
-	t_vec3 poi;
-	t_vec3 normal;
-	t_color color;
-	int light;
-} t_hit_info;
+	int		hit;
+	t_vec3	poi;
+	t_vec3	normal;
+	t_color	color;
+	int		light;
+	double	dist;
+	t_object *obj;
+
+}		t_hit_info;
 
 /* **************************************** */
 /*           FUNCTION PROTOTYPES            */
@@ -187,6 +191,7 @@ t_vec3 cross(t_vec3 vec1, t_vec3 vec2);
 t_vec3 vec_op_vec(t_vec3 vec1, t_vec3 vec2, float (*op)(float, float));
 t_vec3 sc_op_vec(float sc, t_vec3 vec2, float (*op)(float, float));
 t_vec3	init_vec(float x, float y, float z);
+t_vec3	vec_sub(t_vec3 vec1, t_vec3 vec2);
 float magnitude(t_vec3 vec);
 t_vec3 normalize(t_vec3 vec);
 float add(float a, float b);
@@ -209,6 +214,14 @@ int keyhook(int key, t_minirt *vars);
 int	quit(t_minirt *vars);
 void    hook_manipulation(t_minirt *vars);
 
+// intersections
+typedef t_hit_info (*t_intersect)(t_vec3 origin, t_vec3 dir, t_object *obj);
+
+t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj);
+t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj);
+t_hit_info	intersect_cylinder(t_vec3 origin, t_vec3 dir, t_object *obj);
+t_hit_info	intersect_plan(t_vec3 origin, t_vec3 dir, t_object *obj);
+t_hit_info	intersect_last_shape(t_vec3 origin, t_vec3 dir, t_object *obj);
 
 
 #endif
