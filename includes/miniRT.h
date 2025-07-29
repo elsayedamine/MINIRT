@@ -134,8 +134,8 @@ typedef struct s_ambiance
 
 typedef struct s_projection
 {
-	float projection_plane_w;
-	float projection_plane_h;
+	float w;
+	float h;
 	t_vec3 origin;
 	t_vec3 **rays;
 	int bounce_count;
@@ -190,5 +190,15 @@ float add(float a, float b);
 float mul(float a, float b);
 float divis(float a, float b);
 float sub(float a, float b);
+
+//drawing
+void	put_pixel(t_minirt *vars, int x, int y, int color);
+
+//raytracing
+void setup(t_minirt *vars);
+void raytracing(t_minirt *vars);
+
+//debugging
+void print_vec(t_vec3 vec, int nl);
 
 #endif

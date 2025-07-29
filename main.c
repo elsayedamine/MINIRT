@@ -39,9 +39,9 @@ int	main(int ac, char **av)
 		if (extract_data(&vars, av[1]) == FALSE)
 			return (130);
 		print_members(vars.members, print_data);
-		// setup(&vars);
-		// init_window(&vars);
-		// rendering(&vars, &parser);
+		setup(&vars);
+		raytracing(&vars);
+		mlx_loop(vars.win.mlx);
 		cleanup(&vars, 1);
 		return (0);
 	}

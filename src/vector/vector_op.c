@@ -38,4 +38,4 @@ t_vec3 sc_op_vec(float sc, t_vec3 vec2, float (*op)(float, float))
 	result.y = op(sc, vec2.y);
 	result.z = op(sc, vec2.z);
 	return (result);
-}
+}	

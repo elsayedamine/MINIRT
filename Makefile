@@ -5,18 +5,7 @@ INC = -I./includes
 LIB = -L./mlx -L./libft -lft -lmlx_Linux -lXext -lX11 -lm
 LIBFT_PATH = ./libft/libft.a
 
-sources = \
-		main.c \
-		src/window.c \
-		src/extraction/extraction.c \
-		src/extraction/error.c \
-		src/extraction/utils.c \
-		src/extraction/get_color.c \
-		src/extraction/fill_shapes.c \
-		src/extraction/fill_settings.c \
-		src/extraction/classifier.c \
-		src/extraction/fillers.c \
-
+sources = $(wildcard *.c) $(wildcard src/*.c) $(wildcard src/*/*.c)
 object = $(sources:.c=.o)
 
 all: $(NAME) 
