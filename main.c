@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:29:26 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/28 17:29:10 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/29 16:48:04 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	main(int ac, char **av)
 		print_members(vars.members, print_data);
 		setup(&vars);
 		raytracing(&vars);
+		mlx_key_hook(vars.win.win, keyhook, &vars);
+		mlx_hook(vars.win.win, 17, 1L << 0, quit, &vars);
 		mlx_loop(vars.win.mlx);
 		cleanup(&vars, 1);
 		return (0);

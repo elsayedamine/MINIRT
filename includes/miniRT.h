@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/28 17:45:00 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/07/29 16:39:19 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,5 +200,9 @@ void raytracing(t_minirt *vars);
 
 //debugging
 void print_vec(t_vec3 vec, int nl);
+
+// key_hooks
+int keyhook(int key, t_minirt *vars);
+int	quit(t_minirt *vars);
 
 #endif
