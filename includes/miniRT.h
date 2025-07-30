@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/29 16:39:19 by sayed            ###   ########.fr       */
+/*   Updated: 2025/07/30 17:56:40 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define M_HEIGHT 1080
 # define M_THETA 0.76842396884
 # define RAD 0.0174533
+# define EPSILON 0.0001f
 
 /* **************************************** */
 /*                 ENUMS                    */
@@ -144,7 +145,7 @@ typedef struct s_hit_info
 	t_vec3	poi;
 	t_vec3	normal;
 	t_color	color;
-	int		light;
+	float	light;
 	double	dist;
 	t_object *obj;
 

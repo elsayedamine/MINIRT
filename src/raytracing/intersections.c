@@ -32,7 +32,6 @@ t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj)
 	hit.normal = normalize(vec_op_vec(hit.poi, obj->crd, sub));
 	hit.dist = fmin(x1, x2);
 	hit.color = obj->rgb;
-	hit.light = 0;
 	hit.obj = obj;
 	return (hit);
 }
