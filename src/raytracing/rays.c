@@ -52,12 +52,14 @@ int	trace(t_minirt *vars, t_ray ray, int count)
 		hit_info = get_hit_info(ray.origin, ray.dir, vars);
 		if (!hit_info.hit)
 			break;
+		light = col_mul_sc(init_color(255, 255, 255), vars->amb_ratio);
+		light = col_mul_col(light, vars->amb_rgb);
 		light = col_add_col(light, col_mul_sc(color, hit_info.light));
 		color = col_mul_col(color, hit_info.color);
 		ray = new_ray(hit_info.poi, hit_info.normal);
 		i++;
 	}
-	return (color_to_int(color));
+	return (color_to_int(light));
 }
 
 void raytracing(t_minirt *vars)
