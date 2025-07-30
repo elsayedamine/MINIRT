@@ -31,12 +31,19 @@ t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars)
 t_ray new_ray(t_vec3 pos, t_vec3 normal)
 {
 	t_ray new;
+	float x, y, z;
 
-	new.dir = init_vec(rrand(&pos, -1, 1), rrand(&pos, -1, 1), rrand(&pos, -1, 1));
+	x = ((float)rand() / RAND_MAX) * 2.0f - 1.0f;
+	y = ((float)rand() / RAND_MAX) * 2.0f - 1.0f;
+	z = ((float)rand() / RAND_MAX) * 2.0f - 1.0f;
+	new.dir = init_vec(x, y, z);
 	if (dot(new.dir, normal) < 0)
 		new.dir = sc_op_vec(-1, new.dir, mul);
 	new.dir = normalize(vec_op_vec(normalize(new.dir), normal, add));
-	new.origin = pos;
+	// print_vec(new.dir, 1);
+	// new.origin = pos;
+	new.origin = vec_op_vec(pos, sc_op_vec(EPSILON, normal, mul), add);
+	// new.origin = vec_op_vec(pos, new.dir, add);
 	return (new);
 }
 
@@ -74,13 +81,16 @@ int    trace(t_minirt *vars, t_ray ray, int count)
     {
         hit_info = get_hit_info(ray.origin, ray.dir, vars);
         if (!hit_info.hit)
-            break;
+            break ;
         // hit_info.light = compute_light(&hit_info, vars);
         // light = col_mul_col(light, vars->amb_rgb);
         light = col_add_col(light, col_mul_sc(color, hit_info.light));
-        // printf()
         color = col_mul_col(color, hit_info.color);
         ray = new_ray(hit_info.poi, hit_info.normal);
+		printf("%d - orig: ", i);
+		print_vec(ray.origin, 0);
+		printf("; dir: ");
+		print_vec(ray.dir, 1);
         i++;
     }
     return (color_to_int(light));
@@ -96,11 +106,12 @@ void raytracing(t_minirt *vars)
 		j = 0;
 		while (j < M_HEIGHT)
 		{
-			color = trace(vars, vars->rays[i][j], 50);
+			color = trace(vars, vars->rays[i][j], 10);
 			put_pixel(vars, i, j, color);
 			j++;
 		}
 		i++;
 	}
+	printf("done\n");
 	mlx_put_image_to_window(vars->win.mlx, vars->win.win, vars->win.img, 0, 0);
 }
