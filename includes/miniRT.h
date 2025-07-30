@@ -81,15 +81,10 @@ typedef struct s_window
 
 typedef struct s_color
 {
+	int			a;
 	int			r;
 	int			g;
 	int			b;
-	int			r2;
-	int			g2;
-	int			b2;
-	int			r_interp;
-	int			g_interp;
-	int			b_interp;
 }				t_color;
 typedef struct s_vec3
 {
@@ -126,21 +121,20 @@ typedef struct s_camera
 	float	fov;
 }			t_camera;
 
-typedef struct s_projection
+typedef struct s_ray
 {
-	float w;
-	float h;
 	t_vec3 origin;
-	t_vec3 **rays;
-	int bounce_count;
-} t_projection;
+	t_vec3 dir;
+} t_ray;
 
 typedef struct s_minirt
 {
 	t_win	win;
 	t_list	*members;
 	t_camera cam;
-	t_projection plane;
+	t_ray	**rays;
+	float	plane_w;
+	float	plane_h;
 	float	amb_ratio;
 	t_color	amb_rgb;
 }			t_minirt;
@@ -191,14 +185,12 @@ t_vec3 cross(t_vec3 vec1, t_vec3 vec2);
 t_vec3 vec_op_vec(t_vec3 vec1, t_vec3 vec2, float (*op)(float, float));
 t_vec3 sc_op_vec(float sc, t_vec3 vec2, float (*op)(float, float));
 t_vec3	init_vec(float x, float y, float z);
-t_vec3	vec_sub(t_vec3 vec1, t_vec3 vec2);
 float magnitude(t_vec3 vec);
 t_vec3 normalize(t_vec3 vec);
 float add(float a, float b);
 float mul(float a, float b);
 float divis(float a, float b);
 float sub(float a, float b);
-t_vec3	vec_add(t_vec3 a, t_vec3 b);
 
 //drawing
 void	put_pixel(t_minirt *vars, int x, int y, int color);
@@ -224,5 +216,15 @@ t_hit_info	intersect_cylinder(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_plan(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_last_shape(t_vec3 origin, t_vec3 dir, t_object *obj);
 
+// colors
+t_color init_color(int a, int r, int g, int b);
+t_color int_to_color(int in);
+int color_to_int(t_color color);
+t_color col_mul_col(t_color c1, t_color c2);
+t_color col_mul_sc(t_color col, float sc);
+t_color col_add_col(t_color c1, t_color c2);
+
+//random
+float rrand(void *state, float min, float max);
 
 #endif
