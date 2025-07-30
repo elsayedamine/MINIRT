@@ -51,13 +51,13 @@ int	trace(t_minirt *vars, t_ray ray, int count)
 	{
 		hit_info = get_hit_info(ray.origin, ray.dir, vars);
 		if (!hit_info.hit)
-			break ;
+			break;
 		light = col_add_col(light, col_mul_sc(color, hit_info.light));
 		color = col_mul_col(color, hit_info.color);
 		ray = new_ray(hit_info.poi, hit_info.normal);
 		i++;
 	}
-	return (color_to_int(light));
+	return (color_to_int(color));
 }
 
 void raytracing(t_minirt *vars)
@@ -70,7 +70,7 @@ void raytracing(t_minirt *vars)
 		j = 0;
 		while (j < M_HEIGHT)
 		{
-			color = trace(vars, vars->rays[i][j], 30);
+			color = trace(vars, vars->rays[i][j], 1);
 			put_pixel(vars, i, j, color);
 			j++;
 		}
