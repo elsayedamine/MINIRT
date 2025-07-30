@@ -59,30 +59,31 @@ float	compute_light(t_hit_info *hit, t_minirt *vars)
 	return (light_intensity);
 }
 
-int	trace(t_minirt *vars, t_ray ray, int count)
+int    trace(t_minirt *vars, t_ray ray, int count)
 {
-	t_color light;
-	t_color color;
-	t_hit_info hit_info;
-	int i;
+    t_color light;
+    t_color color;
+    t_hit_info hit_info;
+    int i;
 
-	i = 0;
-	light = init_color(255, 255, 255);
-	color = init_color(255, 255, 255);
-	while (i < count)
-	{
-		hit_info = get_hit_info(ray.origin, ray.dir, vars);
-		if (!hit_info.hit)
-			break;
-		hit_info.light = compute_light(&hit_info, vars);
-		light = col_mul_sc(init_color(255, 255, 255), vars->amb_ratio);
-		light = col_mul_col(light, vars->amb_rgb);
-		light = col_add_col(light, col_mul_sc(color, hit_info.light));
-		color = col_mul_col(color, hit_info.color);
-		ray = new_ray(hit_info.poi, hit_info.normal);
-		i++;
-	}
-	return (color_to_int(light));
+    i = 0;
+    light = init_color(0, 0, 0);
+    // light = col_mul_sc(init_color(255, 255, 255), vars->amb_ratio);
+    color = init_color(255, 255, 255);
+    while (i < count)
+    {
+        hit_info = get_hit_info(ray.origin, ray.dir, vars);
+        if (!hit_info.hit)
+            break;
+        // hit_info.light = compute_light(&hit_info, vars);
+        // light = col_mul_col(light, vars->amb_rgb);
+        light = col_add_col(light, col_mul_sc(color, hit_info.light));
+        // printf()
+        color = col_mul_col(color, hit_info.color);
+        ray = new_ray(hit_info.poi, hit_info.normal);
+        i++;
+    }
+    return (color_to_int(light));
 }
 
 void raytracing(t_minirt *vars)
@@ -95,7 +96,7 @@ void raytracing(t_minirt *vars)
 		j = 0;
 		while (j < M_HEIGHT)
 		{
-			color = trace(vars, vars->rays[i][j], 1);
+			color = trace(vars, vars->rays[i][j], 50);
 			put_pixel(vars, i, j, color);
 			j++;
 		}
