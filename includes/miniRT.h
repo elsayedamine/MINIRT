@@ -81,7 +81,6 @@ typedef struct s_window
 
 typedef struct s_color
 {
-	int			a;
 	int			r;
 	int			g;
 	int			b;
@@ -217,7 +216,7 @@ t_hit_info	intersect_plan(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_last_shape(t_vec3 origin, t_vec3 dir, t_object *obj);
 
 // colors
-t_color init_color(int a, int r, int g, int b);
+t_color init_color(int r, int g, int b);
 t_color int_to_color(int in);
 int color_to_int(t_color color);
 t_color col_mul_col(t_color c1, t_color c2);

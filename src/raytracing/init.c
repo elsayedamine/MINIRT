@@ -13,19 +13,18 @@ t_ray calc_ray(float u, int y, t_minirt *vars)
 {
 	t_ray ray;
 	float v;
-	t_vec3 dir;
 	t_vec3 offsetx;
 	t_vec3 offsety;
 
 	v = 1 - ((((float)y + .5) / M_HEIGHT) * 2);
 	offsetx = sc_op_vec(u * (vars->plane_w / 2), vars->cam.rt, mul);
 	offsety = sc_op_vec(v * (vars->plane_h / 2), vars->cam.up, mul);
-	dir = vec_op_vec(vars->cam.crd, vars->cam.fw, add);
-	dir = vec_op_vec(dir, offsetx, add);
-	dir = vec_op_vec(dir, offsety, add);
-	dir = vec_op_vec(dir, vars->cam.crd, sub);
+	ray.dir = vec_op_vec(vars->cam.crd, vars->cam.fw, add);
+	ray.dir = vec_op_vec(ray.dir, offsetx, add);
+	ray.dir = vec_op_vec(ray.dir, offsety, add);
+	ray.dir = vec_op_vec(ray.dir, vars->cam.crd, sub);
+	ray.dir = normalize(ray.dir);
 	ray.origin = vars->cam.crd;
-	ray.dir = normalize(dir);
 	return (ray);
 }
 
@@ -48,6 +47,7 @@ void setup_rays(t_minirt *vars)
 		while (j < M_HEIGHT)
 		{
 			vars->rays[i][j] = calc_ray(u, j, vars);
+			// print_vec(vars->rays[i][j].dir, 1);
 			j++;
 		}
 		i++;

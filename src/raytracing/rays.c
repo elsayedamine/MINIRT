@@ -32,7 +32,7 @@ t_ray new_ray(t_vec3 pos, t_vec3 normal)
 	new.dir = init_vec(rrand(&pos, -1, 1), rrand(&pos, -1, 1), rrand(&pos, -1, 1));
 	if (dot(new.dir, normal) < 0)
 		new.dir = sc_op_vec(-1, new.dir, mul);
-	new.dir = normalize(vec_op_vec(new.dir, normal, add));
+	new.dir = normalize(vec_op_vec(normalize(new.dir), normal, add));
 	new.origin = pos;
 	return (new);
 }
@@ -45,8 +45,8 @@ int	trace(t_minirt *vars, t_ray ray, int count)
 	int i;
 
 	i = 0;
-	light = init_color(0, 0, 0, 0);
-	color = init_color(0, 255, 255, 255);
+	light = init_color(0, 0, 0);
+	color = init_color(255, 255, 255);
 	while (i < count)
 	{
 		hit_info = get_hit_info(ray.origin, ray.dir, vars);
