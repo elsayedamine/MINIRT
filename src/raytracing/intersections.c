@@ -27,7 +27,7 @@ t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj)
 	else
 		return (hit.hit = 0, hit);
 	hit.hit = 1;
-	hit.dist = x;
+	hit.dist = distance(hit.poi, origin);
 	hit.poi = vec_op_vec(origin, sc_op_vec(x, dir, mul), add);
 	hit.normal = normalize(vec_op_vec(hit.poi, obj->crd, sub));
 	hit.color = obj->rgb;
@@ -56,7 +56,7 @@ t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj)
 	hit.poi = vec_op_vec(origin, sc_op_vec(x, dir, mul), add);
 	hit.hit = 1;
 	hit.normal = normalize(vec_op_vec(hit.poi, obj->crd, sub));
-	hit.dist = fmin(x1, x2);
+	hit.dist = distance(hit.poi, origin);
 	hit.color = obj->rgb;
 	hit.obj = obj;
 	hit.light = 0;
@@ -89,7 +89,7 @@ t_hit_info	intersect_plan(t_vec3 origin, t_vec3 dir, t_object *obj)
 	hit.dist = x;
 	hit.color = obj->rgb;
 	hit.light = 0;
-
+	hit.obj = obj;
 	return (hit);
 }
 
