@@ -14,9 +14,9 @@ t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj)
 	float b = 2 * dot(oc, dir);
 	float c = dot(oc, oc) - radius * radius;
 	float delta = b * b - 4 * a * c;
-
+	hit.dist = 0;
 	if (delta < 0)
-		return (hit);
+		return (hit.hit = 0, hit);
 
 	x1 = (-b - sqrtf(delta)) / (2 * a);
 	x2 = (-b + sqrtf(delta)) / (2 * a);
@@ -25,7 +25,7 @@ t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj)
 	else if (x2 > 0)
 		x = x2;
 	else
-		return (hit);
+		return (hit.hit = 0, hit);
 	hit.hit = 1;
 	hit.dist = x;
 	hit.poi = vec_op_vec(origin, sc_op_vec(x, dir, mul), add);

@@ -4,7 +4,10 @@ void setup_cam(t_minirt *vars)
 {
 	t_vec3 wup;
 
-	wup = init_vec(0, 0, 1);
+	if (fabs(vars->cam.fw.x) == 0 && fabs(vars->cam.fw.y) == 0)
+		wup = init_vec(0, 1, 0); // use Y axis if fw is colinear with Z
+	else
+		wup = init_vec(0, 0, 1);
 	vars->cam.rt = normalize(cross(vars->cam.fw, wup));
 	vars->cam.up = normalize(cross(vars->cam.rt, vars->cam.fw));
 }
