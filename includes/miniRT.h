@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/30 17:56:40 by sayed            ###   ########.fr       */
+/*   Updated: 2025/07/31 16:02:11 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ float dot(t_vec3 vec1, t_vec3 vec2);
 t_vec3 cross(t_vec3 vec1, t_vec3 vec2);
 t_vec3 vec_op_vec(t_vec3 vec1, t_vec3 vec2, float (*op)(float, float));
 t_vec3 sc_op_vec(float sc, t_vec3 vec2, float (*op)(float, float));
+float	distance(t_vec3 p1, t_vec3 p2);
 t_vec3	init_vec(float x, float y, float z);
 float magnitude(t_vec3 vec);
 t_vec3 normalize(t_vec3 vec);
