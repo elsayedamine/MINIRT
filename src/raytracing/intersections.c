@@ -7,8 +7,7 @@ t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj)
 	float		x1, x2, x;
 	float		radius = 5; // just random 7alia
 
-	printf("test\n");
-	hit.hit = 0;
+	hit.hit = 0;	
 	hit.light = 0;
 	oc = vec_op_vec(origin, obj->crd, sub);
 	float a = dot(dir, dir);

@@ -9,7 +9,7 @@ unsigned int ptr_to_seed(void *ptr)
 	return ((unsigned int)(addr & 0xFFFFFFFF)) ^ ((unsigned int)(addr >> 32));
 }
 
-unsigned int _random(void *state)
+unsigned int _random(void *state	)
 {
 	unsigned int seed;
 	unsigned int result;
