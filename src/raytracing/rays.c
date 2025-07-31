@@ -21,8 +21,8 @@ t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars)
 	{
 		obj = (t_object *)curr->content;
 		hit_info = f[obj->class - 2](origin, dir, obj);
-		print_vec(origin, 0);
-		print_vec(dir, 1);
+		// print_vec(origin, 0);
+		// print_vec(dir, 1);
 		if (hit_info.hit && hit_info.dist < closest.dist)
 			closest = hit_info;
 		curr = curr->next;
@@ -82,7 +82,6 @@ int    trace(t_minirt *vars, t_ray ray, int count)
     while (i < count)
     {
 		hit_info = get_hit_info(ray.origin, ray.dir, vars);
-
         if (!hit_info.hit)
             break ;
         // hit_info.light = compute_light(&hit_info, vars);
@@ -90,11 +89,6 @@ int    trace(t_minirt *vars, t_ray ray, int count)
         light = col_add_col(light, col_mul_sc(color, hit_info.light));
         color = col_mul_col(color, hit_info.color);
         ray = new_ray(hit_info.poi, hit_info.normal);
-		// printf("%d - orig: ", i);
-		// print_vec(ray.origin, 0);
-		// printf("; dir: ");
-		// print_vec(ray.dir, 1);
-        i++;
     }
     return (color_to_int(light));
 }
@@ -109,7 +103,7 @@ void raytracing(t_minirt *vars)
 		j = 0;
 		while (j < M_HEIGHT)
 		{
-			color = trace(vars, vars->rays[i][j], 10);
+			color = trace(vars, vars->rays[i][j], 30);
 			put_pixel(vars, i, j, color);
 			j++;
 		}
