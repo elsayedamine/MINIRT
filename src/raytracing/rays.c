@@ -62,9 +62,9 @@ t_color    trace(t_minirt *vars, t_ray ray, int count)
     while (i < count)
     {
 		hit_info = get_hit_info(ray.origin, ray.dir, vars);
-		printf("%d - %d - %d\n", hit_info.color.r, hit_info.color.g, hit_info.color.b);
         if (!hit_info.hit)
-            break ;
+			break ;
+		// printf("%d - %d - %d\n", hit_info.color.r, hit_info.color.g, hit_info.color.b);
         // light = col_mul_col(light, vars->amb_rgb);
         light = col_add_col(light, col_mul_sc(color, hit_info.light));
         color = col_mul_col(color, hit_info.color);

@@ -78,9 +78,9 @@ t_hit_info	intersect_plan(t_vec3 origin, t_vec3 dir, t_object *obj)
 {
 	t_hit_info hit;
 
-	if (dot(obj->n_vct, dir) == 0) // plan et droite sont coplanaires ou parallels
+	if (dot(obj->n_vct, dir) == 0)
 		return (hit.hit = 0, hit);
-	float	x = (dot(obj->n_vct, vec_op_vec(origin, obj->crd, sub))) / dot(obj->n_vct, dir);
+	float	x = (dot(obj->n_vct, vec_op_vec(obj->crd, origin, sub))) / dot(obj->n_vct, dir);
 	if (x <= 0)
 		return (hit.hit = 0, hit);
 	hit.hit = 1;
