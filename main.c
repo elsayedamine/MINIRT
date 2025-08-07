@@ -35,7 +35,6 @@ int	main(int ac, char **av)
 {
 	t_minirt	vars;
 
-	srand(time(NULL));
 	if (ac == 2 && valid_filename(av[1]))
 	{
 		if (extract_data(&vars, av[1]) == FALSE)

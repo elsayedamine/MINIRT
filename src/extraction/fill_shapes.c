@@ -25,11 +25,11 @@ int	fill_plan(char *line, t_object *obj)
 	data = classifier(fields[1], &type, VECTOR);
 	if (data.class == UNKNOWN || !(type <= RGB1))
 		return (ft_free("2", fields), throw_error(PLAN), 1);
-	obj->crd = data.crd;
+	obj->p = data.p;
 	data = classifier(fields[2], &type, ORIENT);
 	if (!(type == ORIENT))
 		return (ft_free("2", fields), throw_error(PLAN), 1);
-	obj->n = data.crd;
+	obj->n = data.p;
 	data = classifier(fields[3], &type, RGB);
 	obj->rgb = data.rgb;
 	if (!(type == RGB || (type == RGB1 && obj->rgb.r >= 0 && obj->rgb.g >= 0 && obj->rgb.b >= 0)))
@@ -50,11 +50,11 @@ int	fill_cylinder(char *line, t_object *obj)
 	data = classifier(fields[1], &type, VECTOR);
 	if (data.class == UNKNOWN || !(type <= RGB1))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
-	obj->crd = data.crd;
+	obj->p = data.p;
 	data = classifier(fields[2], &type, ORIENT);
 	if (!(type == ORIENT))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
-	obj->o_vct = data.crd;
+	obj->o = data.p;
 	data = classifier(fields[3], &type, CYLINDER);
 	if (!(type >= RATIO))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
@@ -83,7 +83,7 @@ int	fill_sphere(char *line, t_object *obj)
 	data = classifier(fields[1], &type, VECTOR);
 	if (data.class == UNKNOWN || !(type <= RGB1))
 		return (ft_free("2", fields), throw_error(SPHERE), 1);
-	obj->crd = data.crd;
+	obj->p = data.p;
 	data = classifier(fields[2], &type, SPHERE);
 	if (!(type >= RATIO))
 		return (ft_free("2", fields), throw_error(SPHERE), 1);
@@ -92,5 +92,38 @@ int	fill_sphere(char *line, t_object *obj)
 	obj->rgb = data.rgb;
 	if (!(type == RGB || (type == RGB1 && obj->rgb.r >= 0 && obj->rgb.g >= 0 && obj->rgb.b >= 0)))
 		return (ft_free("2", fields), throw_error(SPHERE), 1);
+	return (ft_free("2", fields), 0);
+}
+
+int	fill_cone(char *line, t_object *obj)
+{
+	char		**fields;
+	t_object	data;
+	int			type;
+
+	fields = ft_split(line, WHITE);
+	if (!fields || ft_arrlen(fields) > 6)
+		return (ft_free("2", fields), throw_error(CYLINDER), 1);
+	obj->class = CONE;
+	data = classifier(fields[1], &type, VECTOR);
+	if (data.class == UNKNOWN || !(type <= RGB1))
+		return (ft_free("2", fields), throw_error(CYLINDER), 1);
+	obj->p = data.p;
+	data = classifier(fields[2], &type, ORIENT);
+	if (!(type == ORIENT))
+		return (ft_free("2", fields), throw_error(CYLINDER), 1);
+	obj->o = data.p;
+	data = classifier(fields[3], &type, CYLINDER);
+	if (!(type >= RATIO))
+		return (ft_free("2", fields), throw_error(CYLINDER), 1);
+	obj->angle = data.r;
+	data = classifier(fields[4], &type, CYLINDER);
+	if (!(type >= RATIO))
+		return (ft_free("2", fields), throw_error(CYLINDER), 1);
+	obj->h = data.r;
+	data = classifier(fields[5], &type, RGB);
+	if (!(type == RGB || (type == RGB1 && obj->rgb.r >= 0 && obj->rgb.g >= 0 && obj->rgb.b >= 0)))
+		return (ft_free("2", fields), throw_error(CYLINDER), 1);
+	obj->rgb = data.rgb;
 	return (ft_free("2", fields), 0);
 }

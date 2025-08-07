@@ -35,11 +35,11 @@ t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars)
 
 int is_shadowed(t_minirt *vars, t_hit_info hit, t_object *light)
 {
-    t_vec3 light_dir = normalize(vec_op_vec(light->crd, hit.poi, sub));
+    t_vec3 light_dir = normalize(vec_op_vec(light->p, hit.poi, sub));
     t_ray shadow_ray;
     shadow_ray.origin = vec_op_vec(hit.poi, sc_op_vec(EPSILON, light_dir, mul), add);
     shadow_ray.dir = light_dir;
-    float dist = distance(light->crd, hit.poi);
+    float dist = distance(light->p, hit.poi);
     t_hit_info shadow_hit = get_hit_info(shadow_ray.origin, shadow_ray.dir, vars);
     if (shadow_hit.hit && shadow_hit.dist < dist)
         return TRUE;
@@ -48,7 +48,7 @@ int is_shadowed(t_minirt *vars, t_hit_info hit, t_object *light)
 
 t_color compute_lighting(t_minirt *vars, t_hit_info hit, t_object *light, t_ray ray)
 {
-	t_vec3 light_dir = normalize(vec_op_vec(light->crd, hit.poi, sub));
+	t_vec3 light_dir = normalize(vec_op_vec(light->p, hit.poi, sub));
 	t_vec3 vect = normalize(vec_op_vec(ray.origin, hit.poi, sub));
 	float dotNL = dot(hit.normal, light_dir);
 	t_vec3 R = vec_op_vec(sc_op_vec(-1, light_dir, mul), sc_op_vec(2 * dotNL, hit.normal, mul), add);
@@ -58,7 +58,7 @@ t_color compute_lighting(t_minirt *vars, t_hit_info hit, t_object *light, t_ray 
 	if (dotRV < 0)
 		dotRV = 0;
 	t_color diffuse = col_mul_sc(light->rgb, dotNL);
-	float shininess = 32.0f;
+	float shininess = 100.0f;
 	t_color specular = col_mul_sc(light->rgb, powf(dotRV, shininess));
 	t_color final = col_mul_col(col_add_col(diffuse, specular), hit.color);
 	return final;

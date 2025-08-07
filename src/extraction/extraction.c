@@ -20,8 +20,8 @@ t_object	*new_object(void)
 	if (!obj)
 		return (NULL);
 	obj->class = -1;
+	obj->angle = -1;
 	obj->r = -2.0;
-	obj->fov = -2.0;
 	obj->h = -2.0;
 	obj->ratio = -2.0;
 	return (obj);
@@ -47,6 +47,8 @@ int	assign_object(t_minirt *vars, char *file, t_object *obj)
 		err = fill_cylinder(file, obj);
 	else if (!ft_strncmp("pl ", file, 3))
 		err = fill_plan(file, obj);
+	else if (!ft_strncmp("co ", file, 3))
+		err = fill_cone(file, obj);
 	else
 		return (cleanup(vars, 3), free(obj), throw_error(ERR), 0);
 	if (err == 1)
@@ -69,8 +71,11 @@ int	extract_data(t_minirt *vars, char *filename)
 	file = ft_read(fd, filename);
 	i = 0;
 	while (file[i])
+	{
+		printf("%s\n", file[i]);
 		if (assign_object(vars, file[i++], new_object()) == FALSE)
 			return (close(fd), ft_free("2", file), FALSE);
+	}
 	return (close(fd), ft_free("2", file), TRUE);
 }
 

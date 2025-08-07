@@ -45,11 +45,11 @@ int	fill_camera(char *line, t_minirt *vars)
 	data = classifier(fields[1], &type, VECTOR);
 	if (data.class == UNKNOWN || !(type <= RGB1))
 		return (ft_free("2", fields), throw_error(CAMERA), 1);
-	vars->cam.crd = data.crd;
+	vars->cam.p = data.p;
 	data = classifier(fields[2], &type, ORIENT);
 	if (type != ORIENT && type != RGB1)
 		return (ft_free("2", fields), throw_error(CAMERA), 1);
-	vars->cam.fw = data.crd;
+	vars->cam.fw = data.p;
 	data = classifier(fields[3], &type, CAMERA);
 	if (type != FOV && type != RATIO)
 		return (ft_free("2", fields), throw_error(CAMERA), 1);
@@ -70,7 +70,7 @@ int	fill_light(char *line, t_object *obj)
 	data = classifier(fields[1], &type, VECTOR);
 	if (data.class == UNKNOWN || !(type <= RGB1))
 		return (ft_free("2", fields), throw_error(LIGHT), 1);
-	obj->crd = data.crd;
+	obj->p = data.p;
 	data = classifier(fields[2], &type, LIGHT);
 	if (type != RATIO)
 		return (ft_free("2", fields), throw_error(LIGHT), 1);

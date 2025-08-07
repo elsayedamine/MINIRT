@@ -66,15 +66,15 @@ t_object	classifier(char *s, int *type, int class)
 	obj.fov = -2.0f;
 	obj.r = -2.0f;
 	obj.h = -2.0f;
-	obj.crd.x = 0;
-	obj.crd.y = 0;
-	obj.crd.z = 0;
+	obj.p.x = 0;
+	obj.p.y = 0;
+	obj.p.z = 0;
 	obj.n.x = 0;
 	obj.n.y = 0;
 	obj.n.z = 0;
-	obj.o_vct.x = 0;
-	obj.o_vct.y = 0;
-	obj.o_vct.z = 0;
+	obj.o.x = 0;
+	obj.o.y = 0;
+	obj.o.z = 0;
 	obj.rgb.r = 0;
 	obj.rgb.g = 0;
 	obj.rgb.b = 0;
@@ -84,7 +84,7 @@ t_object	classifier(char *s, int *type, int class)
 		if (class == RGB && is_int(p[0]) && is_int(p[1]) && is_int(p[2]) && \
 			fill_rgb(&obj.rgb, p[0], p[1], p[2]) < 5)
 			return (*type = fill_rgb(&obj.rgb, p[0], p[1], p[2]), obj);
-		if (fill_vector(&obj.crd, p, class, type) == TRUE)
+		if (fill_vector(&obj.p, p, class, type) == TRUE)
 			return (obj);
 	}
 	else if (s && fill_float(&obj.r, s) >= 5)

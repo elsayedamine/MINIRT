@@ -22,12 +22,12 @@ t_ray calc_ray(float u, int y, t_minirt *vars)
 	v = 1 - ((((float)y + .5) / M_HEIGHT) * 2);
 	offsetx = sc_op_vec(u * (vars->plane_w / 2), vars->cam.rt, mul);
 	offsety = sc_op_vec(v * (vars->plane_h / 2), vars->cam.up, mul);
-	ray.dir = vec_op_vec(vars->cam.crd, vars->cam.fw, add);
+	ray.dir = vec_op_vec(vars->cam.p, vars->cam.fw, add);
 	ray.dir = vec_op_vec(ray.dir, offsetx, add);
 	ray.dir = vec_op_vec(ray.dir, offsety, add);
-	ray.dir = vec_op_vec(ray.dir, vars->cam.crd, sub);
+	ray.dir = vec_op_vec(ray.dir, vars->cam.p, sub);
 	ray.dir = normalize(ray.dir);
-	ray.origin = vars->cam.crd;
+	ray.origin = vars->cam.p;
 	return (ray);
 }
 

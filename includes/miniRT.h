@@ -49,7 +49,7 @@ typedef enum e_type
 	SPHERE,
 	CYLINDER,
 	PLAN,
-	LAST_SHAPE,
+	CONE,
 	ERR = -1
 }	t_type;
 
@@ -103,18 +103,18 @@ typedef struct s_object
 {
 	int		class;
 	float	ratio;
-	float	fov;
+	float	angle;
 	float	r;
 	float	h;
-	t_vec3	crd;
+	t_vec3	p;
 	t_vec3	n;
-	t_vec3	o_vct;
+	t_vec3	o;
 	t_color	rgb;
 }			t_object;
 
 typedef struct s_camera
 {
-	t_vec3	crd;
+	t_vec3	p;
 	t_vec3	fw;
 	t_vec3	rt;
 	t_vec3	up;	
@@ -224,8 +224,5 @@ int color_to_int(t_color color);
 t_color col_mul_col(t_color c1, t_color c2);
 t_color col_mul_sc(t_color col, float sc);
 t_color col_add_col(t_color c1, t_color c2);
-
-//random
-float rrand(void *state, float min, float max);
 
 #endif
