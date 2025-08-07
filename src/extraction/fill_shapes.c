@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   fill_shapes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 17:00:40 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/07 15:43:28 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/07 22:47:31 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
 
-int	fill_plan(char *line, t_object *obj)
+int	fill_plan(t_minirt *vars, char *line, t_object *obj)
 {
 	char		**fields;
 	t_object	data;
@@ -37,7 +37,7 @@ int	fill_plan(char *line, t_object *obj)
 	return (ft_free("2", fields), 0);
 }
 
-int	fill_cylinder(char *line, t_object *obj)
+int	fill_cylinder(t_minirt *vars, char *line, t_object *obj)
 {
 	char		**fields;
 	t_object	data;
@@ -67,10 +67,14 @@ int	fill_cylinder(char *line, t_object *obj)
 	if (!(type == RGB || (type == RGB1 && obj->rgb.r >= 0 && obj->rgb.g >= 0 && obj->rgb.b >= 0)))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
 	obj->rgb = data.rgb;
+	// if (fields[6])
+	// {
+	// 	if (!set_mode(vars, fields[6], obj))
+	// }
 	return (ft_free("2", fields), 0);
 }
 
-int	fill_sphere(char *line, t_object *obj)
+int	fill_sphere(t_minirt *vars, char *line, t_object *obj)
 {
 	char		**fields;
 	t_object	data;
@@ -95,7 +99,7 @@ int	fill_sphere(char *line, t_object *obj)
 	return (ft_free("2", fields), 0);
 }
 
-int	fill_cone(char *line, t_object *obj)
+int	fill_cone(t_minirt *vars, char *line, t_object *obj)
 {
 	char		**fields;
 	t_object	data;

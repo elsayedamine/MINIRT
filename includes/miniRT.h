@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/07 15:40:28 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/07 22:11:35 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,27 +65,36 @@ typedef enum e_token_type
 	FLOAT
 }	t_token_type;
 
+typedef enum e_mode
+{
+	NONE,
+	SOLID,
+	CHECKERED,
+	BRUMPMAP,
+	TEXTURE
+} t_mode;
+
 /* **************************************** */
 /*             STRUCTURES                   */
 /* **************************************** */
 
 typedef struct s_window
 {
-	void		*mlx;
-	void		*win;
-	void		*img;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-}				t_win;
+	void	*mlx;
+	void	*win;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}			t_win;
 
 typedef struct s_color
 {
-	int			r;
-	int			g;
-	int			b;
-}				t_color;
+	int		r;
+	int		g;
+	int		b;
+}			t_color;
 typedef struct s_vec3
 {
 	float	x;
@@ -99,6 +108,14 @@ typedef struct s_class
 	void	*data;
 }			t_class;
 
+typedef struct s_texture
+{
+	t_mode	mode;
+	void	*img;
+	int		w;
+	int		h;
+}			t_texture;
+
 typedef struct s_object
 {
 	int		class;
@@ -109,6 +126,7 @@ typedef struct s_object
 	t_vec3	p;
 	t_vec3	n;
 	t_vec3	o;
+	t_texture t;
 	t_color	rgb;
 }			t_object;
 
@@ -129,27 +147,26 @@ typedef struct s_ray
 
 typedef struct s_minirt
 {
-	t_win	win;
-	t_list	*members;
-	t_camera cam;
-	t_ray	**rays;
-	float	plane_w;
-	float	plane_h;
-	float	amb_ratio;
-	t_color	amb_rgb;
+	t_win		win;
+	t_list		*members;
+	t_camera	cam;
+	t_ray		**rays;
+	float		plane_w;
+	float		plane_h;
+	float		amb_ratio;
+	t_color		amb_rgb;
 }			t_minirt;
 
 typedef struct s_hit_info
 {
-	int		hit;
-	t_vec3	poi;
-	t_vec3	normal;
-	t_color	color;
-	float	light;
-	double	dist;
-	t_object *obj;
-
-}		t_hit_info;
+	int			hit;
+	t_vec3		poi;
+	t_vec3		normal;
+	t_color		color;
+	float		light;
+	double		dist;
+	t_object	*obj;
+}				t_hit_info;
 
 /* **************************************** */
 /*           FUNCTION PROTOTYPES            */
@@ -163,36 +180,35 @@ t_object	classifier(char *s, int *type, int class);
 int			throw_error(int err);
 t_object	*new_object(void);
 void		print_members(t_list *lst, void (*f)(t_object *));
-void		print_data(t_object *obj);
 void		cleanup(t_minirt *vars, int n);
-
-//
+void		print_data(t_object *obj);
 
 // fillers
-int			fill_cone(char *line, t_object *obj);
-int			fill_plan(char *data, t_object *obj);
-int			fill_sphere(char *data, t_object *obj);
-int			fill_cylinder(char *data, t_object *obj);
-int			fill_ambiance(char *data, t_minirt *vars);
-int			fill_light(char *data, t_object *obj);
-int			fill_camera(char *data, t_minirt *vars);
-int			fill_rgb(t_color *c, char p1[8], char p2[8], char p3[8]);
-int			fill_float(float *f, char *s);
-int			fill_vector(t_vec3 *v, char p[3][8], int class, int *type);
+int		fill_cone(t_minirt *vars, char *line, t_object *obj);
+int		fill_plan(t_minirt *vars, char *data, t_object *obj);
+int		fill_sphere(t_minirt *vars, char *data, t_object *obj);
+int		fill_cylinder(t_minirt *vars, char *data, t_object *obj);
+int		fill_ambiance(char *data, t_minirt *vars);
+int		fill_light(char *data, t_object *obj);
+int		fill_camera(char *data, t_minirt *vars);
+int		fill_rgb(t_color *c, char p1[8], char p2[8], char p3[8]);
+int		fill_float(float *f, char *s);
+int		fill_vector(t_vec3 *v, char p[3][8], int class, int *type);
+t_mode	set_mode(t_minirt *vars, char *str, t_object *obj);
 
 // vectors
-float dot(t_vec3 vec1, t_vec3 vec2);
-t_vec3 cross(t_vec3 vec1, t_vec3 vec2);
-t_vec3 vec_op_vec(t_vec3 vec1, t_vec3 vec2, float (*op)(float, float));
-t_vec3 sc_op_vec(float sc, t_vec3 vec2, float (*op)(float, float));
+float	dot(t_vec3 vec1, t_vec3 vec2);
+t_vec3	cross(t_vec3 vec1, t_vec3 vec2);
+t_vec3	vec_op_vec(t_vec3 vec1, t_vec3 vec2, float (*op)(float, float));
+t_vec3	sc_op_vec(float sc, t_vec3 vec2, float (*op)(float, float));
 float	distance(t_vec3 p1, t_vec3 p2);
 t_vec3	init_vec(float x, float y, float z);
-float magnitude(t_vec3 vec);
-t_vec3 normalize(t_vec3 vec);
-float add(float a, float b);
-float mul(float a, float b);
-float divis(float a, float b);
-float sub(float a, float b);
+float	magnitude(t_vec3 vec);
+t_vec3	normalize(t_vec3 vec);
+float	add(float a, float b);
+float	mul(float a, float b);
+float	divis(float a, float b);
+float	sub(float a, float b);
 
 //drawing
 void	put_pixel(t_minirt *vars, int x, int y, int color);

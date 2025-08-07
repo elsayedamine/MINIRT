@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extraction.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/07 15:47:08 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/07 21:51:22 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ int	assign_object(t_minirt *vars, char *file, t_object *obj)
 	else if (!ft_strncmp("l ", file, 2))
 		err = fill_light(file, obj);
 	else if (!ft_strncmp("sp ", file, 3))
-		err = fill_sphere(file, obj);
+		err = fill_sphere(vars, file, obj);
 	else if (!ft_strncmp("cy ", file, 3))
-		err = fill_cylinder(file, obj);
+		err = fill_cylinder(vars, file, obj);
 	else if (!ft_strncmp("pl ", file, 3))
-		err = fill_plan(file, obj);
+		err = fill_plan(vars, file, obj);
 	else if (!ft_strncmp("co ", file, 3))
-		err = fill_cone(file, obj);
+		err = fill_cone(vars, file, obj);
 	else
 		return (cleanup(vars, 3), free(obj), throw_error(ERR), 0);
 	if (err == 1)
