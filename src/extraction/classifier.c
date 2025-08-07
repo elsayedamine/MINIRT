@@ -69,9 +69,9 @@ t_object	classifier(char *s, int *type, int class)
 	obj.crd.x = 0;
 	obj.crd.y = 0;
 	obj.crd.z = 0;
-	obj.n_vct.x = 0;
-	obj.n_vct.y = 0;
-	obj.n_vct.z = 0;
+	obj.n.x = 0;
+	obj.n.y = 0;
+	obj.n.z = 0;
 	obj.o_vct.x = 0;
 	obj.o_vct.y = 0;
 	obj.o_vct.z = 0;

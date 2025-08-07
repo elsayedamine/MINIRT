@@ -65,27 +65,47 @@ t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj)
 
 t_hit_info	intersect_cylinder(t_vec3 origin, t_vec3 dir, t_object *obj)
 {
-	(void)origin;
-	(void)dir;
-	(void)obj;
 	t_hit_info hit;
 
+	t_vec3 w = vec_op_vec(origin, obj->crd, sub);
+	t_vec3 d = vec_op_vec(dir, sc_op_vec(dot(dir, obj->o_vct), obj->o_vct, mul), sub);
+	t_vec3 m = vec_op_vec(w, sc_op_vec(dot(w, obj->o_vct), obj->o_vct, mul), sub);
+	float a = dot(d, d);
+	float b = 2 * dot(m, d);
+	float c = dot(m, m) - pow(obj->r, 2);
+	float delta = pow(b, 2) - 4 * a * c;
+	if (delta < 0)
+		return (hit.hit = 0, hit);
+	float	x1 = (-b + sqrt(delta)) / (2 * a);
+	float	x2 = (-b - sqrt(delta)) / (2 * a);
+	float x = (x1 > 0 && (x1 < x2 || x2 <= 0)) * x1 + (x2 > 0 && !(x1 > 0 && (x1 < x2 || x2 <= 0))) * x2;
+	if (!(x1 > 0 && (x1 < x2 || x2 <= 0)) && x2 <= 0)
+		return (hit.hit = 0, hit);
+	hit.poi = vec_op_vec(origin, sc_op_vec(x, dir, mul), add);
+	float spot = dot(vec_op_vec(hit.poi, obj->crd, sub), obj->o_vct);
+	if (spot < 0 || spot > obj->h)
+		return (hit.hit = 0, hit);
+	hit.hit = 1;
+	hit.normal = normalize(vec_op_vec(hit.poi, obj->crd, sub));
+	hit.dist = distance(hit.poi, origin);
+	hit.color = obj->rgb;
+	hit.obj = obj;
 	hit.light = 0;
 	return (hit);
 }
 
-t_hit_info	intersect_plan(t_vec3 origin, t_vec3 dir, t_object *obj)
+t_hit_info	intersect_plane(t_vec3 origin, t_vec3 dir, t_object *obj)
 {
 	t_hit_info hit;
 
-	if (dot(obj->n_vct, dir) == 0)
+	if (dot(obj->n, dir) == 0)
 		return (hit.hit = 0, hit);
-	float	x = (dot(obj->n_vct, vec_op_vec(obj->crd, origin, sub))) / dot(obj->n_vct, dir);
+	float	x = (dot(obj->n, vec_op_vec(obj->crd, origin, sub))) / dot(obj->n, dir);
 	if (x <= 0)
 		return (hit.hit = 0, hit);
 	hit.hit = 1;
 	hit.poi = vec_op_vec(origin, sc_op_vec(x, dir, mul), add);
-	hit.normal = obj->n_vct;
+	hit.normal = obj->n;
 	hit.dist = x;
 	hit.color = obj->rgb;
 	hit.light = 0;

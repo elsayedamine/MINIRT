@@ -63,7 +63,7 @@ void	print_data(t_object *obj)
 			obj->crd.y, obj->crd.z);
 	if (obj->class == PLAN)
 		printf("n_nvt    : %.1f,%.1f,%.1f\n", \
-			obj->n_vct.x, obj->n_vct.y, obj->n_vct.z);
+			obj->n.x, obj->n.y, obj->n.z);
 	if (obj->class == CYLINDER || obj->class == CAMERA)
 		printf("o_vct    : %.1f,%.1f,%.1f\n", \
 			obj->o_vct.x, obj->o_vct.y, obj->o_vct.z);

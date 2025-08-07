@@ -29,7 +29,7 @@ int	fill_plan(char *line, t_object *obj)
 	data = classifier(fields[2], &type, ORIENT);
 	if (!(type == ORIENT))
 		return (ft_free("2", fields), throw_error(PLAN), 1);
-	obj->n_vct = data.crd;
+	obj->n = data.crd;
 	data = classifier(fields[3], &type, RGB);
 	obj->rgb = data.rgb;
 	if (!(type == RGB || (type == RGB1 && obj->rgb.r >= 0 && obj->rgb.g >= 0 && obj->rgb.b >= 0)))

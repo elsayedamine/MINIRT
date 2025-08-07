@@ -10,7 +10,7 @@ t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars)
 		intersect_light,
 		intersect_sphere,
 		intersect_cylinder,
-		intersect_plan,
+		intersect_plane,
 		intersect_last_shape,
 	};
 
@@ -105,6 +105,5 @@ void raytracing(t_minirt *vars)
 			put_pixel(vars, i, j, color);
 		}
 	}
-	puts("done");
 	mlx_put_image_to_window(vars->win.mlx, vars->win.win, vars->win.img, 0, 0);
 }

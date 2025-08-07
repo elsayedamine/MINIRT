@@ -107,7 +107,7 @@ typedef struct s_object
 	float	r;
 	float	h;
 	t_vec3	crd;
-	t_vec3	n_vct;
+	t_vec3	n;
 	t_vec3	o_vct;
 	t_color	rgb;
 }			t_object;
@@ -214,7 +214,7 @@ typedef t_hit_info (*t_intersect)(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_cylinder(t_vec3 origin, t_vec3 dir, t_object *obj);
-t_hit_info	intersect_plan(t_vec3 origin, t_vec3 dir, t_object *obj);
+t_hit_info	intersect_plane(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_last_shape(t_vec3 origin, t_vec3 dir, t_object *obj);
 
 // colors
