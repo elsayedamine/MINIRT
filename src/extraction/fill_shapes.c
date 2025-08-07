@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_shapes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 17:00:40 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/07 22:47:31 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/07 23:54:11 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	fill_plan(t_minirt *vars, char *line, t_object *obj)
 	t_object	data;
 	int			type;
 
+	(void)vars;
 	fields = ft_split(line, WHITE);
 	if (!fields || ft_arrlen(fields) > 4)
 		return (ft_free("2", fields), throw_error(PLAN), 1);
@@ -43,6 +44,7 @@ int	fill_cylinder(t_minirt *vars, char *line, t_object *obj)
 	t_object	data;
 	int			type;
 
+	(void)vars;
 	fields = ft_split(line, WHITE);
 	if (!fields || ft_arrlen(fields) > 6)
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
@@ -80,6 +82,7 @@ int	fill_sphere(t_minirt *vars, char *line, t_object *obj)
 	t_object	data;
 	int			type;
 
+	(void)vars;
 	fields = ft_split(line, WHITE);
 	if (!fields || ft_arrlen(fields) > 4)
 		return (ft_free("2", fields), throw_error(SPHERE), 1);
@@ -105,6 +108,7 @@ int	fill_cone(t_minirt *vars, char *line, t_object *obj)
 	t_object	data;
 	int			type;
 
+	(void)vars;
 	fields = ft_split(line, WHITE);
 	if (!fields || ft_arrlen(fields) > 6)
 		return (ft_free("2", fields), throw_error(CONE), 1);
