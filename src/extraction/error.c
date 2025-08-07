@@ -14,7 +14,7 @@
 
 int	throw_error(int err)
 {
-	if (err <= LAST_SHAPE && err >= 0)
+	if (err <= CONE && err >= 0)
 		printfd(2, "Error\n\tUndefined data for %s Element!\n", g_strs[err]);
 	if (err == ERR)
 		printfd(2, "Error\n\tUndefined data Entry!\n");

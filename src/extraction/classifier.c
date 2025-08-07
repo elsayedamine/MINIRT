@@ -63,7 +63,6 @@ t_object	classifier(char *s, int *type, int class)
 	t_object obj;
 	obj.class = -1;
 	obj.ratio = -2.0f;
-	obj.fov = -2.0f;
 	obj.r = -2.0f;
 	obj.h = -2.0f;
 	obj.p.x = 0;

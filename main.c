@@ -14,7 +14,7 @@
 #include <time.h>
 
 char	g_strs[7][12] = {"AMBIANCE", "CAMERA", "LIGHT", \
-	"SPHERE", "CYLINDER", "PLAN", "LAST_SHAPE"}; // only for printing
+	"SPHERE", "CYLINDER", "PLAN", "CONE"}; // only for printing
 
 int	valid_filename(char *s)
 {
