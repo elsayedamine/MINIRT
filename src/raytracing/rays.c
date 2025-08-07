@@ -20,8 +20,12 @@ t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars)
 	while (curr)
 	{
 		obj = (t_object *)curr->content;
+		if (obj->class == LIGHT)
+		{
+			curr = curr->next;
+			continue ;
+		}
 		hit_info = f[obj->class - 2](origin, dir, obj);
-		// printf("%s\n", g_strs[obj->class]);
 		if (hit_info.hit && hit_info.dist < closest.dist)
 			closest = hit_info;
 		curr = curr->next;
@@ -29,113 +33,77 @@ t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars)
 	return (closest);
 }
 
-t_ray new_ray(t_vec3 pos, t_vec3 normal)
+int is_shadowed(t_minirt *vars, t_hit_info hit, t_object *light)
 {
-	t_ray new;
-	float x, y, z;
-
-	x = ((float)rand() / RAND_MAX) * 2.0f - 1.0f;
-	y = ((float)rand() / RAND_MAX) * 2.0f - 1.0f;
-	z = ((float)rand() / RAND_MAX) * 2.0f - 1.0f;
-	new.dir = init_vec(x, y, z);
-	if (dot(new.dir, normal) < 0)
-		new.dir = sc_op_vec(-1, new.dir, mul);
-	new.dir = normalize(vec_op_vec(normalize(new.dir), normal, add));
-	// print_vec(new.dir, 1);
-	// new.origin = pos;
-	new.origin = vec_op_vec(pos, sc_op_vec(EPSILON, normal, mul), add);
-	// new.origin = vec_op_vec(pos, new.dir, add);
-	return (new);
+    t_vec3 light_dir = normalize(vec_op_vec(light->crd, hit.poi, sub));
+    t_ray shadow_ray;
+    shadow_ray.origin = vec_op_vec(hit.poi, sc_op_vec(EPSILON, light_dir, mul), add);
+    shadow_ray.dir = light_dir;
+    float dist = distance(light->crd, hit.poi);
+    t_hit_info shadow_hit = get_hit_info(shadow_ray.origin, shadow_ray.dir, vars);
+    if (shadow_hit.hit && shadow_hit.dist < dist)
+        return TRUE;
+    return FALSE;
 }
 
-t_color    trace(t_minirt *vars, t_ray ray, int count)
+t_color compute_lighting(t_minirt *vars, t_hit_info hit, t_object *light, t_ray ray)
 {
-    t_color light;
-    t_color color;
-    t_hit_info hit_info;
-    int i;
-
-    i = 0;
-    light = init_color(0, 0, 0);
-    // light = col_mul_sc(init_color(255, 255, 255), vars->amb_ratio);
-    color = init_color(255, 255, 255);
-    while (i < count)
-    {
-		hit_info = get_hit_info(ray.origin, ray.dir, vars);
-        if (!hit_info.hit)
-			break ;
-		// printf("%d - %d - %d\n", hit_info.color.r, hit_info.color.g, hit_info.color.b);
-        // light = col_mul_col(light, vars->amb_rgb);
-        light = col_add_col(light, col_mul_sc(color, hit_info.light));
-        color = col_mul_col(color, hit_info.color);
-        ray = new_ray(hit_info.poi, hit_info.normal);
-    }
-    return (light);
+    t_vec3 light_dir = normalize(vec_op_vec(light->crd, hit.poi, sub));
+    t_vec3 vect = normalize(vec_op_vec(ray.origin, hit.poi, sub));
+    float dotNL = dot(hit.normal, light_dir);
+    t_vec3 R = vec_op_vec(sc_op_vec(-1, light_dir, mul), sc_op_vec(2 * dotNL, hit.normal, mul), add);
+    if (dotNL < 0)
+        dotNL = 0;
+    float dotRV = dot(R, vect);
+    if (dotRV < 0)
+        dotRV = 0;
+    t_color diffuse = col_mul_sc(light->rgb, dotNL);
+    float shininess = 32.0f;
+    t_color specular = col_mul_sc(light->rgb, powf(dotRV, shininess));
+    t_color final = col_mul_col(col_add_col(diffuse, specular), hit.color);
+    return final;
 }
 
-t_vec3 jitter_ray(t_vec3 ray_dir, float max_angle_rad)
+t_color trace(t_minirt *vars, t_ray ray)
 {
-	t_vec3 u, v;
+	t_hit_info hit;
+	t_color final_color;
+	t_color light_component;
 
-	// Build an orthonormal basis (u, v, w), where w = ray_dir
-	t_vec3 w = normalize(ray_dir);
-	if (fabs(w.x) > 0.1)
-		u = normalize(cross((t_vec3){0,1,0}, w));
-	else
-		u = normalize(cross((t_vec3){1,0,0}, w));
-	v = cross(w, u);
-
-	// Generate random polar coordinates within the cone
-	float rand1 = (float)rand() / RAND_MAX; // ∈ [0,1)
-	float rand2 = (float)rand() / RAND_MAX;
-	float theta = acos(1.0 - rand1 * (1.0 - cos(max_angle_rad)));
-	float phi = 2.0 * M_PI * rand2;
-
-	float x = sin(theta) * cos(phi);
-	float y = sin(theta) * sin(phi);
-	float z = cos(theta);
-
-	// Convert to world space
-	t_vec3 jittered_dir = sc_op_vec(x, u, mul);
-	jittered_dir = vec_op_vec(sc_op_vec(y, v, mul), jittered_dir, add);
-	jittered_dir = vec_op_vec(sc_op_vec(z, w, mul), jittered_dir, add);	
-	return (normalize(jittered_dir));
-}
-
-int sample(t_minirt *vars, t_ray ray, int samples)
-{
-	t_color color;
-	int i;
-
-	i = 0;
-	// printf("-----");
-	// print_vec(ray.dir, 1);
-	color = init_color(0, 0, 0);
-	while (i < samples)
+	hit = get_hit_info(ray.origin, ray.dir, vars);
+	if (!hit.hit)
+		return (init_color(0, 0, 0));
+	final_color = col_mul_col(hit.color, col_mul_sc(vars->amb_rgb, vars->amb_ratio));
+	t_list *curr = vars->members;
+	while (curr)
 	{
-		// ray.dir = jitter_ray(ray.dir, .05);
-		// print_vec(ray.dir, 1);
-		color = col_add_col(color, trace(vars, ray, 10));
-		i++;
+	    t_object *obj = (t_object *)curr->content;
+	    if (obj->class == LIGHT)
+	    {
+	        if (!is_shadowed(vars, hit, obj))
+	        {
+	            light_component = compute_lighting(vars, hit, obj, ray);
+	            final_color = col_add_col(final_color, light_component);
+	        }
+	    }
+	    curr = curr->next;
 	}
-	return (color_to_int(col_mul_sc(color, 1.0f / samples)));
+    return (col_add_col(final_color, (t_color){0, 0, 0}));
 }
 
 void raytracing(t_minirt *vars)
 {
 	int i, j, color;
 
-	i = 0;
-	while (i < M_WIDTH)
+	i = -1;
+	while (++i < M_WIDTH)
 	{
-		j = 0;
-		while (j < M_HEIGHT)
+		j = -1;
+		while (++j < M_HEIGHT)
 		{
-			color = color_to_int(trace(vars, vars->rays[i][j], 10));
+			color = color_to_int(trace(vars, vars->rays[i][j]));
 			put_pixel(vars, i, j, color);
-			j++;
 		}
-		i++;
 	}
 	puts("done");
 	mlx_put_image_to_window(vars->win.mlx, vars->win.win, vars->win.img, 0, 0);
