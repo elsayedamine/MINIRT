@@ -11,7 +11,7 @@ t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars)
 		intersect_sphere,
 		intersect_cylinder,
 		intersect_plane,
-		intersect_last_shape,
+		intersect_cone,
 	};
 
 	curr = vars->members;

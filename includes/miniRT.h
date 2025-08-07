@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/31 16:02:11 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/07 15:40:28 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ void		cleanup(t_minirt *vars, int n);
 //
 
 // fillers
+int			fill_cone(char *line, t_object *obj);
 int			fill_plan(char *data, t_object *obj);
 int			fill_sphere(char *data, t_object *obj);
 int			fill_cylinder(char *data, t_object *obj);
@@ -215,7 +216,7 @@ t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_cylinder(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_plane(t_vec3 origin, t_vec3 dir, t_object *obj);
-t_hit_info	intersect_last_shape(t_vec3 origin, t_vec3 dir, t_object *obj);
+t_hit_info	intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj);
 
 // colors
 t_color init_color(int r, int g, int b);

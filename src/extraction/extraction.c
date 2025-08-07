@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extraction.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/28 17:30:38 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/07 15:47:08 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_object	*new_object(void)
 int	assign_object(t_minirt *vars, char *file, t_object *obj)
 {
 	static int		err = 0;
-	static int	seen[3];
+	static int	seen[2];
 
 	ft_strcompress(file);
 	if (!file[0])
@@ -39,7 +39,7 @@ int	assign_object(t_minirt *vars, char *file, t_object *obj)
 		err = fill_ambiance(file, vars);
 	else if (!ft_strncmp("C ", file, 2) && !seen[1]++)
 		err = fill_camera(file, vars);
-	else if (!ft_strncmp("L ", file, 2) && !seen[2]++)
+	else if (!ft_strncmp("l ", file, 2))
 		err = fill_light(file, obj);
 	else if (!ft_strncmp("sp ", file, 3))
 		err = fill_sphere(file, obj);
@@ -72,7 +72,7 @@ int	extract_data(t_minirt *vars, char *filename)
 	i = 0;
 	while (file[i])
 	{
-		printf("%s\n", file[i]);
+		// printf("%s\n", file[i]);
 		if (assign_object(vars, file[i++], new_object()) == FALSE)
 			return (close(fd), ft_free("2", file), FALSE);
 	}

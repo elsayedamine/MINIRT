@@ -36,7 +36,6 @@ t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj)
 	return (hit);
 }
 
-
 t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj)
 {
 	t_hit_info hit;
@@ -113,7 +112,7 @@ t_hit_info	intersect_plane(t_vec3 origin, t_vec3 dir, t_object *obj)
 	return (hit);
 }
 
-t_hit_info	intersect_last_shape(t_vec3 origin, t_vec3 dir, t_object *obj)
+t_hit_info	intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj)
 {
 	t_hit_info hit;
 
@@ -122,7 +121,7 @@ t_hit_info	intersect_last_shape(t_vec3 origin, t_vec3 dir, t_object *obj)
 	float a = pow(dot(dir, obj->o), 2) - k * dot(dir, dir);
 	float b = 2 * dot(w, obj->o) * dot(dir, obj->o) - 2 * k * dot(w, dir);
 	float c = pow(dot(w, obj->o), 2) - k * dot(w, w);
-		float delta = pow(b, 2) - 4 * a * c;
+	float delta = pow(b, 2) - 4 * a * c;
 	if (delta < 0)
 		return (hit.hit = 0, hit);
 	float x1 = (-b + sqrt(delta)) / (2 * a);

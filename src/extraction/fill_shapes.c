@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_shapes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 17:00:40 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/28 17:30:12 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/07 15:43:28 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,27 +103,27 @@ int	fill_cone(char *line, t_object *obj)
 
 	fields = ft_split(line, WHITE);
 	if (!fields || ft_arrlen(fields) > 6)
-		return (ft_free("2", fields), throw_error(CYLINDER), 1);
+		return (ft_free("2", fields), throw_error(CONE), 1);
 	obj->class = CONE;
 	data = classifier(fields[1], &type, VECTOR);
 	if (data.class == UNKNOWN || !(type <= RGB1))
-		return (ft_free("2", fields), throw_error(CYLINDER), 1);
+		return (ft_free("2", fields), throw_error(CONE), 1);
 	obj->p = data.p;
 	data = classifier(fields[2], &type, ORIENT);
 	if (!(type == ORIENT))
-		return (ft_free("2", fields), throw_error(CYLINDER), 1);
+		return (ft_free("2", fields), throw_error(CONE), 1);
 	obj->o = data.p;
-	data = classifier(fields[3], &type, CYLINDER);
+	data = classifier(fields[3], &type, CONE);
 	if (!(type >= RATIO))
-		return (ft_free("2", fields), throw_error(CYLINDER), 1);
+		return (ft_free("2", fields), throw_error(CONE), 1);
 	obj->angle = data.r;
-	data = classifier(fields[4], &type, CYLINDER);
+	data = classifier(fields[4], &type, CONE);
 	if (!(type >= RATIO))
-		return (ft_free("2", fields), throw_error(CYLINDER), 1);
+		return (ft_free("2", fields), throw_error(CONE), 1);
 	obj->h = data.r;
 	data = classifier(fields[5], &type, RGB);
 	if (!(type == RGB || (type == RGB1 && obj->rgb.r >= 0 && obj->rgb.g >= 0 && obj->rgb.b >= 0)))
-		return (ft_free("2", fields), throw_error(CYLINDER), 1);
+		return (ft_free("2", fields), throw_error(CONE), 1);
 	obj->rgb = data.rgb;
 	return (ft_free("2", fields), 0);
 }
