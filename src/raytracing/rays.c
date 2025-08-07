@@ -48,20 +48,20 @@ int is_shadowed(t_minirt *vars, t_hit_info hit, t_object *light)
 
 t_color compute_lighting(t_minirt *vars, t_hit_info hit, t_object *light, t_ray ray)
 {
-    t_vec3 light_dir = normalize(vec_op_vec(light->crd, hit.poi, sub));
-    t_vec3 vect = normalize(vec_op_vec(ray.origin, hit.poi, sub));
-    float dotNL = dot(hit.normal, light_dir);
-    t_vec3 R = vec_op_vec(sc_op_vec(-1, light_dir, mul), sc_op_vec(2 * dotNL, hit.normal, mul), add);
-    if (dotNL < 0)
-        dotNL = 0;
-    float dotRV = dot(R, vect);
-    if (dotRV < 0)
-        dotRV = 0;
-    t_color diffuse = col_mul_sc(light->rgb, dotNL);
-    float shininess = 32.0f;
-    t_color specular = col_mul_sc(light->rgb, powf(dotRV, shininess));
-    t_color final = col_mul_col(col_add_col(diffuse, specular), hit.color);
-    return final;
+	t_vec3 light_dir = normalize(vec_op_vec(light->crd, hit.poi, sub));
+	t_vec3 vect = normalize(vec_op_vec(ray.origin, hit.poi, sub));
+	float dotNL = dot(hit.normal, light_dir);
+	t_vec3 R = vec_op_vec(sc_op_vec(-1, light_dir, mul), sc_op_vec(2 * dotNL, hit.normal, mul), add);
+	if (dotNL < 0)
+		dotNL = 0;
+	float dotRV = dot(R, vect);
+	if (dotRV < 0)
+		dotRV = 0;
+	t_color diffuse = col_mul_sc(light->rgb, dotNL);
+	float shininess = 32.0f;
+	t_color specular = col_mul_sc(light->rgb, powf(dotRV, shininess));
+	t_color final = col_mul_col(col_add_col(diffuse, specular), hit.color);
+	return final;
 }
 
 t_color trace(t_minirt *vars, t_ray ray)
