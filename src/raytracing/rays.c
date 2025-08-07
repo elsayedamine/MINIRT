@@ -48,6 +48,7 @@ int is_shadowed(t_minirt *vars, t_hit_info hit, t_object *light)
 
 t_color compute_lighting(t_minirt *vars, t_hit_info hit, t_object *light, t_ray ray)
 {
+	float	attenuation = 1;
 	t_vec3 light_dir = normalize(vec_op_vec(light->p, hit.poi, sub));
 	t_vec3 vect = normalize(vec_op_vec(ray.origin, hit.poi, sub));
 	float dotNL = dot(hit.normal, light_dir);
@@ -57,10 +58,17 @@ t_color compute_lighting(t_minirt *vars, t_hit_info hit, t_object *light, t_ray 
 	float dotRV = dot(R, vect);
 	if (dotRV < 0)
 		dotRV = 0;
+	// atten = 1.0 / (k1 + k2 * d + k3 * d²); // k1, k2, k3 are constants and d is the dist from the light and the poi
+	// k1 = 1.0 , k2 = 0.7, k3 = 1.8 this for spotlights
+	float	dist = distance(hit.poi, light->p);
+	attenuation = 1.0 / (1.0f + 0.7f * dist + 1.8 * dist * dist)
 	t_color diffuse = col_mul_sc(light->rgb, dotNL);
-	float shininess = 100.0f;
+	diffuse = col_mul_sc(diffuse, attenuation);
+	float shininess = 32.0f;
 	t_color specular = col_mul_sc(light->rgb, powf(dotRV, shininess));
-	t_color final = col_mul_col(col_add_col(diffuse, specular), hit.color);
+	specular = col_mul_sc(specular, attenuation);
+	t_color final = col_add_col(col_mul_col(diffuse, hit.color), specular);
+
 	return final;
 }
 
