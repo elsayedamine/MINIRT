@@ -70,6 +70,8 @@ t_hit_info	intersect_cylinder(t_vec3 origin, t_vec3 dir, t_object *obj)
 	t_vec3 d = vec_op_vec(dir, sc_op_vec(dot(dir, obj->o), obj->o, mul), sub);
 	t_vec3 m = vec_op_vec(w, sc_op_vec(dot(w, obj->o), obj->o, mul), sub);
 	float a = dot(d, d);
+	if (fabs(a) < EPSILON)
+		return (hit.hit = 0, hit);
 	float b = 2 * dot(m, d);
 	float c = dot(m, m) - pow(obj->r, 2);
 	float delta = pow(b, 2) - 4 * a * c;
@@ -85,7 +87,9 @@ t_hit_info	intersect_cylinder(t_vec3 origin, t_vec3 dir, t_object *obj)
 	if (spot < 0 || spot > obj->h)
 		return (hit.hit = 0, hit);
 	hit.hit = 1;
-	hit.normal = normalize(vec_op_vec(hit.poi, obj->p, sub));
+	// added these two lines too
+	t_vec3 proj = sc_op_vec(dot(vec_op_vec(hit.poi, obj->p, sub), obj->o), obj->o, mul);
+	hit.normal = normalize(vec_op_vec(vec_op_vec(hit.poi, obj->p, sub), proj, sub));
 	hit.dist = distance(hit.poi, origin);
 	hit.color = obj->rgb;
 	hit.obj = obj;
@@ -119,6 +123,8 @@ t_hit_info	intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj)
 	t_vec3 w = vec_op_vec(origin, obj->p, sub);
 	float k = pow(cos(obj->angle * RAD), 2);
 	float a = pow(dot(dir, obj->o), 2) - k * dot(dir, dir);
+	if (fabs(a) < EPSILON)
+		return (hit.hit = 0, hit);
 	float b = 2 * dot(w, obj->o) * dot(dir, obj->o) - 2 * k * dot(w, dir);
 	float c = pow(dot(w, obj->o), 2) - k * dot(w, w);
 	float delta = pow(b, 2) - 4 * a * c;
@@ -133,8 +139,10 @@ t_hit_info	intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj)
 	float spot = dot(vec_op_vec(hit.poi, obj->p, sub), obj->o);
 	if (spot < 0 || spot > obj->h)
 		return (hit.hit = 0, hit);
+	// i added the two lines below
+	t_vec3 axis = sc_op_vec(dot(obj->o, vec_op_vec(hit.poi, obj->p, sub)), obj->o, mul);
+	hit.normal = normalize(vec_op_vec(vec_op_vec(hit.poi, obj->p, sub), axis, sub));
 	hit.hit = 1;
-	hit.normal = normalize(vec_op_vec(hit.poi, obj->p, sub));
 	hit.dist = distance(hit.poi, origin);
 	hit.color = obj->rgb;
 	hit.obj = obj;

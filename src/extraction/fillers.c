@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:03:36 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/28 17:26:58 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/07 15:51:33 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,3 +57,39 @@ int	fill_vector(t_vec3 *v, char p[3][8], int class, int *type)
 	return (FALSE);
 }
 
+void	init_vars(float *f, float *f1, float *f2, int *sign)
+{
+	*f = 0;
+	*f1 = 0;
+	*f2 = 1;
+	*sign = 1;
+}
+
+float	ft_atof(char *str)
+{
+	float	first_part;
+	float	second_part;
+	float	divisor;
+	int		sign;
+
+	init_vars(&first_part, &second_part, &divisor, &sign);
+	if (str && (*str == '-' || *str == '+'))
+		if (*str++ == '-')
+			sign = -1;
+	while (*str >= '0' && *str <= '9')
+	{
+		first_part = first_part * 10 + (*str - '0');
+		str++;
+	}
+	if (*str == '.')
+	{
+		str++;
+		while (*str >= '0' && *str <= '9')
+		{
+			second_part = second_part * 10 + (*str - '0');
+			divisor *= 10;
+			str++;
+		}
+	}
+	return (sign * (first_part + (second_part / divisor)));
+}

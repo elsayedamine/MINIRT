@@ -35,15 +35,15 @@ t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars)
 
 int is_shadowed(t_minirt *vars, t_hit_info hit, t_object *light)
 {
-    t_vec3 light_dir = normalize(vec_op_vec(light->p, hit.poi, sub));
-    t_ray shadow_ray;
-    shadow_ray.origin = vec_op_vec(hit.poi, sc_op_vec(EPSILON, light_dir, mul), add);
-    shadow_ray.dir = light_dir;
-    float dist = distance(light->p, hit.poi);
-    t_hit_info shadow_hit = get_hit_info(shadow_ray.origin, shadow_ray.dir, vars);
-    if (shadow_hit.hit && shadow_hit.dist < dist)
-        return TRUE;
-    return FALSE;
+	t_vec3 light_dir = normalize(vec_op_vec(light->p, hit.poi, sub));
+	t_ray shadow_ray;
+	shadow_ray.origin = vec_op_vec(hit.poi, sc_op_vec(EPSILON, light_dir, mul), add);
+	shadow_ray.dir = light_dir;
+	float dist = distance(light->p, hit.poi);
+	t_hit_info shadow_hit = get_hit_info(shadow_ray.origin, shadow_ray.dir, vars);
+	if (shadow_hit.hit && shadow_hit.dist < dist)
+		return TRUE;
+	return FALSE;
 }
 
 t_color compute_lighting(t_minirt *vars, t_hit_info hit, t_object *light, t_ray ray)
@@ -64,31 +64,24 @@ t_color compute_lighting(t_minirt *vars, t_hit_info hit, t_object *light, t_ray 
 	return final;
 }
 
-t_color trace(t_minirt *vars, t_ray ray)
+int	trace(t_minirt *vars, t_ray ray)
 {
-	t_hit_info hit;
-	t_color final_color;
-	t_color light_component;
+	t_hit_info	hit;
+	t_color		final_color;
 
 	hit = get_hit_info(ray.origin, ray.dir, vars);
 	if (!hit.hit)
-		return (init_color(0, 0, 0));
+		return (0);
 	final_color = col_mul_col(hit.color, col_mul_sc(vars->amb_rgb, vars->amb_ratio));
 	t_list *curr = vars->members;
 	while (curr)
 	{
-	    t_object *obj = (t_object *)curr->content;
-	    if (obj->class == LIGHT)
-	    {
-	        if (!is_shadowed(vars, hit, obj))
-	        {
-	            light_component = compute_lighting(vars, hit, obj, ray);
-	            final_color = col_add_col(final_color, light_component);
-	        }
-	    }
-	    curr = curr->next;
+		t_object *obj = (t_object *)curr->content;
+		if (obj->class == LIGHT && !is_shadowed(vars, hit, obj))
+			final_color = col_add_col(final_color, compute_lighting(vars, hit, obj, ray));
+		curr = curr->next;
 	}
-    return (col_add_col(final_color, (t_color){0, 0, 0}));
+	return (color_to_int(final_color));
 }
 
 void raytracing(t_minirt *vars)
@@ -101,7 +94,7 @@ void raytracing(t_minirt *vars)
 		j = -1;
 		while (++j < M_HEIGHT)
 		{
-			color = color_to_int(trace(vars, vars->rays[i][j]));
+			color = trace(vars, vars->rays[i][j]);
 			put_pixel(vars, i, j, color);
 		}
 	}
