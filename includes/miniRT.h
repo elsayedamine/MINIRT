@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/08 19:20:22 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/08 23:03:49 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,15 @@
 /*              DEFINITIONS                 */
 /* **************************************** */
 
-# define M "miniRT"
+# define RTX "miniRT"
 # define M_PI 3.14159265358979323846
 # define M_WIDTH 1920
 # define M_HEIGHT 1080
 # define M_THETA 0.76842396884
 # define RAD 0.0174533
 # define EPSILON 0.0001f
+#define LEFT_CLICK 1
+#define RIGHT_CLICK 3
 
 /* **************************************** */
 /*                 ENUMS                    */
@@ -137,9 +139,15 @@ typedef struct s_camera
 
 typedef struct s_ray
 {
-	t_vec3 origin;
-	t_vec3 dir;
-} t_ray;
+	t_vec3	origin;
+	t_vec3	dir;
+}			t_ray;
+
+typedef struct s_select
+{
+	t_object	*obj;
+	int			mouse;	
+}				t_select;
 
 typedef struct s_minirt
 {
@@ -151,7 +159,7 @@ typedef struct s_minirt
 	float		plane_h;
 	float		amb_ratio;
 	t_color		amb_rgb;
-	t_object	*selected;
+	t_select	selected;
 }				t_minirt;
 
 typedef struct s_hit_info
@@ -167,7 +175,6 @@ typedef struct s_hit_info
 
 typedef t_hit_info (*t_intersect)(t_vec3 origin, t_vec3 dir, t_object *obj);
 typedef t_vec3 (*t_get_uv)(t_vec3 poi, t_object *obj);
-typedef t_vec3	(*t_rotate)(t_vec3 vec, float angle)
 
 /* **************************************** */
 /*           FUNCTION PROTOTYPES            */
@@ -198,7 +205,6 @@ int		fill_camera(char *data, t_minirt *vars);
 int		fill_rgb(t_color *c, char p1[8], char p2[8], char p3[8]);
 int		fill_float(float *f, char *s);
 int		fill_vector(t_vec3 *v, char p[3][8], int class, int *type);
-t_mode	set_mode(t_minirt *vars, char *str, t_object *obj);
 
 // vectors
 float	dot(t_vec3 vec1, t_vec3 vec2);
@@ -218,18 +224,20 @@ float	sub(float a, float b);
 void	put_pixel(t_minirt *vars, int x, int y, int color);
 
 //raytracing
-void setup(t_minirt *vars);
-void raytracing(t_minirt *vars);
+void 	setup(t_minirt *vars);
+void 	raytracing(t_minirt *vars);
 
 //debugging
-void print_vec(t_vec3 vec, int nl);
+void 	print_vec(t_vec3 vec, int nl);
 
 // key_hooks
-int keyhook(int key, t_minirt *vars);
-int	quit(t_minirt *vars);
+int		keyhook(int key, t_minirt *vars);
+int		quit(t_minirt *vars);
 void    hook_manipulation(t_minirt *vars);
+int		mouse_click(int button, int x, int y, t_minirt *vars);
 
 // intersections
+t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars);
 t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_cylinder(t_vec3 origin, t_vec3 dir, t_object *obj);
@@ -239,7 +247,7 @@ t_hit_info	intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj);
 // colors
 t_color init_color(int r, int g, int b);
 t_color int_to_color(int in);
-int color_to_int(t_color color);
+int		color_to_int(t_color color);
 t_color col_mul_col(t_color c1, t_color c2);
 t_color col_mul_sc(t_color col, float sc);
 t_color col_add_col(t_color c1, t_color c2);
@@ -249,5 +257,4 @@ t_color get_color(t_vec3 poi, t_object *obj);
 t_vec3	rotate_z(t_vec3 vec, float angle);
 t_vec3	rotate_x(t_vec3 vec, float angle);
 t_vec3	rotate_y(t_vec3 vec, float angle);
-
 #endif

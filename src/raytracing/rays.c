@@ -17,6 +17,7 @@ t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars)
 	curr = vars->members;
 	closest.hit = 0;
 	closest.dist = INFINITY;
+	closest.obj = NULL;
 	while (curr)
 	{
 		obj = (t_object *)curr->content;
