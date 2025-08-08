@@ -69,6 +69,7 @@ int	trace(t_minirt *vars, t_ray ray)
 	t_hit_info	hit;
 	t_color		final_color;
 
+	vars->selected = NULL;
 	hit = get_hit_info(ray.origin, ray.dir, vars);
 	if (!hit.hit)
 		return (0);
@@ -84,7 +85,7 @@ int	trace(t_minirt *vars, t_ray ray)
 	return (color_to_int(final_color));
 }
 
-void raytracing(t_minirt *vars)
+void raytracing(t_minirt *vars, t_ray **rays)
 {
 	int i, j, color;
 
@@ -94,7 +95,7 @@ void raytracing(t_minirt *vars)
 		j = -1;
 		while (++j < M_HEIGHT)
 		{
-			color = trace(vars, vars->rays[i][j]);
+			color = trace(vars, rays[i][j]);
 			put_pixel(vars, i, j, color);
 		}
 	}

@@ -12,16 +12,16 @@ void setup_cam(t_minirt *vars)
 	vars->cam.up = normalize(cross(vars->cam.rt, vars->cam.fw));
 }
 
-t_ray calc_ray(float u, int y, t_minirt *vars)
+t_ray calc_ray(float u, int y, t_minirt *vars, float plane[2])
 {
-	t_ray ray;
 	float v;
+	t_ray ray;
 	t_vec3 offsetx;
 	t_vec3 offsety;
 
 	v = 1 - ((((float)y + .5) / M_HEIGHT) * 2);
-	offsetx = sc_op_vec(u * (vars->plane_w / 2), vars->cam.rt, mul);
-	offsety = sc_op_vec(v * (vars->plane_h / 2), vars->cam.up, mul);
+	offsetx = sc_op_vec(u * (plane[W] / 2), vars->cam.rt, mul);
+	offsety = sc_op_vec(v * (plane[H] / 2), vars->cam.up, mul);
 	ray.dir = vec_op_vec(vars->cam.p, vars->cam.fw, add);
 	ray.dir = vec_op_vec(ray.dir, offsetx, add);
 	ray.dir = vec_op_vec(ray.dir, offsety, add);
@@ -31,34 +31,33 @@ t_ray calc_ray(float u, int y, t_minirt *vars)
 	return (ray);
 }
 
-void setup_rays(t_minirt *vars)
+t_ray	**setup_rays(t_minirt *vars)
 {
 	float u;
 	int i;
 	int j;
+	float	plane[2];
+	t_ray	**rays;
 
 	i = 0;
 	j = 0;
-	vars->plane_w = 2 * tan((vars->cam.fov * RAD) / 2);
-	vars->plane_h = vars->plane_w * (float)M_HEIGHT / (float)M_WIDTH;
-	vars->rays = malloc(sizeof(t_ray *) * M_WIDTH);
+	plane[W] = 2 * tan((vars->cam.fov * RAD) / 2);
+	plane[H] = plane[W] * (float)M_HEIGHT / (float)M_WIDTH;
+	rays = malloc(sizeof(t_ray *) * M_WIDTH);
 	while (i < M_WIDTH)
 	{
 		u = (((i + .5) / M_WIDTH) * 2) - 1;
-		vars->rays[i] = malloc(sizeof(t_ray) * M_HEIGHT);
-		j = 0;
-		while (j < M_HEIGHT)
-		{
-			vars->rays[i][j] = calc_ray(u, j, vars);
-			// print_vec(vars->rays[i][j].dir, 1);
-			j++;
-		}
+		rays[i] = malloc(sizeof(t_ray) * M_HEIGHT);
+		j = -1;
+		while (++j < M_HEIGHT)
+			rays[i][j] = calc_ray(u, j, vars, plane);
 		i++;
 	}
+	return (rays);
 }
 
-void setup(t_minirt *vars)
+t_ray	**setup(t_minirt *vars)
 {
 	setup_cam(vars);
-	setup_rays(vars);
+	return (setup_rays(vars));
 }
