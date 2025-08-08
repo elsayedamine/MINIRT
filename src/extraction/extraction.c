@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/08 00:03:06 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/09 00:04:03 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ t_object	*new_object(void)
 int	assign_object(t_minirt *vars, char *file, t_object *obj)
 {
 	static int		err = 0;
-	static int	seen[2];
+	static int	seen;
 
 	ft_strcompress(file);
 	if (!file[0] || *file == '#')
 		return (free(obj), TRUE);
-	if (!ft_strncmp("A ", file, 2) && !seen[0]++)
+	if (!ft_strncmp("A ", file, 2) && !seen++)
 		err = fill_ambiance(file, vars);
-	else if (!ft_strncmp("C ", file, 2) && !seen[1]++)
+	else if (!ft_strncmp("c ", file, 2))
 		err = fill_camera(file, vars);
 	else if (!ft_strncmp("l ", file, 2))
 		err = fill_light(file, obj);
@@ -69,6 +69,9 @@ int	extract_data(t_minirt *vars, char *filename)
 	if (fd == -1)
 		return (perror("Failed to open file"), FALSE);
 	file = ft_read(fd, filename);
+	i = -1;
+	while (++i < 11)
+		vars->cam[i].exist = 0;
 	i = 0;
 	while (file[i])
 	{

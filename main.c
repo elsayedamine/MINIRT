@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:29:26 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/08 18:02:29 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/08 23:58:05 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,7 @@ int	valid_filename(char *s)
 
 	l = ft_strlen(s) - 1;
 	if (l + 1 >= 4)
-	{
-		if (!ft_strncmp(&s[l - 2], ".rt", 3))
-			return (1);
-		else
-			return (0);
-	}
+		return (ft_strncmp(&s[l - 2], ".rt", 3) == 0);
 	return (0);
 }
 
@@ -41,7 +36,7 @@ int	main(int ac, char **av)
 		if (extract_data(&vars, av[1]) == FALSE)
 			return (130);
 		// print_members(vars.members, print_data);
-		setup(&vars);
+		setup(&vars, 0);
 		raytracing(&vars);
 		hook_manipulation(&vars);
 		cleanup(&vars, 1);

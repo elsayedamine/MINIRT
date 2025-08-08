@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/08 23:03:49 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/09 00:02:32 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ typedef enum e_type
 	CYLINDER,
 	PLAN,
 	CONE,
-	ERR = -1
+	ERR = -1,
+	TOO_MANY_CAM = -2
 }	t_type;
 
 typedef enum e_token_type
@@ -135,6 +136,7 @@ typedef struct s_camera
 	t_vec3	rt;
 	t_vec3	up;	
 	float	fov;
+	int		exist;
 }			t_camera;
 
 typedef struct s_ray
@@ -153,7 +155,7 @@ typedef struct s_minirt
 {
 	t_win		win;
 	t_list		*members;
-	t_camera	cam;
+	t_camera	cam[11];
 	t_ray		**rays;
 	float		plane_w;
 	float		plane_h;
@@ -224,7 +226,7 @@ float	sub(float a, float b);
 void	put_pixel(t_minirt *vars, int x, int y, int color);
 
 //raytracing
-void 	setup(t_minirt *vars);
+void	setup(t_minirt *vars, int cam_id);
 void 	raytracing(t_minirt *vars);
 
 //debugging

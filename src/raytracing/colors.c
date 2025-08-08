@@ -93,7 +93,7 @@ t_color get_color(t_vec3 poi, t_object *obj)
 		get_uv_cone
 	};
 
-	if (obj->t.mode == SOLID)
+	if (obj->t.mode == NONE)
 		return (obj->t.c1);
 	uv = f[obj->class - 3](poi, obj);
 	if (obj->t.mode == CHECKERED)

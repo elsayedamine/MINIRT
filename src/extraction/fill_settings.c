@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_settings.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:36:35 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/28 17:26:02 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/09 00:03:04 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	fill_camera(char *line, t_minirt *vars)
 	char	**fields;
 	t_object	data;
 	int		type;
+	static int	cam_number;
 
 	fields = ft_split(line, WHITE);
 	if (!fields || ft_arrlen(fields) > 4)
@@ -45,15 +46,18 @@ int	fill_camera(char *line, t_minirt *vars)
 	data = classifier(fields[1], &type, VECTOR);
 	if (data.class == UNKNOWN || !(type <= RGB1))
 		return (ft_free("2", fields), throw_error(CAMERA), 1);
-	vars->cam.p = data.p;
+	vars->cam[cam_number].p = data.p;
 	data = classifier(fields[2], &type, ORIENT);
 	if (type != ORIENT && type != RGB1)
 		return (ft_free("2", fields), throw_error(CAMERA), 1);
-	vars->cam.fw = data.p;
+	vars->cam[cam_number].fw = data.p;
 	data = classifier(fields[3], &type, CAMERA);
 	if (type != FOV && type != RATIO)
 		return (ft_free("2", fields), throw_error(CAMERA), 1);
-	vars->cam.fov = data.r;
+	vars->cam[cam_number].fov = data.r;
+	if (++cam_number >= 11)
+		return (ft_free("2", fields), throw_error(TOO_MANY_CAM), 1);
+	vars->cam[cam_number].exist = 1;
 	return (ft_free("2", fields), 2);
 }
 
