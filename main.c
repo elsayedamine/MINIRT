@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:29:26 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/08 03:19:13 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/08 16:53:22 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ int	main(int ac, char **av)
 		if (extract_data(&vars, av[1]) == FALSE)
 			return (130);
 		// print_members(vars.members, print_data);
-		setup(&vars);
-		raytracing(&vars);
+		raytracing(&vars, setup(&vars));
 		hook_manipulation(&vars);
 		cleanup(&vars, 1);
 		return (0);
