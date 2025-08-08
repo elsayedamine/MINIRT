@@ -71,9 +71,14 @@ t_color get_pixel_bump(int x, int y, void *img)
 	return (int_to_color(*(unsigned int *)(addr + offset)));
 }
 
-t_color get_pixel_checkered(int x, int y, t_texture texture)
+t_color get_pixel_checkered(float x, float y, t_texture texture)
 {
-	
+	int u = (int)floor(x * (float)texture.w);
+	int v = (int)floor(y * (float)texture.w);
+	if ((u + v) % 2 == 0)
+	    return (texture.c1);
+	else
+	    return (texture.c2);
 }
 
 t_color get_color(t_vec3 poi, t_object *obj)
@@ -91,11 +96,11 @@ t_color get_color(t_vec3 poi, t_object *obj)
 	if (obj->t.mode == SOLID)
 		return (obj->t.c1);
 	uv = f[obj->class - 3](poi, obj);
+	if (obj->t.mode == CHECKERED)
+		return (get_pixel_checkered(uv.x, uv.y, obj->t));
 	x = (1.0f - uv.x) * (float)(obj->t.w - 1);
 	y = uv.y * (float)(obj->t.h - 1);
 	if (obj->t.mode == BUMPMAP)
 		return (get_pixel_bump(x, y, obj->t.img));
-	if (obj->t.mode == CHECKERED)
-		return (get_pixel_checkered(x, y, obj->t));
 	return (obj->t.c1);
 }

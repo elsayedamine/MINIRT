@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/08 02:35:09 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/08 16:42:09 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,13 @@ typedef struct s_vec3
 	float	y;
 	float	z;
 }			t_vec3;
+
+typedef struct s_mat3
+{
+	t_vec3	x;
+	t_vec3	y;
+	t_vec3	z;
+}			t_mat3;
 
 typedef struct s_texture
 {
