@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/08 17:25:45 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/08 17:38:10 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@
 # define M_THETA 0.76842396884
 # define RAD 0.0174533
 # define EPSILON 0.0001f
-# define W 1
-# define H 0
+
 /* **************************************** */
 /*                 ENUMS                    */
 /* **************************************** */
@@ -104,13 +103,6 @@ typedef struct s_vec3
 	float	z;
 }			t_vec3;
 
-typedef struct s_mat3
-{
-	t_vec3	x;
-	t_vec3	y;
-	t_vec3	z;
-}			t_mat3;
-
 typedef struct s_texture
 {
 	t_mode	mode;
@@ -154,6 +146,9 @@ typedef struct s_minirt
 	t_win		win;
 	t_list		*members;
 	t_camera	cam;
+	t_ray		**rays;
+	float		plane_w;
+	float		plane_h;
 	float		amb_ratio;
 	t_color		amb_rgb;
 	t_object	*selected;
@@ -222,8 +217,8 @@ float	sub(float a, float b);
 void	put_pixel(t_minirt *vars, int x, int y, int color);
 
 //raytracing
-t_ray	**setup(t_minirt *vars);
-void raytracing(t_minirt *vars, t_ray **rays);
+void setup(t_minirt *vars);
+void raytracing(t_minirt *vars);
 
 //debugging
 void print_vec(t_vec3 vec, int nl);
