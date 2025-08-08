@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/07 23:59:12 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/08 00:03:06 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	assign_object(t_minirt *vars, char *file, t_object *obj)
 	static int	seen[2];
 
 	ft_strcompress(file);
-	if (!file[0])
+	if (!file[0] || *file == '#')
 		return (free(obj), TRUE);
 	if (!ft_strncmp("A ", file, 2) && !seen[0]++)
 		err = fill_ambiance(file, vars);
@@ -49,8 +49,6 @@ int	assign_object(t_minirt *vars, char *file, t_object *obj)
 		err = fill_plan(vars, file, obj);
 	else if (!ft_strncmp("co ", file, 3))
 		err = fill_cone(vars, file, obj);
-	else if (*file == '#')
-		return (free(obj), 1);
 	else
 		return (cleanup(vars, 3), free(obj), throw_error(ERR), 0);
 	if (err == 1)

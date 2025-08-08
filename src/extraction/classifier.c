@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 22:48:49 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/07 23:52:10 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/08 01:49:51 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	split_3_parts(char *s, char part1[8], char part2[8], char part3[8])
 	int	j;
 
 	ft_init(2, &i, &j);
-	if (s[i] == ',' || s[i] == '\0')
+	if (!s || s[i] == ',' || s[i] == '\0')
 		return (FALSE);
 	while (s[i] && s[i] != ',' && j < 7)
 		part1[j++] = s[i++];
@@ -65,19 +65,8 @@ t_object	classifier(char *s, int *type, int class)
 	obj.ratio = -2.0f;
 	obj.r = -2.0f;
 	obj.h = -2.0f;
-	obj.p.x = 0;
-	obj.p.y = 0;
-	obj.p.z = 0;
-	obj.n.x = 0;
-	obj.n.y = 0;
-	obj.n.z = 0;
-	obj.o.x = 0;
-	obj.o.y = 0;
-	obj.o.z = 0;
-	obj.rgb.r = 0;
-	obj.rgb.g = 0;
-	obj.rgb.b = 0;
-
+	ft_init(12, &obj.p.x, &obj.p.y, &obj.p.z, &obj.n.x, &obj.n.y, &obj.n.z, \
+		&obj.o.x, &obj.o.y, &obj.o.z, &obj.rgb.r, &obj.rgb.g, &obj.rgb.b);
 	if (s && split_3_parts(s, p[0], p[1], p[2]))
 	{
 		if (class == RGB && is_int(p[0]) && is_int(p[1]) && is_int(p[2]) && \

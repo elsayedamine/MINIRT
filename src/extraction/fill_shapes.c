@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 17:00:40 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/07 23:54:11 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/08 02:05:20 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	fill_plan(t_minirt *vars, char *line, t_object *obj)
 	t_object	data;
 	int			type;
 
-	(void)vars;
 	fields = ft_split(line, WHITE);
-	if (!fields || ft_arrlen(fields) > 4)
+	if (!fields || ft_arrlen(fields) > 4 + 1)
 		return (ft_free("2", fields), throw_error(PLAN), 1);
 	obj->class = PLAN;
+	obj->t.mode = NONE;
 	data = classifier(fields[1], &type, VECTOR);
 	if (data.class == UNKNOWN || !(type <= RGB1))
 		return (ft_free("2", fields), throw_error(PLAN), 1);
@@ -35,6 +35,10 @@ int	fill_plan(t_minirt *vars, char *line, t_object *obj)
 	obj->rgb = data.rgb;
 	if (!(type == RGB || (type == RGB1 && obj->rgb.r >= 0 && obj->rgb.g >= 0 && obj->rgb.b >= 0)))
 		return (ft_free("2", fields), throw_error(PLAN), 1);
+	if (fields[4])
+		obj->t = extract_texture(fields[4], vars);
+	if (fields[4] && obj->t.mode == NONE)
+		return (ft_free("2", fields), throw_error(PLAN), 1);
 	return (ft_free("2", fields), 0);
 }
 
@@ -44,11 +48,11 @@ int	fill_cylinder(t_minirt *vars, char *line, t_object *obj)
 	t_object	data;
 	int			type;
 
-	(void)vars;
 	fields = ft_split(line, WHITE);
-	if (!fields || ft_arrlen(fields) > 6)
+	if (!fields || ft_arrlen(fields) > 6 + 1)
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
 	obj->class = CYLINDER;
+	obj->t.mode = NONE;
 	data = classifier(fields[1], &type, VECTOR);
 	if (data.class == UNKNOWN || !(type <= RGB1))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
@@ -69,10 +73,10 @@ int	fill_cylinder(t_minirt *vars, char *line, t_object *obj)
 	if (!(type == RGB || (type == RGB1 && obj->rgb.r >= 0 && obj->rgb.g >= 0 && obj->rgb.b >= 0)))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
 	obj->rgb = data.rgb;
-	// if (fields[6])
-	// {
-	// 	if (!set_mode(vars, fields[6], obj))
-	// }
+	if (fields[6])
+		obj->t = extract_texture(fields[6], vars);
+	if (fields[6] && obj->t.mode == NONE)
+		return (ft_free("2", fields), throw_error(CYLINDER), 1);
 	return (ft_free("2", fields), 0);
 }
 
@@ -82,11 +86,11 @@ int	fill_sphere(t_minirt *vars, char *line, t_object *obj)
 	t_object	data;
 	int			type;
 
-	(void)vars;
 	fields = ft_split(line, WHITE);
-	if (!fields || ft_arrlen(fields) > 4)
+	if (!fields || ft_arrlen(fields) > 4 + 1)
 		return (ft_free("2", fields), throw_error(SPHERE), 1);
 	obj->class = SPHERE;
+	obj->t.mode = NONE;
 	data = classifier(fields[1], &type, VECTOR);
 	if (data.class == UNKNOWN || !(type <= RGB1))
 		return (ft_free("2", fields), throw_error(SPHERE), 1);
@@ -99,6 +103,10 @@ int	fill_sphere(t_minirt *vars, char *line, t_object *obj)
 	obj->rgb = data.rgb;
 	if (!(type == RGB || (type == RGB1 && obj->rgb.r >= 0 && obj->rgb.g >= 0 && obj->rgb.b >= 0)))
 		return (ft_free("2", fields), throw_error(SPHERE), 1);
+	if (fields[4])
+		obj->t = extract_texture(fields[4], vars);
+	if (fields[4] && obj->t.mode == NONE)
+		return (ft_free("2", fields), throw_error(SPHERE), 1);
 	return (ft_free("2", fields), 0);
 }
 
@@ -108,11 +116,11 @@ int	fill_cone(t_minirt *vars, char *line, t_object *obj)
 	t_object	data;
 	int			type;
 
-	(void)vars;
 	fields = ft_split(line, WHITE);
-	if (!fields || ft_arrlen(fields) > 6)
+	if (!fields || ft_arrlen(fields) > 6 + 1)
 		return (ft_free("2", fields), throw_error(CONE), 1);
 	obj->class = CONE;
+	obj->t.mode = NONE;
 	data = classifier(fields[1], &type, VECTOR);
 	if (data.class == UNKNOWN || !(type <= RGB1))
 		return (ft_free("2", fields), throw_error(CONE), 1);
@@ -133,5 +141,9 @@ int	fill_cone(t_minirt *vars, char *line, t_object *obj)
 	if (!(type == RGB || (type == RGB1 && obj->rgb.r >= 0 && obj->rgb.g >= 0 && obj->rgb.b >= 0)))
 		return (ft_free("2", fields), throw_error(CONE), 1);
 	obj->rgb = data.rgb;
+	if (fields[6])
+		obj->t = extract_texture(fields[6], vars);
+	if (fields[6] && obj->t.mode == NONE)
+		return (ft_free("2", fields), throw_error(CONE), 1);
 	return (ft_free("2", fields), 0);
 }

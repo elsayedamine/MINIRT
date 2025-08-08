@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:29:26 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/07 22:52:14 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/08 03:19:13 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int ac, char **av)
 	{
 		if (extract_data(&vars, av[1]) == FALSE)
 			return (130);
-		print_members(vars.members, print_data);
+		// print_members(vars.members, print_data);
 		setup(&vars);
 		raytracing(&vars);
 		hook_manipulation(&vars);

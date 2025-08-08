@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/07 22:11:35 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/08 02:35:09 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef enum e_mode
 	NONE,
 	SOLID,
 	CHECKERED,
-	BRUMPMAP,
+	BUMPMAP,
 	TEXTURE
 } t_mode;
 
@@ -95,6 +95,7 @@ typedef struct s_color
 	int		g;
 	int		b;
 }			t_color;
+
 typedef struct s_vec3
 {
 	float	x;
@@ -102,18 +103,14 @@ typedef struct s_vec3
 	float	z;
 }			t_vec3;
 
-typedef struct s_class
-{
-	int		class;
-	void	*data;
-}			t_class;
-
 typedef struct s_texture
 {
 	t_mode	mode;
 	void	*img;
 	int		w;
 	int		h;
+	t_color	c1;
+	t_color	c2;
 }			t_texture;
 
 typedef struct s_object
@@ -126,8 +123,8 @@ typedef struct s_object
 	t_vec3	p;
 	t_vec3	n;
 	t_vec3	o;
-	t_texture t;
 	t_color	rgb;
+	t_texture t;
 }			t_object;
 
 typedef struct s_camera
@@ -182,6 +179,9 @@ t_object	*new_object(void);
 void		print_members(t_list *lst, void (*f)(t_object *));
 void		cleanup(t_minirt *vars, int n);
 void		print_data(t_object *obj);
+t_texture   extract_texture(char *texture, t_minirt *vars);
+int			split_3_parts(char *s, char part1[8], char part2[8], char part3[8]);
+int			is_int(char *s);
 
 // fillers
 int		fill_cone(t_minirt *vars, char *line, t_object *obj);
