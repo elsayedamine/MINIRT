@@ -7,7 +7,7 @@ t_vec3 get_uv_cone(t_vec3 poi, t_object *obj)
 
 	local = vec_op_vec(poi, obj->p, sub);
 	local = sc_op_vec(1.0f / obj->r, local, mul);
-	uv.x = atan2(local.z, local.x) / (2.0f * M_PI) - .25f;
+	uv.x = atan2(local.z, local.x) / (2.0f * M_PI) - .25f;	
 	uv.y = (local.y + obj->h / 2.0f) / obj->h;
 	return (uv);
 }
