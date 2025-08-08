@@ -6,7 +6,7 @@
 /*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:29:26 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/08 18:01:28 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/08 18:02:29 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	main(int ac, char **av)
 		if (extract_data(&vars, av[1]) == FALSE)
 			return (130);
 		// print_members(vars.members, print_data);
-		raytracing(&vars, setup(&vars));
+		setup(&vars);
+		raytracing(&vars);
 		hook_manipulation(&vars);
 		cleanup(&vars, 1);
 		return (0);

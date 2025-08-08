@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/08 17:38:10 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/08 19:20:22 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ typedef struct s_minirt
 	float		amb_ratio;
 	t_color		amb_rgb;
 	t_object	*selected;
-}			t_minirt;
+}				t_minirt;
 
 typedef struct s_hit_info
 {
@@ -167,6 +167,7 @@ typedef struct s_hit_info
 
 typedef t_hit_info (*t_intersect)(t_vec3 origin, t_vec3 dir, t_object *obj);
 typedef t_vec3 (*t_get_uv)(t_vec3 poi, t_object *obj);
+typedef t_vec3	(*t_rotate)(t_vec3 vec, float angle)
 
 /* **************************************** */
 /*           FUNCTION PROTOTYPES            */
@@ -245,5 +246,8 @@ t_color col_add_col(t_color c1, t_color c2);
 
 // textures
 t_color get_color(t_vec3 poi, t_object *obj);
+t_vec3	rotate_z(t_vec3 vec, float angle);
+t_vec3	rotate_x(t_vec3 vec, float angle);
+t_vec3	rotate_y(t_vec3 vec, float angle);
 
 #endif
