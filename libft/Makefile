@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -O3 -Wall -Wextra
+CFLAGS = -Wall -Wextra -Werror -g
 AR = ar rcs
 RM = rm -rf
 NAME = libft.a

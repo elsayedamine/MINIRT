@@ -29,7 +29,7 @@ int	fill_ambiance(char *line, t_minirt *vars)
 	data = classifier(fields[2], &type, RGB);
 	if (type != RGB && type != RGB1)
 		return (ft_free("2", fields), throw_error(AMBIANCE), 1);
-	vars->amb_rgb = data.rgb;
+	vars->amb_rgb = data.t.c1;
 	return (ft_free("2", fields), 2);
 }
 
@@ -76,8 +76,8 @@ int	fill_light(char *line, t_object *obj)
 		return (ft_free("2", fields), throw_error(LIGHT), 1);
 	obj->ratio = data.r;
 	data = classifier(fields[3], &type, RGB);
-	obj->rgb = data.rgb;
-	if (type != RGB && (type != RGB1 || obj->rgb.r < 0 || obj->rgb.g < 0 || obj->rgb.b < 0))
+	obj->t.c1 = data.t.c1;
+	if (type != RGB && (type != RGB1 || obj->t.c1.r < 0 || obj->t.c1.g < 0 || obj->t.c1.b < 0))
 		return (ft_free("2", fields), throw_error(LIGHT), 1);
 	return (ft_free("2", fields), 0);
 }

@@ -15,7 +15,7 @@ void	print_data(t_object *obj)
 	printf("diameter : %.1f\n", obj->r);
 	printf("height   : %.1f\n", obj->h);
 	if (obj->class != 1)
-		printf("rgb      : %d,%d,%d\n", obj->rgb.r, obj->rgb.g, obj->rgb.b);
+		printf("rgb      : %d,%d,%d\n", obj->t.c1.r, obj->t.c1.g, obj->t.c1.b);
 	if (obj->class != 0)
 		printf("crd      : %.1f,%.1f,%.1f\n", obj->p.x, \
 			obj->p.y, obj->p.z);

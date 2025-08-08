@@ -57,9 +57,9 @@ t_color compute_lighting(t_minirt *vars, t_hit_info hit, t_object *light, t_ray 
 	float dotRV = dot(R, vect);
 	dotRV = (dotRV < 0) * 0 + (dotRV >= 0) * dotRV;
 	// float	dist = distance(hit.poi, light->p);
-	t_color diffuse = col_mul_sc(light->rgb, dotNL);
+	t_color diffuse = col_mul_sc(light->t.c1, dotNL);
 	float shininess = 32.0f;
-	t_color specular = col_mul_sc(light->rgb, powf(dotRV, shininess));
+	t_color specular = col_mul_sc(light->t.c1, powf(dotRV, shininess));
 	t_color final = col_add_col(col_mul_col(diffuse, hit.color), specular);
 	return (final);
 }

@@ -123,7 +123,6 @@ typedef struct s_object
 	t_vec3	p;
 	t_vec3	n;
 	t_vec3	o;
-	t_color	rgb;
 	t_texture t;
 }			t_object;
 
@@ -164,6 +163,9 @@ typedef struct s_hit_info
 	double		dist;
 	t_object	*obj;
 }				t_hit_info;
+
+typedef t_hit_info (*t_intersect)(t_vec3 origin, t_vec3 dir, t_object *obj);
+typedef t_vec3 (*t_get_uv)(t_vec3 poi, t_object *obj);
 
 /* **************************************** */
 /*           FUNCTION PROTOTYPES            */
@@ -226,8 +228,6 @@ int	quit(t_minirt *vars);
 void    hook_manipulation(t_minirt *vars);
 
 // intersections
-typedef t_hit_info (*t_intersect)(t_vec3 origin, t_vec3 dir, t_object *obj);
-
 t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_cylinder(t_vec3 origin, t_vec3 dir, t_object *obj);
@@ -241,5 +241,8 @@ int color_to_int(t_color color);
 t_color col_mul_col(t_color c1, t_color c2);
 t_color col_mul_sc(t_color col, float sc);
 t_color col_add_col(t_color c1, t_color c2);
+
+// textures
+t_color get_color(t_vec3 poi, t_object *obj);
 
 #endif

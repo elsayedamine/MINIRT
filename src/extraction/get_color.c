@@ -36,15 +36,15 @@ int	parse_component(char **str, int *component)
 int	get_rgb(t_minirt *vars, char *str, t_object *obj)
 {
 	(void)vars;
-	if (!parse_component(&str, &obj->rgb.r))
+	if (!parse_component(&str, &obj->t.c1.r))
 		return (FALSE);
 	if (*str++ != ',')
 		return (FALSE);
-	if (!parse_component(&str, &obj->rgb.g))
+	if (!parse_component(&str, &obj->t.c1.g))
 		return (FALSE);
 	if (*str++ != ',')
 		return (FALSE);
-	if (!parse_component(&str, &obj->rgb.b))
+	if (!parse_component(&str, &obj->t.c1.b))
 		return (FALSE);
 	if (*str)
 		return (FALSE);

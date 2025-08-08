@@ -66,12 +66,12 @@ t_object	classifier(char *s, int *type, int class)
 	obj.r = -2.0f;
 	obj.h = -2.0f;
 	ft_init(12, &obj.p.x, &obj.p.y, &obj.p.z, &obj.n.x, &obj.n.y, &obj.n.z, \
-		&obj.o.x, &obj.o.y, &obj.o.z, &obj.rgb.r, &obj.rgb.g, &obj.rgb.b);
+		&obj.o.x, &obj.o.y, &obj.o.z, &obj.t.c1.r, &obj.t.c1.g, &obj.t.c1.b);
 	if (s && split_3_parts(s, p[0], p[1], p[2]))
 	{
 		if (class == RGB && is_int(p[0]) && is_int(p[1]) && is_int(p[2]) && \
-			fill_rgb(&obj.rgb, p[0], p[1], p[2]) < 5)
-			return (*type = fill_rgb(&obj.rgb, p[0], p[1], p[2]), obj);
+			fill_rgb(&obj.t.c1, p[0], p[1], p[2]) < 5)
+			return (*type = fill_rgb(&obj.t.c1, p[0], p[1], p[2]), obj);
 		if (fill_vector(&obj.p, p, class, type) == TRUE)
 			return (obj);
 	}

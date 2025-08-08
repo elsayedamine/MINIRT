@@ -61,5 +61,4 @@ void setup(t_minirt *vars)
 {
 	setup_cam(vars);
 	setup_rays(vars);
-	init_window(vars);
 }
