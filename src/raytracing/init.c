@@ -59,6 +59,7 @@ void setup_rays(t_minirt *vars, int cam_id)
 
 void	setup(t_minirt *vars, int cam_id)
 {
+	vars->cam_id = cam_id;
 	setup_cam(vars, cam_id);
 	setup_rays(vars, cam_id);
 }

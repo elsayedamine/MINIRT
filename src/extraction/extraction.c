@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/09 18:00:16 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/09 18:29:37 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	extract_data(t_minirt *vars, char *filename)
 	i = 0;
 	while (++i < 11)
 		vars->cam[i].exist = 0;
+	vars->selected.mouse = NO_CLICK;
 	i = -1;
 	while (file[++i])
 	{

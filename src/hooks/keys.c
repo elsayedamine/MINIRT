@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:38:23 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/09 17:55:02 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/09 19:34:30 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,25 +58,52 @@ void rotation(t_minirt *vars, int c)
 
 int keyhook(int key, t_minirt *vars)
 {
+	int	wasdqe;
+
 	if (key == 65307)
 		quit(vars);
 	if (key == '\t')
-		vars->selected.mouse = 0;
-	// printf("use mouse: %d\n", vars->selected.mouse);
-	if (ft_strchr("wasdqe", key) && vars->selected.mouse == LEFT_CLICK)
+		vars->selected.mouse = NO_CLICK;
+	wasdqe = ft_strchr("wasdqe", key) != NULL;
+	if (wasdqe && vars->selected.mouse == LEFT_CLICK)
 		translation(vars, key);
-	if (ft_strchr("wasdqe", key) && vars->selected.mouse == RIGHT_CLICK)
+	else if (wasdqe && vars->selected.mouse == RIGHT_CLICK)
 		rotation(vars, key);
-	// i will do somthing for the camera here
-
-	if (ft_isdigit(key) && vars->cam[key - 48].exist)
-	{
-		printf("%d\n", key);
-		setup(vars, key - 48);
-		raytracing(vars);
-	}
-	// guess i did hhhhhhh
+	else if (ft_isdigit(key) && vars->cam[key - 48].exist)
+		return (setup(vars, key - 48), raytracing(vars), TRUE);
+	else if (wasdqe && vars->selected.mouse == NO_CLICK)
+		camera_translation(vars, key);
+	// else if (wasdqe && vars->selected.mouse == MIDDLE_CLICK)
+		// camera_rotation(vars, key);
     return (TRUE);
+}
+
+void	resize(t_minirt *vars)
+{
+	if (vars->selected.obj->class == SPHERE)
+		vars->selected.obj->r += (vars->selected.mouse == 4) - (vars->selected.mouse == 5);
+	if (vars->selected.obj->class == CYLINDER)
+	{
+		vars->selected.obj->h += (vars->selected.mouse == 4) - (vars->selected.mouse == 5);
+		vars->selected.obj->r += (vars->selected.mouse == 4) - (vars->selected.mouse == 5);
+	}
+	if (vars->selected.obj->class == CONE)
+	{
+		vars->selected.obj->h += (vars->selected.mouse == 4) - (vars->selected.mouse == 5);
+		vars->selected.obj->angle += (vars->selected.mouse == 4) - (vars->selected.mouse == 5);
+	}
+	raytracing(vars);
+}
+
+void	camera_translation(t_minirt *vars, int c)
+{
+	t_vec3 trans;
+
+	trans = (t_vec3){(c == 'd') - (c == 'a') / 2.0f,
+		(c == 'w') - (c == 's') / 2.0f, (c == 'q') - (c == 'e') / 2.0f};
+	vars->cam[vars->cam_id].p = vec_op_vec(vars->cam[vars->cam_id].p, trans, add);
+	setup(vars, vars->cam_id);
+	raytracing(vars);
 }
 
 int mouse_click(int button, int x, int y, t_minirt *vars)
@@ -85,7 +112,12 @@ int mouse_click(int button, int x, int y, t_minirt *vars)
 	if (!obj)
 		return (0);
 	vars->selected.obj = obj;
+	vars->selected.prev = vars->selected.mouse;
 	vars->selected.mouse = button;
+	if (vars->selected.prev == LEFT_CLICK && (vars->selected.mouse == SCROLL_UP || vars->selected.mouse == SCROLL_DOWN))
+		resize(vars);
+	// else if (vars->selected.prev == RIGHT_CLICK && vars->selected.mouse == SCROLL_DOWN)
+		// resize_fov(vars);
 	// printf("set muose: %d\n", vars->selected.mouse);
 	return (0);
 }
