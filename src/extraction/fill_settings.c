@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:36:35 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/09 00:03:04 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/09 17:57:59 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	fill_camera(char *line, t_minirt *vars)
 	vars->cam[cam_number].fov = data.r;
 	if (++cam_number >= 11)
 		return (ft_free("2", fields), throw_error(TOO_MANY_CAM), 1);
-	vars->cam[cam_number].exist = 1;
+	vars->cam[cam_number - 1].exist = 1;
 	return (ft_free("2", fields), 2);
 }
 

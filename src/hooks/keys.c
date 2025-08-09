@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:38:23 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/09 08:22:45 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/09 17:55:02 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ int keyhook(int key, t_minirt *vars)
 	if (ft_strchr("wasdqe", key) && vars->selected.mouse == RIGHT_CLICK)
 		rotation(vars, key);
 	// i will do somthing for the camera here
+
 	if (ft_isdigit(key) && vars->cam[key - 48].exist)
 	{
+		printf("%d\n", key);
 		setup(vars, key - 48);
 		raytracing(vars);
 	}

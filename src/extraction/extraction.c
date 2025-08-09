@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/09 15:34:35 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/09 18:00:16 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,12 @@ int	extract_data(t_minirt *vars, char *filename)
 	if (fd == -1)
 		return (perror("Failed to open file"), FALSE);
 	file = ft_read(fd, filename);
-	i = -1;
+	i = 0;
 	while (++i < 11)
 		vars->cam[i].exist = 0;
 	i = -1;
 	while (file[++i])
 	{
-		// printf("%s\n", file[i]);
 		obj = new_object();
 		if (assign_object(vars, file[i], obj) == FALSE)
 			return (close(fd), ft_free("2", file), FALSE);
