@@ -4,9 +4,13 @@ t_vec3 get_uv_cone(t_vec3 poi, t_object *obj)
 {
 	t_vec3 local;
 	t_vec3 uv;
+	t_vec3 rel;
 
-	local = vec_op_vec(poi, obj->p, sub);
-	local = sc_op_vec(1.0f / obj->r, local, mul);
+	rel = vec_op_vec(poi, obj->p, sub);
+	local.x = dot(rel, obj->tan);
+	local.y = dot(rel, obj->o);
+	local.z = dot(rel, obj->bitan);
+	local = sc_op_vec(1.0f / obj->r, local, mul);	
 	uv.x = obj->facing + atan2(local.z, local.x) / (2.0f * M_PI);	
 	uv.y = (local.y + obj->h / 2.0f) / obj->h;
 	return (uv);
@@ -16,15 +20,13 @@ t_vec3 get_uv_cylinder(t_vec3 poi, t_object *obj)
 {
 	t_vec3 local;
 	t_vec3 uv;
-	t_vec3 tmp;
-	t_vec3 tan;
-	t_vec3 bitan;
+	t_vec3 rel;
 
-	tmp = fabs(obj->o.x) < 0.9f ? (t_vec3){1,0,0} : (t_vec3){0,1,0};
-	tan = normalize(cross(tmp, obj->o));
-	bitan = cross(obj->o, tan);
-	local = vec_op_vec(poi, obj->p, sub);
-	local = sc_op_vec(1.0f / obj->r, local, mul);
+	rel = vec_op_vec(poi, obj->p, sub);
+	local.x = dot(rel, obj->tan);
+	local.y = dot(rel, obj->o);
+	local.z = dot(rel, obj->bitan);
+	local = sc_op_vec(1.0f / obj->r, local, mul);	
 	uv.x = obj->facing + atan2(local.z, local.x) / (2.0f * M_PI);
 	uv.y = 1.0f - local.y / obj->h;
 	return (uv);
@@ -40,9 +42,9 @@ t_vec3 get_uv_plane(t_vec3 poi, t_object *obj)
 
 	local = vec_op_vec(poi, obj->p, sub);
 	if (obj->n.y < .999f)
-		ref = init_vec(0, 1, 0);
+		ref = (t_vec3){0, 1, 0};
 	else
-		ref = init_vec(0, 0, -1);
+		ref = (t_vec3){0, 0, -1};
 	right = normalize(cross(ref, obj->n));
 	up = normalize(cross(right, obj->n));
 	uv.x = dot(local, right) * .1f;
@@ -56,9 +58,13 @@ t_vec3 get_uv_sphere(t_vec3 poi, t_object *obj)
 {
 	t_vec3 local;
 	t_vec3 uv;
+	t_vec3 rel;
 
-	local = vec_op_vec(poi, obj->p, sub);
-	local = normalize(sc_op_vec(1.0f / obj->r, local, mul));
+	rel = vec_op_vec(poi, obj->p, sub);
+	local.x = dot(rel, obj->tan);
+	local.y = dot(rel, obj->o);
+	local.z = dot(rel, obj->bitan);
+	local = sc_op_vec(1.0f / obj->r, local, mul);	
 	uv.x = obj->facing + atan2(local.z, local.x) / (2.0f * M_PI);
 	uv.y = acos(local.y) / M_PI;
 	return (uv);

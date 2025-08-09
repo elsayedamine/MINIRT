@@ -5,9 +5,9 @@ void setup_cam(t_minirt *vars, int cam_id)
 	t_vec3 wup;
 
 	if (fabs(vars->cam[cam_id].fw.x) == 0 && fabs(vars->cam[cam_id].fw.y) == 0)
-		wup = init_vec(0, 1, 0); // use Y axis if fw is colinear with Z
+		wup = (t_vec3){0, 1, 0}; // use Y axis if fw is colinear with Z
 	else
-		wup = init_vec(0, 0, 1);
+		wup = (t_vec3){0, 0, 1};
 	vars->cam[cam_id].rt = normalize(cross(vars->cam[cam_id].fw, wup));
 	vars->cam[cam_id].up = normalize(cross(vars->cam[cam_id].rt, vars->cam[cam_id].fw));
 }

@@ -16,8 +16,8 @@ void translation(t_minirt *vars, int c)
 {
 	t_vec3 trans;
 
-	trans = init_vec((c == 'd') - (c == 'a') / 2.0f,
-		(c == 'w') - (c == 's') / 2.0f, (c == 'q') - (c == 'e') / 2.0f);
+	trans = (t_vec3){(c == 'd') - (c == 'a') / 2.0f,
+		(c == 'w') - (c == 's') / 2.0f, (c == 'q') - (c == 'e') / 2.0f};
 	vars->selected.obj->p = vec_op_vec(vars->selected.obj->p, trans, add);
 	raytracing(vars);
 }
@@ -25,33 +25,33 @@ void translation(t_minirt *vars, int c)
 
 void rotation(t_minirt *vars, int c)
 {
-	t_vec3 ref;
-	t_vec3 rot;	
+	t_object *s;
+	t_vec3 rot;
+	t_vec3 temp;
 	
 	rot.x = (c == 'w') - (c == 's');
-	rot.y = (c == 'd') - (c == 'a');
-	rot.z = (c == 'q') - (c == 'e');
-	
-	if (vars->selected.obj->n.y < .999f)
-		ref = init_vec(0, 1, 0);
-	else
-		ref = init_vec(0, 0, -1);
-	if (rot.x)
+	rot.z = (c == 'd') - (c == 'a');
+	rot.y = (c == 'q') - (c == 'e');
+	s = vars->selected.obj;
+	if (rot.x || rot.z)
 	{
-		rotate_z(vars->selected.obj->p, rot.x * 3);
-		rotate_z(vars->selected.obj->n, rot.x * 3);
-	}
-	if (rot.z)
-	{
-		rotate_x(vars->selected.obj->p, rot.z * 3);
-		rotate_x(vars->selected.obj->n, rot.z * 3);		
+		// if (s->class == 4 || s->class == 6)
+		// {
+		// 	temp = vec_op_vec(s->p, sc_op_vec(s->h * 0.5f, s->o, mul), add);
+		// 	temp = rotate_z(temp, rot.z / 10);
+		// 	temp = rotate_x(temp, rot.x / 10);
+		// 	s->p = vec_op_vec(temp, sc_op_vec(s->h * 0.5f, s->o, mul), sub);
+		// }
+		s->o = rotate_z(s->o, rot.z / 10);
+		s->o = rotate_x(s->o, rot.x / 10);
+		set_object_vec(s);		
 	}
 	if (rot.y)
 	{
-		vars->selected.obj->facing += rot.y / 10.0f;
-		vars->selected.obj->facing = fmod(vars->selected.obj->facing, 1.0);
-		if (vars->selected.obj->facing < 0.0)
-			vars->selected.obj->facing += 1.0;
+		s->facing += rot.y / 10.0f;
+		s->facing = fmod(s->facing, 1.0);
+		if (s->facing < 0.0)
+			s->facing += 1.0;
 	}
 	raytracing(vars);
 }

@@ -15,10 +15,12 @@
 t_object	*new_object(void)
 {
 	t_object	*obj;
+	t_vec3		ref;
 
 	obj = (t_object *)malloc(sizeof(t_object));
 	if (!obj)
 		return (NULL);
+	obj->o = (t_vec3){0, 1, 0};
 	obj->facing = 0;
 	obj->class = -1;
 	obj->angle = -1;
@@ -59,8 +61,23 @@ int	assign_object(t_minirt *vars, char *file, t_object *obj)
 	return (ft_lstadd_back(&vars->members, ft_lstnew(obj)), 1);
 }
 
+void set_object_vec(t_object *obj)
+{
+	t_vec3 ref;
+
+	if (obj->o.y < .999f)
+		ref = (t_vec3){0, 1, 0};
+	else
+		ref = (t_vec3){1, 0, 0};
+	obj->tan = normalize(cross(ref, obj->o));
+	obj->bitan = cross(obj->o, obj->tan);
+	// print_vec(obj->tan, 1);
+	// print_vec(obj->bitan, 1);
+}
+
 int	extract_data(t_minirt *vars, char *filename)
 {
+	t_object *obj;
 	int			i;
 	int			fd;
 	char		**file;
@@ -73,12 +90,14 @@ int	extract_data(t_minirt *vars, char *filename)
 	i = -1;
 	while (++i < 11)
 		vars->cam[i].exist = 0;
-	i = 0;
-	while (file[i])
+	i = -1;
+	while (file[++i])
 	{
 		// printf("%s\n", file[i]);
-		if (assign_object(vars, file[i++], new_object()) == FALSE)
+		obj = new_object();
+		if (assign_object(vars, file[i], obj) == FALSE)
 			return (close(fd), ft_free("2", file), FALSE);
+		set_object_vec(obj);
 	}
 	return (close(fd), ft_free("2", file), TRUE);
 }

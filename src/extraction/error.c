@@ -15,10 +15,10 @@
 int	throw_error(int err)
 {
 	if (err <= CONE && err >= 0)
-		printfd(2, "Error\n\tUndefined data for %s Element !\n", g_strs[err]);
+		printfd(2, "Error\n\tUndefined data for %s element!\n", g_strs[err]);
 	if (err == ERR)
-		printfd(2, "Error\n\tUndefined data Entry !\n");
+		printfd(2, "Error\n\tUndefined data entry!\n");
 	if (err == TOO_MANY_CAM)
-		printfd(2, "Too ManY Cameras !\n");
+		printfd(2, "Error\n\tToo many cameras!\n");
 	return (1);
 }
