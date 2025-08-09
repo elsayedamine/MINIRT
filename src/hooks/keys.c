@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:38:23 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/09 19:34:30 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/09 20:07:12 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,18 +106,31 @@ void	camera_translation(t_minirt *vars, int c)
 	raytracing(vars);
 }
 
+void	resize_fov(t_minirt *vars)
+{
+	vars->cam[vars->cam_id].fov += (vars->selected.mouse == 4) - (vars->selected.mouse == 5);
+	if (vars->cam[vars->cam_id].fov > 180)
+		vars->cam[vars->cam_id].fov = 180;
+	if (vars->cam[vars->cam_id].fov < 0)
+		vars->cam[vars->cam_id].fov = 0;
+	setup(vars, vars->cam_id);
+	raytracing(vars);
+}
+
 int mouse_click(int button, int x, int y, t_minirt *vars)
 {
 	t_object *obj = get_hit_info(vars->rays[x][y].origin, vars->rays[x][y].dir, vars).obj;
 	if (!obj)
 		return (0);
+	static int	last_click;
+	if (vars->selected.prev <= RIGHT_CLICK)
+		last_click = vars->selected.prev;
 	vars->selected.obj = obj;
 	vars->selected.prev = vars->selected.mouse;
 	vars->selected.mouse = button;
-	if (vars->selected.prev == LEFT_CLICK && (vars->selected.mouse == SCROLL_UP || vars->selected.mouse == SCROLL_DOWN))
+	if (last_click == LEFT_CLICK && (button == SCROLL_UP || button == SCROLL_DOWN))
 		resize(vars);
-	// else if (vars->selected.prev == RIGHT_CLICK && vars->selected.mouse == SCROLL_DOWN)
-		// resize_fov(vars);
-	// printf("set muose: %d\n", vars->selected.mouse);
+	else if (last_click == RIGHT_CLICK && (button == SCROLL_UP || button == SCROLL_DOWN))
+		resize_fov(vars);
 	return (0);
 }
