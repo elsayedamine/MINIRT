@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extraction.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/09 07:45:40 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/09 15:28:54 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_object	*new_object(void)
 
 int	assign_object(t_minirt *vars, char *file, t_object *obj)
 {
-	static int		err = 0;
+	static int	err = 0;
 	static int	seen;
 
 	ft_strcompress(file);
