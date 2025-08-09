@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extraction.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/09 00:04:03 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/09 07:45:40 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_object	*new_object(void)
 	obj = (t_object *)malloc(sizeof(t_object));
 	if (!obj)
 		return (NULL);
+	obj->facing = 0;
 	obj->class = -1;
 	obj->angle = -1;
 	obj->r = -2.0;

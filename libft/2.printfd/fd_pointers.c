@@ -14,7 +14,7 @@
 
 int	fd_putchar(int fd, char c)
 {
-	write (fd, &c, 1);
+	(void)!write (fd, &c, 1);
 	return (1);
 }
 
@@ -25,12 +25,12 @@ int	fd_putstr(int fd, char const *s)
 	i = 0;
 	if (s == NULL)
 	{
-		write(fd, "(null)", 6);
+		(void)!write(fd, "(null)", 6);
 		return (6);
 	}
 	while (s[i])
 	{
-		write(fd, &s[i], 1);
+		(void)!write(fd, &s[i], 1);
 		i++;
 	}
 	return (i);

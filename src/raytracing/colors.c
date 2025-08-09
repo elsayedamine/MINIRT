@@ -7,7 +7,7 @@ t_vec3 get_uv_cone(t_vec3 poi, t_object *obj)
 
 	local = vec_op_vec(poi, obj->p, sub);
 	local = sc_op_vec(1.0f / obj->r, local, mul);
-	uv.x = atan2(local.z, local.x) / (2.0f * M_PI) - .25f;	
+	uv.x = obj->facing + atan2(local.z, local.x) / (2.0f * M_PI);	
 	uv.y = (local.y + obj->h / 2.0f) / obj->h;
 	return (uv);
 }
@@ -16,10 +16,16 @@ t_vec3 get_uv_cylinder(t_vec3 poi, t_object *obj)
 {
 	t_vec3 local;
 	t_vec3 uv;
+	t_vec3 tmp;
+	t_vec3 tan;
+	t_vec3 bitan;
 
+	tmp = fabs(obj->o.x) < 0.9f ? (t_vec3){1,0,0} : (t_vec3){0,1,0};
+	tan = normalize(cross(tmp, obj->o));
+	bitan = cross(obj->o, tan);
 	local = vec_op_vec(poi, obj->p, sub);
 	local = sc_op_vec(1.0f / obj->r, local, mul);
-	uv.x = .25f + atan2(local.z, local.x) / (2.0f * M_PI);
+	uv.x = obj->facing + atan2(local.z, local.x) / (2.0f * M_PI);
 	uv.y = 1.0f - local.y / obj->h;
 	return (uv);
 }
@@ -53,7 +59,7 @@ t_vec3 get_uv_sphere(t_vec3 poi, t_object *obj)
 
 	local = vec_op_vec(poi, obj->p, sub);
 	local = normalize(sc_op_vec(1.0f / obj->r, local, mul));
-	uv.x = .25f + atan2(local.z, local.x) / (2.0f * M_PI);
+	uv.x = obj->facing + atan2(local.z, local.x) / (2.0f * M_PI);
 	uv.y = acos(local.y) / M_PI;
 	return (uv);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/09 00:02:32 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/09 08:30:40 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,11 +121,14 @@ typedef struct s_object
 	int		class;
 	float	ratio;
 	float	angle;
+	float	facing;
 	float	r;
 	float	h;
 	t_vec3	p;
 	t_vec3	n;
 	t_vec3	o;
+	t_vec3	tan;
+	t_vec3	bitan;
 	t_texture t;
 }			t_object;
 

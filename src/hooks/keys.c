@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:38:23 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/09 00:02:04 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/09 08:22:45 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,37 @@ void translation(t_minirt *vars, int c)
 	raytracing(vars);
 }
 
+
 void rotation(t_minirt *vars, int c)
 {
-	vars->selected.obj->p = rotate_x(vars->selected.obj->p, ((c == 'd') - (c == 'a')) * 3);
-	vars->selected.obj->p = rotate_y(vars->selected.obj->p, ((c == 'w') - (c == 's')) * 3);
-	vars->selected.obj->p = rotate_z(vars->selected.obj->p, ((c == 'q') - (c == 'e')) * 3);
+	t_vec3 ref;
+	t_vec3 rot;	
+	
+	rot.x = (c == 'w') - (c == 's');
+	rot.y = (c == 'd') - (c == 'a');
+	rot.z = (c == 'q') - (c == 'e');
+	
+	if (vars->selected.obj->n.y < .999f)
+		ref = init_vec(0, 1, 0);
+	else
+		ref = init_vec(0, 0, -1);
+	if (rot.x)
+	{
+		rotate_z(vars->selected.obj->p, rot.x * 3);
+		rotate_z(vars->selected.obj->n, rot.x * 3);
+	}
+	if (rot.z)
+	{
+		rotate_x(vars->selected.obj->p, rot.z * 3);
+		rotate_x(vars->selected.obj->n, rot.z * 3);		
+	}
+	if (rot.y)
+	{
+		vars->selected.obj->facing += rot.y / 10.0f;
+		vars->selected.obj->facing = fmod(vars->selected.obj->facing, 1.0);
+		if (vars->selected.obj->facing < 0.0)
+			vars->selected.obj->facing += 1.0;
+	}
 	raytracing(vars);
 }
 
@@ -36,6 +62,7 @@ int keyhook(int key, t_minirt *vars)
 		quit(vars);
 	if (key == '\t')
 		vars->selected.mouse = 0;
+	// printf("use mouse: %d\n", vars->selected.mouse);
 	if (ft_strchr("wasdqe", key) && vars->selected.mouse == LEFT_CLICK)
 		translation(vars, key);
 	if (ft_strchr("wasdqe", key) && vars->selected.mouse == RIGHT_CLICK)
@@ -57,5 +84,6 @@ int mouse_click(int button, int x, int y, t_minirt *vars)
 		return (0);
 	vars->selected.obj = obj;
 	vars->selected.mouse = button;
+	// printf("set muose: %d\n", vars->selected.mouse);
 	return (0);
 }

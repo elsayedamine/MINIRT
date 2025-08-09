@@ -99,5 +99,6 @@ void raytracing(t_minirt *vars)
 			put_pixel(vars, i, j, color);
 		}
 	}
+	puts("done");
 	mlx_put_image_to_window(vars->win.mlx, vars->win.win, vars->win.img, 0, 0);
 }

@@ -40,15 +40,15 @@ int	fd_putnbr(int fd, int n)
 	char	c;
 
 	if (n == -2147483648)
-		write(fd, "-2147483648", 11);
+		(void)!write(fd, "-2147483648", 11);
 	else if (n >= 0 && n <= 9)
 	{
 		c = n + 48;
-		write(fd, &c, 1);
+		(void)!write(fd, &c, 1);
 	}
 	else if (n < 0)
 	{
-		write(fd, "-", 1);
+		(void)!write(fd, "-", 1);
 		fd_putnbr(fd, -n);
 	}
 	else
@@ -66,7 +66,7 @@ int	fd_putnbr_u(int fd, unsigned int n)
 	if (n <= 9)
 	{
 		c = n + 48;
-		write(fd, &c, 1);
+		(void)!write(fd, &c, 1);
 	}
 	else
 	{
