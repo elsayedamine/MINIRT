@@ -6,11 +6,10 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 22:48:49 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/08 01:49:51 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/09 15:33:13 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/miniRT.h"
 #include <miniRT.h>
 
 int	is_int(char *s)

@@ -36,30 +36,37 @@ t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj)
 	return (hit);
 }
 
-t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj)
+t_hit_info intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj)
 {
-	t_hit_info hit;
-	
-	// the equation A.x^2 + B.x + C;
-	float	a = dot(dir, dir);
-	float	b = 2 * dot(vec_op_vec(origin, obj->p, sub), dir);
-	float	c = dot(vec_op_vec(origin, obj->p, sub), vec_op_vec(origin, obj->p, sub)) - obj->r * obj->r;
-	float	delta = pow(b, 2) - 4 * a * c;
-	if (delta < 0) // no intersection
-		return (hit.hit = 0, hit);
-	float	x1 = (-b + sqrt(delta)) / (2 * a);
-	float	x2 = (-b - sqrt(delta)) / (2 * a);
-	float x = (x1 > 0 && (x1 < x2 || x2 <= 0)) * x1 + (x2 > 0 && !(x1 > 0 && (x1 < x2 || x2 <= 0))) * x2;
-	if (!(x1 > 0 && (x1 < x2 || x2 <= 0)) && x2 <= 0)
-		return (hit.hit = 0, hit);
-	hit.poi = vec_op_vec(origin, sc_op_vec(x, dir, mul), add);
-	hit.hit = 1;
-	hit.normal = normalize(vec_op_vec(hit.poi, obj->p, sub));
-	hit.dist = distance(hit.poi, origin);
-	hit.color = get_color(hit.poi, obj);
-	hit.obj = obj;
-	hit.light = 0;
-	return (hit);
+    t_hit_info hit;
+    float a = dot(dir, dir);
+    t_vec3 oc = vec_op_vec(origin, obj->p, sub);
+    float b = 2 * dot(oc, dir);
+    float c = dot(oc, oc) - obj->r * obj->r;
+    float delta = b * b - 4 * a * c;
+
+    if (delta < 0.0f)
+        return (hit.hit = 0, hit);
+    float sqrt_delta = sqrtf(fmaxf(delta, 0.0f));
+    float x1 = (-b - sqrt_delta) / (2 * a);
+    float x2 = (-b + sqrt_delta) / (2 * a);
+    float x = 0;
+    if (x1 > EPS_HIT && (x1 < x2 || x2 <= EPS_HIT))
+        x = x1;
+    else if (x2 > EPS_HIT)
+        x = x2;
+    else
+        return (hit.hit = 0, hit);
+    hit.poi = vec_op_vec(origin, sc_op_vec(x, dir, mul), add);
+    hit.normal = normalize(vec_op_vec(hit.poi, obj->p, sub));
+    if (dot(hit.normal, dir) > 0)
+        hit.normal = sc_op_vec(-1, hit.normal, mul);
+    hit.dist = distance(hit.poi, origin);
+    hit.color = get_color(hit.poi, obj);
+    hit.obj = obj;
+    hit.light = 0;
+    hit.hit = 1;
+    return (hit);
 }
 
 t_hit_info	intersect_cylinder(t_vec3 origin, t_vec3 dir, t_object *obj)
@@ -75,13 +82,18 @@ t_hit_info	intersect_cylinder(t_vec3 origin, t_vec3 dir, t_object *obj)
 	float b = 2 * dot(m, d);
 	float c = dot(m, m) - pow(obj->r, 2);
 	float delta = pow(b, 2) - 4 * a * c;
-	if (delta < 0)
+	if (delta < 0.0f)
 		return (hit.hit = 0, hit);
-	float x1 = (-b + sqrt(delta)) / (2 * a);
-	float x2 = (-b - sqrt(delta)) / (2 * a);
-	float x = (x1 > 0 && (x1 < x2 || x2 <= 0)) * x1 + (x2 > 0 && !(x1 > 0 && (x1 < x2 || x2 <= 0))) * x2;
-	if (!(x1 > 0 && (x1 < x2 || x2 <= 0)) && x2 <= 0)
-		return (hit.hit = 0, hit);
+	float sqrt_delta = sqrtf(fmaxf(delta, 0.0f)); // added to reduce black spots
+	float x1 = (-b - sqrt_delta) / (2 * a);
+	float x2 = (-b + sqrt_delta) / (2 * a);
+	float x = 0;
+	if (x1 > EPS_HIT && (x1 < x2 || x2 <= EPS_HIT))
+	    x = x1;
+	else if (x2 > EPS_HIT)
+	    x = x2;
+	else
+	    return (hit.hit = 0, hit);
 	hit.poi = vec_op_vec(origin, sc_op_vec(x, dir, mul), add);
 	float spot = dot(vec_op_vec(hit.poi, obj->p, sub), obj->o);
 	if (spot < 0 || spot > obj->h)
@@ -130,11 +142,16 @@ t_hit_info	intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj)
 	float delta = pow(b, 2) - 4 * a * c;
 	if (delta < 0)
 		return (hit.hit = 0, hit);
-	float x1 = (-b + sqrt(delta)) / (2 * a);
-	float x2 = (-b - sqrt(delta)) / (2 * a);
-	float x = (x1 > 0 && (x1 < x2 || x2 <= 0)) * x1 + (x2 > 0 && !(x1 > 0 && (x1 < x2 || x2 <= 0))) * x2;
-	if (!(x1 > 0 && (x1 < x2 || x2 <= 0)) && x2 <= 0)
-		return (hit.hit = 0, hit);
+	float sqrt_delta = sqrtf(fmaxf(delta, 0.0f));
+	float x1 = (-b - sqrt_delta) / (2 * a);
+	float x2 = (-b + sqrt_delta) / (2 * a);
+	float x = 0.0f;
+	if (x1 > EPS_HIT && (x1 < x2 || x2 <= EPS_HIT))
+	    x = x1;
+	else if (x2 > EPS_HIT)
+	    x = x2;
+	else
+	    return (hit.hit = 0, hit);
 	hit.poi = vec_op_vec(origin, sc_op_vec(x, dir, mul), add);
 	float spot = dot(vec_op_vec(hit.poi, obj->p, sub), obj->o);
 	if (spot < 0 || spot > obj->h)

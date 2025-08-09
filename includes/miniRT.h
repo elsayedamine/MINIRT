@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/09 08:30:40 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/09 17:28:33 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@
 # define M_HEIGHT 1080
 # define M_THETA 0.76842396884
 # define RAD 0.0174533
-# define EPSILON 0.0001f
-#define LEFT_CLICK 1
-#define RIGHT_CLICK 3
+# define EPSILON 1e-3f
+# define LEFT_CLICK 1
+# define RIGHT_CLICK 3
+# define EPS_HIT 1e-3f
 
 /* **************************************** */
 /*                 ENUMS                    */

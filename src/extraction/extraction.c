@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/09 15:28:54 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/09 15:34:35 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_object	*new_object(void)
 {
 	t_object	*obj;
-	t_vec3		ref;
+	// t_vec3		ref;
 
 	obj = (t_object *)malloc(sizeof(t_object));
 	if (!obj)
