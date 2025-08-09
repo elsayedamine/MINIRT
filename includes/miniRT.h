@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/09 19:20:39 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/09 23:44:58 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,13 +141,22 @@ typedef struct s_object
 	t_texture t;
 }			t_object;
 
+typedef struct s_quat
+{
+    float w, x, y, z;
+} t_quat;
+
 typedef struct s_camera
 {
 	t_vec3	p;
 	t_vec3	fw;
 	t_vec3	rt;
-	t_vec3	up;	
+	t_vec3	up;
+	float pitch;
+    float yaw;
+    float roll;	
 	float	fov;
+	t_quat orientation;
 	int		exist;
 }			t_camera;
 
@@ -252,6 +261,9 @@ int		quit(t_minirt *vars);
 void    hook_manipulation(t_minirt *vars);
 int		mouse_click(int button, int x, int y, t_minirt *vars);
 void	camera_translation(t_minirt *vars, int c);
+void	camera_rotation(t_minirt *vars, int c);
+
+
 // intersections
 t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars);
 t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj);

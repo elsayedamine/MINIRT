@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:38:23 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/09 20:07:12 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/09 23:49:29 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void rotation(t_minirt *vars, int c)
 {
 	t_object *s;
 	t_vec3 rot;
-	t_vec3 temp;
+	// t_vec3 temp;
 	
 	rot.x = (c == 'w') - (c == 's');
 	rot.z = (c == 'd') - (c == 'a');
@@ -73,24 +73,27 @@ int keyhook(int key, t_minirt *vars)
 		return (setup(vars, key - 48), raytracing(vars), TRUE);
 	else if (wasdqe && vars->selected.mouse == NO_CLICK)
 		camera_translation(vars, key);
-	// else if (wasdqe && vars->selected.mouse == MIDDLE_CLICK)
-		// camera_rotation(vars, key);
+	else if (wasdqe && vars->selected.mouse == MIDDLE_CLICK)
+		camera_rotation(vars, key);
     return (TRUE);
 }
 
 void	resize(t_minirt *vars)
 {
+	int	scale;
+
+	scale = (vars->selected.mouse == 4) - (vars->selected.mouse == 5);
 	if (vars->selected.obj->class == SPHERE)
-		vars->selected.obj->r += (vars->selected.mouse == 4) - (vars->selected.mouse == 5);
+		vars->selected.obj->r += scale;
 	if (vars->selected.obj->class == CYLINDER)
 	{
-		vars->selected.obj->h += (vars->selected.mouse == 4) - (vars->selected.mouse == 5);
-		vars->selected.obj->r += (vars->selected.mouse == 4) - (vars->selected.mouse == 5);
+		vars->selected.obj->h += scale;
+		vars->selected.obj->r += scale;
 	}
 	if (vars->selected.obj->class == CONE)
 	{
-		vars->selected.obj->h += (vars->selected.mouse == 4) - (vars->selected.mouse == 5);
-		vars->selected.obj->angle += (vars->selected.mouse == 4) - (vars->selected.mouse == 5);
+		vars->selected.obj->h += scale;
+		vars->selected.obj->angle += scale;
 	}
 	raytracing(vars);
 }
@@ -102,6 +105,15 @@ void	camera_translation(t_minirt *vars, int c)
 	trans = (t_vec3){(c == 'd') - (c == 'a') / 2.0f,
 		(c == 'w') - (c == 's') / 2.0f, (c == 'q') - (c == 'e') / 2.0f};
 	vars->cam[vars->cam_id].p = vec_op_vec(vars->cam[vars->cam_id].p, trans, add);
+	setup(vars, vars->cam_id);
+	raytracing(vars);
+}
+
+void	camera_rotation(t_minirt *vars, int c)
+{
+	vars->cam[vars->cam_id].fw = rotate_x(vars->cam[vars->cam_id].fw, ((c == 'w') - (c == 's')) * 0.05f);
+	vars->cam[vars->cam_id].fw = rotate_y(vars->cam[vars->cam_id].fw, ((c == 'd') - (c == 'a')) * 0.05f);
+	vars->cam[vars->cam_id].fw = rotate_z(vars->cam[vars->cam_id].fw, ((c == 'q') - (c == 'e')) * 0.05f);
 	setup(vars, vars->cam_id);
 	raytracing(vars);
 }

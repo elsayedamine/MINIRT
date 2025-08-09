@@ -2,7 +2,7 @@
 
 # rotation for plan
 # rotation over world-axe y
-# translation + rotation for camera
+# rotation for camera (360 degree)
 # filling the cone and the cylinder
 # multithreading 
 # shininess - specular
