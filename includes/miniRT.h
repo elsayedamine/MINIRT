@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/09 23:44:58 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/10 14:39:12 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,13 +265,13 @@ void	camera_rotation(t_minirt *vars, int c);
 
 
 // intersections
-t_hit_info get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars);
+t_hit_info	get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars);
 t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_cylinder(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_plane(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj);
-
+t_hit_info	calculate_intersection_with_bases(t_object *obj, t_hit_info hit[3], t_ray ray);
 // colors
 t_color init_color(int r, int g, int b);
 t_color int_to_color(int in);
