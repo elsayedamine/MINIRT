@@ -9,6 +9,7 @@ void *worker(void *args)
 {
 	t_pool *pool;
 	t_list *curr;
+	t_task task;
 
 	pool = (t_pool *)args;
 	while (1)
@@ -16,15 +17,17 @@ void *worker(void *args)
 		pthread_mutex_lock(&pool->queue_mutex);
 		while (!pool->tasks && pool->running)
 			pthread_cond_wait(&pool->queue_cond, &pool->queue_mutex);
-		if (!pool->running)	
+		if (!pool->running)
 			return (pthread_mutex_unlock(&pool->queue_mutex), NULL);
 		curr = pool->tasks;
 		pool->tasks = curr->next;
+		task = *(t_task *)curr->content;
+		// free(curr->content);
+		// free(curr);
 		pthread_mutex_unlock(&pool->queue_mutex);
 		if (!curr)
 			continue ;
-		((t_task *)curr->content)->f(((t_task *)curr->content)->args);	
-		ft_lstdelone(curr, free);
+		task.f(task.args);
 		if (atomic_fetch_sub(&pool->pending, 1) == 1)
 		{
 			pthread_mutex_lock(&pool->wait_mutex);
@@ -34,6 +37,14 @@ void *worker(void *args)
 	}
 	return (NULL);
 }	
+
+void	pool_wait(t_pool *pool)
+{
+	pthread_mutex_lock(&pool->wait_mutex);
+	while (atomic_load(&pool->pending) > 0)
+		pthread_cond_wait(&pool->wait_cond, &pool->wait_mutex);
+	pthread_mutex_unlock(&pool->wait_mutex);
+}
 
 void init_pool(t_pool *pool)
 {
@@ -76,10 +87,7 @@ void add_task(t_pool *pool, void (*f)(void *args), void *args)
 
 void print_int(void *args)
 {
-	int *i;
-
-	i = (int *)args;
-	printf("%d\n", *i);
+	printf("num: %d\n", *(int *)args);
 }
 
 void	pool_destroy(t_pool *pool)
@@ -109,7 +117,7 @@ int main(int ac, char **av)
 	
 	init_pool(&pool);
 	int i = -1;
-	while (++i < 20)
+	while (++i < 10)
 		add_task(&pool, print_int, (void *)&i);
-	
+	pool_wait(&pool);
 }
