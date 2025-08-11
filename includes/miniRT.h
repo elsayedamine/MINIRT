@@ -22,6 +22,8 @@
 # include <X11/keysym.h>
 # include <math.h>
 # include <mlx.h>
+# include <pthread.h>
+# include <stdatomic.h>
 
 /* **************************************** */
 /*              DEFINITIONS                 */
@@ -89,6 +91,26 @@ typedef enum e_mode
 /* **************************************** */
 /*             STRUCTURES                   */
 /* **************************************** */
+
+typedef struct s_task
+{
+	void	(*f)(void* args);
+	void	*args;
+} t_task;
+
+typedef struct s_pool
+{
+	t_list *tasks;
+	pthread_t *workers;
+	pthread_mutex_t thread;
+	atomic_int pending;
+	int running;
+	int count;
+	pthread_mutex_t queue_mutex;
+	pthread_cond_t queue_cond;
+	pthread_mutex_t wait_mutex;
+	pthread_cond_t wait_cond;
+} t_pool;
 
 typedef struct s_window
 {
@@ -286,5 +308,14 @@ t_vec3	rotate_z(t_vec3 vec, float angle);
 t_vec3	rotate_x(t_vec3 vec, float angle);
 t_vec3	rotate_y(t_vec3 vec, float angle);
 void set_object_vec(t_object *obj);
+
+//multithreading
+void	*worker(void *args);
+void	pool_wait(t_pool *pool);
+void	init_pool(t_pool *pool);
+void	add_task(t_pool *pool, void (*f)(void *args), void *args);
+void	pool_destroy(t_pool *pool);
+void	*mkargs(int count, ...);
+void	*get_args(void *args);
 
 #endif

@@ -1,8 +1,8 @@
 NAME = miniRT
 CC = cc
-CFLAGS = -Wall -Wextra -g  -O3	#-Werror -g
+CFLAGS = -Wall -Wextra -g 	#-Werror -g
 INC = -I./includes
-LIB = -L./mlx -L./libft -lft -lmlx_Linux -lXext -lX11 -lm
+LIB = -L./mlx -L./libft -lft -lmlx_Linux -lXext -lX11 -lm -lpthread
 LIBFT_PATH = ./libft/libft.a
 
 sources = $(wildcard *.c) $(wildcard src/*.c) $(wildcard src/*/*.c)

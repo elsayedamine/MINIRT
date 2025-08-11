@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <pthread.h>
-#include <stdlib.h>
-#include "pool.h"
-
-void	pool_destroy(t_pool *pool);
+#include <miniRT.h>
 
 void *worker(void *args)
 {
@@ -85,11 +80,6 @@ void add_task(t_pool *pool, void (*f)(void *args), void *args)
 	pthread_mutex_unlock(&pool->queue_mutex);
 }	
 
-void print_int(void *args)
-{
-	printf("num: %d\n", *(int *)args);
-}
-
 void	pool_destroy(t_pool *pool)
 {
 	int i;
@@ -108,16 +98,4 @@ void	pool_destroy(t_pool *pool)
 	pthread_mutex_destroy(&pool->thread);
 	free(pool->workers);
 	ft_lstclear(&pool->tasks, free);
-}
-
-int main(int ac, char **av)
-{
-	t_pool pool;
-
-	
-	init_pool(&pool);
-	int i = -1;
-	while (++i < 10)
-		add_task(&pool, print_int, (void *)&i);
-	pool_wait(&pool);
 }

@@ -1,7 +1,0 @@
-{
-	"files.associations": {
-		"atomic": "cpp",
-		"pthread.h": "c",
-		"cstdlib": "c"
-	}
-}
