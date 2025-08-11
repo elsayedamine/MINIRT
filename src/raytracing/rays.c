@@ -93,8 +93,6 @@ void trace_vertical(void *args)
 	int i;
 	int j;
 
-	// vars = (t_minirt *)get_args(args);
-	// i = *((int *)(get_args(args)));
 	new_args = (void **)args;
 	vars = (t_minirt *)(new_args[0]);
 	i = *(int *)(new_args[1]);

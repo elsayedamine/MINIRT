@@ -27,24 +27,20 @@ void rotation(t_minirt *vars, int c)
 {
 	t_object *s;
 	t_vec3 rot;
-	// t_vec3 temp;
+	t_vec3 temp;
 	
-	rot.x = (c == 'w') - (c == 's');
-	rot.z = (c == 'd') - (c == 'a');
-	rot.y = (c == 'q') - (c == 'e');
+	rot.x = (c == 's') - (c == 'w');
+	rot.z = (c == 'a') - (c == 'd');
+	rot.y = (c == 'e') - (c == 'q');
 	s = vars->selected.obj;
 	if (rot.x || rot.z)
 	{
-		// if (s->class == 4 || s->class == 6)
-		// {
-		// 	temp = vec_op_vec(s->p, sc_op_vec(s->h * 0.5f, s->o, mul), add);
-		// 	temp = rotate_z(temp, rot.z / 10);
-		// 	temp = rotate_x(temp, rot.x / 10);
-		// 	s->p = vec_op_vec(temp, sc_op_vec(s->h * 0.5f, s->o, mul), sub);
-		// }
+		temp = vec_op_vec(sc_op_vec(s->h * 0.5f, s->o, mul), s->p, add);
 		s->o = rotate_z(s->o, rot.z / 10);
 		s->o = rotate_x(s->o, rot.x / 10);
-		set_object_vec(s);		
+		if (s->class == 4 || s->class == 6)
+			s->p = vec_op_vec(sc_op_vec(s->h * -0.5f, s->o, mul), temp, add);
+		set_object_vec(s);
 	}
 	if (rot.y)
 	{

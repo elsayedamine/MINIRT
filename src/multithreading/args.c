@@ -10,18 +10,6 @@ void free_args(void **args)
 	free(args);
 }
 
-void *get_args(void *args)
-{
-	static void **index;
-	void *ret;
-
-	if (args)
-		index = (void **)args;
-	ret = *index;
-	if (ret)
-		index++;
-	return (ret);
-}
 void *mk_args(int count, ...)
 {
 	va_list	args;
