@@ -17,12 +17,12 @@ void *worker(void *args)
 		curr = pool->tasks;
 		pool->tasks = curr->next;
 		task = *(t_task *)curr->content;
-		// free(curr->content);
-		// free(curr);
 		pthread_mutex_unlock(&pool->queue_mutex);
 		if (!curr)
 			continue ;
 		task.f(task.args);
+		free_args(task.args);
+		ft_lstdelone(curr, free);
 		if (atomic_fetch_sub(&pool->pending, 1) == 1)
 		{
 			pthread_mutex_lock(&pool->wait_mutex);

@@ -315,7 +315,8 @@ void	pool_wait(t_pool *pool);
 void	init_pool(t_pool *pool);
 void	add_task(t_pool *pool, void (*f)(void *args), void *args);
 void	pool_destroy(t_pool *pool);
-void	*mkargs(int count, ...);
+void	*mk_args(int count, ...);
 void	*get_args(void *args);
+void	free_args(void **args);
 
 #endif

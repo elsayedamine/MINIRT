@@ -93,34 +93,31 @@ void trace_vertical(void *args)
 	int i;
 	int j;
 
+	// vars = (t_minirt *)get_args(args);
+	// i = *((int *)(get_args(args)));
 	new_args = (void **)args;
 	vars = (t_minirt *)(new_args[0]);
 	i = *(int *)(new_args[1]);
-	// vars = (t_minirt *)get_args(args);
-	// i = *(int *)(get_args(NULL));
 	j = -1;
 	while (++j < M_HEIGHT)
 	{
 		color = trace(vars, vars->rays[i][j]);
 		put_pixel(vars, i, j, color);
 	}
-	free(new_args[1]);
-	free(args);
 }
 
 void raytracing(t_minirt *vars)
 {
+	void *args;
 	t_pool pool;
-	int *cpy;
 	int i;
 
 	init_pool(&pool);
 	i = -1;
 	while (++i < M_WIDTH)
 	{
-		cpy = malloc(sizeof(int));
-		*cpy = i;
-		add_task(&pool, trace_vertical, mkargs(2, vars, cpy));
+		args = mk_args(2, vars, sizeof(t_minirt), &i, 4);
+		add_task(&pool, trace_vertical, args);
 	}
 	pool_wait(&pool);
 	pool_destroy(&pool);
