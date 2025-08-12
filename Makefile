@@ -1,35 +1,42 @@
-NAME = miniRT
-CC = cc
-CFLAGS = -Wall -Wextra -g 	#-Werror -g
+CC:=cc
+CFLAGS:= -Wextra -Wall -Werror -O3 -g
+NAME:= minirt
 INC = -I./includes
 LIB = -L./mlx -L./libft -lft -lmlx_Linux -lXext -lX11 -lm -lpthread
+BIN_DIR:=bin
+SRC_DIRS= src $(patsubst %/, %, $(sort $(dir $(wildcard src/*/))))
+SRC:= $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/*.c)) main.c
+OBJ:= $(patsubst %.c, $(BIN_DIR)/%.o, $(notdir $(SRC)))
 LIBFT_PATH = ./libft/libft.a
 
-sources = $(wildcard *.c) $(wildcard src/*.c) $(wildcard src/*/*.c)
-object = $(sources:.c=.o)
+.DEFAULT_GOAL := $(NAME)
 
-all: $(NAME) 
+vpath %.c $(SRC_DIRS)
+
+echo:
+
+all: $(NAME)
 
 $(LIBFT_PATH):
 	make all -C ./libft
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+$(NAME): $(OBJ) $(LIBFT_PATH)
+	$(CC) $(CFLAGS) $(INC) -o $@ $(OBJ) $(LIB)
 
-$(NAME): $(object) $(LIBFT_PATH)
-	$(CC) $(CFLAGS) $(object) $(LIB) -o $(NAME)
+$(BIN_DIR)/%.o : %.c $(INCLUDES) | $(BIN_DIR)
+	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 clean:
-	rm -rf $(object)
-	make clean -C ./libft
+	rm -rf $(BIN_DIR)
 
 fclean: clean
 	rm -rf $(NAME)
 	make fclean -C ./libft
 
-re: fclean all
+re: fclean $(NAME)
 
-flush:
-	make re && make clean && clear && ./miniRT
-.SECONDARY: $(object)
-.PHONY: clean fclean re all
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
+
+.PHONY: all clean fclean re debug
+.SECONDARY:
