@@ -49,6 +49,8 @@ void rotation(t_minirt *vars, int c)
 		if (s->facing < 0.0)
 			s->facing += 1.0;
 	}
+	print_vec(s->tan, 1);
+	print_vec(s->bitan, 1);
 	raytracing(vars);
 }
 
