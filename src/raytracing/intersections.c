@@ -197,5 +197,4 @@ t_hit_info	intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj)
 	hit.obj = obj;
 	hit.light = 0;
 	return (hit);
-
 }

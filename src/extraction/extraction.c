@@ -66,18 +66,16 @@ void set_object_vec(t_object *obj)
 	t_vec3 ref;
 
 	if (obj->o.y < .999f)
-		ref = (t_vec3){0, 0, -1};
+		ref = (t_vec3){0, 0, 1};
 	else
-		ref = (t_vec3){-1, 0, 0};
+		ref = (t_vec3){1, 0, 0};
 	obj->tan = normalize(cross(ref, obj->o));
-	obj->bitan = cross(obj->o, obj->tan);
-	// if (dot(obj->tan, ref) < 0.0f)
+	obj->bitan = normalize(cross(obj->o, obj->tan));
+	// if (dot(obj->tan, ref) < EPSILON)
 	// {
-	// 	obj->tan = sc_op_vec(-1.0f, obj->tan, mul);
-	// 	obj->bitan = sc_op_vec(-1.0f, obj->bitan, mul);
+	// 	obj->tan = sc_op_vec(1.0f, obj->tan, mul);
+	// 	obj->bitan = sc_op_vec(1.0f, obj->bitan, mul);
 	// }
-	// print_vec(obj->tan, 1);
-	// print_vec(obj->bitan, 1);
 }
 
 int	extract_data(t_minirt *vars, char *filename)

@@ -38,7 +38,7 @@ int is_shadowed(t_minirt *vars, t_hit_info hit, t_object *light)
 {
 	t_vec3 light_dir = normalize(vec_op_vec(light->p, hit.poi, sub));
 	t_ray shadow_ray;
-	shadow_ray.origin = vec_op_vec(hit.poi, sc_op_vec(EPSILON, hit.normal, mul), add);// that hit.normal was light_dir somehow
+	shadow_ray.origin = vec_op_vec(hit.poi, sc_op_vec(EPSILON, hit.normal, mul), add);
 	shadow_ray.dir = light_dir;
 	float dist = distance(light->p, hit.poi);
 	t_hit_info shadow_hit = get_hit_info(shadow_ray.origin, shadow_ray.dir, vars);

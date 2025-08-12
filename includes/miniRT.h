@@ -31,8 +31,8 @@
 
 # define RTX "miniRT"
 # define M_PI 3.14159265358979323846
-# define M_WIDTH 1920
-# define M_HEIGHT 1080
+# define M_WIDTH 1280
+# define M_HEIGHT 720
 # define M_THETA 0.76842396884
 # define RAD 0.0174533
 # define EPSILON 1e-3f

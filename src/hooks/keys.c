@@ -38,9 +38,12 @@ void rotation(t_minirt *vars, int c)
 		temp = vec_op_vec(sc_op_vec(s->h * 0.5f, s->o, mul), s->p, add);
 		s->o = rotate_z(s->o, rot.z / 10);
 		s->o = rotate_x(s->o, rot.x / 10);
+		s->tan = rotate_x(s->tan, rot.x / 10);
+		s->tan = rotate_z(s->tan, rot.z / 10);
+		s->bitan = normalize(cross(s->o, s->tan));
 		if (s->class == 4 || s->class == 6)
 			s->p = vec_op_vec(sc_op_vec(s->h * -0.5f, s->o, mul), temp, add);
-		set_object_vec(s);
+		// set_object_vec(s);
 	}
 	if (rot.y)
 	{
@@ -49,8 +52,6 @@ void rotation(t_minirt *vars, int c)
 		if (s->facing < 0.0)
 			s->facing += 1.0;
 	}
-	print_vec(s->tan, 1);
-	print_vec(s->bitan, 1);
 	raytracing(vars);
 }
 
