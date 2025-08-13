@@ -69,6 +69,25 @@ t_hit_info intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj)
     return (hit);
 }
 
+t_hit_info	intersect_plane(t_vec3 origin, t_vec3 dir, t_object *obj)
+{
+	t_hit_info hit;
+
+	if (dot(obj->n, dir) == 0)
+		return (hit.hit = 0, hit);
+	float	x = (dot(obj->n, vec_op_vec(obj->p, origin, sub))) / dot(obj->n, dir);
+	if (x <= 0)
+		return (hit.hit = 0, hit);
+	hit.hit = 1;
+	hit.poi = vec_op_vec(origin, sc_op_vec(x, dir, mul), add);
+	hit.normal = obj->n;
+	hit.dist = x;
+	hit.color = get_color(hit.poi, obj);
+	hit.light = 0;
+	hit.obj = obj;
+	return (hit);
+}
+
 t_hit_info	intersect_cylinder(t_vec3 origin, t_vec3 dir, t_object *obj)
 {
 	t_hit_info hit[3];
@@ -139,25 +158,6 @@ t_hit_info	calculate_intersection_with_bases(t_object *cylinder, t_hit_info hit[
 		return (hit[1]);
 	else
 		return (hit[2]);
-}
-
-t_hit_info	intersect_plane(t_vec3 origin, t_vec3 dir, t_object *obj)
-{
-	t_hit_info hit;
-
-	if (dot(obj->n, dir) == 0)
-		return (hit.hit = 0, hit);
-	float	x = (dot(obj->n, vec_op_vec(obj->p, origin, sub))) / dot(obj->n, dir);
-	if (x <= 0)
-		return (hit.hit = 0, hit);
-	hit.hit = 1;
-	hit.poi = vec_op_vec(origin, sc_op_vec(x, dir, mul), add);
-	hit.normal = obj->n;
-	hit.dist = x;
-	hit.color = get_color(hit.poi, obj);
-	hit.light = 0;
-	hit.obj = obj;
-	return (hit);
 }
 
 t_hit_info	intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj)

@@ -6,7 +6,7 @@
 /*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:38:23 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/10 14:42:53 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/13 17:38:15 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,16 @@ void rotation(t_minirt *vars, int c)
 	rot.z = (c == 'a') - (c == 'd');
 	rot.y = (c == 'e') - (c == 'q');
 	s = vars->selected.obj;
-	if (rot.x || rot.z)
-	{
-		temp = vec_op_vec(sc_op_vec(s->h * 0.5f, s->o, mul), s->p, add);
-		s->o = rotate_z(s->o, rot.z / 10);
-		s->o = rotate_x(s->o, rot.x / 10);
-		s->tan = rotate_x(s->tan, rot.x / 10);
-		s->tan = rotate_z(s->tan, rot.z / 10);
-		s->bitan = normalize(cross(s->o, s->tan));
-		if (s->class == 4 || s->class == 6)
-			s->p = vec_op_vec(sc_op_vec(s->h * -0.5f, s->o, mul), temp, add);
-	}
-	if (rot.y)
-	{
-		s->facing += rot.y / 10.0f;
-		s->facing = fmod(s->facing, 1.0);
-		if (s->facing < 0.0)
-			s->facing += 1.0;
-	}
+	temp = vec_op_vec(sc_op_vec(s->h * 0.5f, s->o, mul), s->p, add);
+	s->o = rotate_z(s->o, rot.z / 10);
+	s->o = rotate_x(s->o, rot.x / 10);
+	s->o = rotate_y(s->o, rot.y / 10);
+	s->tan = rotate_y(s->tan, rot.y / 10);
+	s->tan = rotate_x(s->tan, rot.x / 10);
+	s->tan = rotate_z(s->tan, rot.z / 10);
+	s->bitan = normalize(cross(s->o, s->tan));
+	if (s->class == 4 || s->class == 6)
+		s->p = vec_op_vec(sc_op_vec(s->h * -0.5f, s->o, mul), temp, add);
 	raytracing(vars);
 }
 
