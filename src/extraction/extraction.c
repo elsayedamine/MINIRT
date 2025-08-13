@@ -15,12 +15,13 @@
 t_object	*new_object(void)
 {
 	t_object	*obj;
-	// t_vec3		ref;
 
 	obj = (t_object *)malloc(sizeof(t_object));
 	if (!obj)
 		return (NULL);
 	obj->o = (t_vec3){0, 1, 0};
+	obj->tan = normalize(cross((t_vec3){0, 0, 1}, obj->o));
+	obj->bitan = normalize(cross(obj->o, obj->tan));
 	obj->facing = 0;
 	obj->class = -1;
 	obj->angle = -1;
@@ -61,22 +62,31 @@ int	assign_object(t_minirt *vars, char *file, t_object *obj)
 	return (ft_lstadd_back(&vars->members, ft_lstnew(obj)), 1);
 }
 
-void set_object_vec(t_object *obj)
-{
-	t_vec3 ref;
+// void set_object_vec(t_object *obj)
+// {
+// 	t_vec3 ref;
+// 	t_vec3 prev_tan;
 
-	if (obj->o.y < .999f)
-		ref = (t_vec3){0, 0, 1};
-	else
-		ref = (t_vec3){1, 0, 0};
-	obj->tan = normalize(cross(ref, obj->o));
-	obj->bitan = normalize(cross(obj->o, obj->tan));
-	// if (dot(obj->tan, ref) < EPSILON)
-	// {
-	// 	obj->tan = sc_op_vec(1.0f, obj->tan, mul);
-	// 	obj->bitan = sc_op_vec(1.0f, obj->bitan, mul);
-	// }
-}
+// 	ref = (t_vec3){0, 0, 1};
+// 	if (obj->o.y < .999f)
+// 		ref = (t_vec3){1, 0, 0};
+// 	// 	ref = (t_vec3){0, 0, 1};
+// 	// else
+// 	obj->tan = normalize(cross(ref, obj->o));
+// 	obj->bitan = normalize(cross(obj->o, obj->tan));
+// 	prev_tan = obj->tan;
+// 	printf("o: ");
+// 	print_vec(obj->o, 1);
+// 	printf("ref: ");
+// 	print_vec(ref, 1);
+// 	print_vec(obj->tan, 1);
+// 	print_vec(obj->bitan, 1);
+// 	// if (dot(obj->tan, ref) < EPSILON)
+// 	// {
+// 	// 	obj->tan = sc_op_vec(1.0f, obj->tan, mul);
+// 	// 	obj->bitan = sc_op_vec(1.0f, obj->bitan, mul);
+// 	// }
+// }
 
 int	extract_data(t_minirt *vars, char *filename)
 {
@@ -100,7 +110,6 @@ int	extract_data(t_minirt *vars, char *filename)
 		obj = new_object();
 		if (assign_object(vars, file[i], obj) == FALSE)
 			return (close(fd), ft_free("2", file), FALSE);
-		set_object_vec(obj);
 	}
 	return (close(fd), ft_free("2", file), TRUE);
 }

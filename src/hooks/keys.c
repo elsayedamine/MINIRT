@@ -22,7 +22,6 @@ void translation(t_minirt *vars, int c)
 	raytracing(vars);
 }
 
-
 void rotation(t_minirt *vars, int c)
 {
 	t_object *s;
@@ -43,7 +42,6 @@ void rotation(t_minirt *vars, int c)
 		s->bitan = normalize(cross(s->o, s->tan));
 		if (s->class == 4 || s->class == 6)
 			s->p = vec_op_vec(sc_op_vec(s->h * -0.5f, s->o, mul), temp, add);
-		// set_object_vec(s);
 	}
 	if (rot.y)
 	{
