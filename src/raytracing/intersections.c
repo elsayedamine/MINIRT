@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 16:52:53 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/14 17:52:09 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/14 23:06:15 by sayed            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,43 +99,43 @@ t_hit_info	intersect_plane(t_vec3 origin, t_vec3 dir, t_object *obj)
 	return (hit);
 }
 
-t_hit_info	intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj)
-{
-	t_hit_info hit;
+// t_hit_info	intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj)
+// {
+// 	t_hit_info hit;
 
-	t_vec3 w = vec_op_vec(origin, obj->p, sub);
-	float k = pow(cos(obj->angle * RAD), 2);
-	float a = pow(dot(dir, obj->o), 2) - k * dot(dir, dir);
-	if (fabs(a) < EPSILON)
-		return (hit.hit = 0, hit);
-	float b = 2 * dot(w, obj->o) * dot(dir, obj->o) - 2 * k * dot(w, dir);
-	float c = pow(dot(w, obj->o), 2) - k * dot(w, w);
-	float delta = pow(b, 2) - 4 * a * c;
-	if (delta < 0)
-		return (hit.hit = 0, hit);
-	float sqrt_delta = sqrtf(fmaxf(delta, 0.0f));
-	float x1 = (-b - sqrt_delta) / (2 * a);
-	float x2 = (-b + sqrt_delta) / (2 * a);
-	float x = 0.0f;
-	if (x1 > EPS_HIT && (x1 < x2 || x2 <= EPS_HIT))
-	    x = x1;
-	else if (x2 > EPS_HIT)
-	    x = x2;
-	else
-	    return (hit.hit = 0, hit);
-	hit.poi = vec_op_vec(origin, sc_op_vec(x, dir, mul), add);
-	float spot = dot(vec_op_vec(hit.poi, obj->p, sub), obj->o);
-	if (spot < 0 || spot > obj->h)
-		return (hit.hit = 0, hit);
-	// i added the two lines below
-	t_vec3 axis = sc_op_vec(dot(obj->o, vec_op_vec(hit.poi, obj->p, sub)), obj->o, mul);
-	hit.normal = normalize(vec_op_vec(vec_op_vec(hit.poi, obj->p, sub), axis, sub));
-	hit.hit = 1;
-	hit.dist = distance(hit.poi, origin);
-	hit.color = get_color(hit.poi, obj);
-	hit.obj = obj;
-	hit.light = 0;
-	return (hit);
-}
+// 	t_vec3 w = vec_op_vec(origin, obj->p, sub);
+// 	float k = pow(cos(obj->angle * RAD), 2);
+// 	float a = pow(dot(dir, obj->o), 2) - k * dot(dir, dir);
+// 	if (fabs(a) < EPSILON)
+// 		return (hit.hit = 0, hit);
+// 	float b = 2 * dot(w, obj->o) * dot(dir, obj->o) - 2 * k * dot(w, dir);
+// 	float c = pow(dot(w, obj->o), 2) - k * dot(w, w);
+// 	float delta = pow(b, 2) - 4 * a * c;
+// 	if (delta < 0)
+// 		return (hit.hit = 0, hit);
+// 	float sqrt_delta = sqrtf(fmaxf(delta, 0.0f));
+// 	float x1 = (-b - sqrt_delta) / (2 * a);
+// 	float x2 = (-b + sqrt_delta) / (2 * a);
+// 	float x = 0.0f;
+// 	if (x1 > EPS_HIT && (x1 < x2 || x2 <= EPS_HIT))
+// 	    x = x1;
+// 	else if (x2 > EPS_HIT)
+// 	    x = x2;
+// 	else
+// 	    return (hit.hit = 0, hit);
+// 	hit.poi = vec_op_vec(origin, sc_op_vec(x, dir, mul), add);
+// 	float spot = dot(vec_op_vec(hit.poi, obj->p, sub), obj->o);
+// 	if (spot < 0 || spot > obj->h)
+// 		return (hit.hit = 0, hit);
+// 	// i added the two lines below
+// 	t_vec3 axis = sc_op_vec(dot(obj->o, vec_op_vec(hit.poi, obj->p, sub)), obj->o, mul);
+// 	hit.normal = normalize(vec_op_vec(vec_op_vec(hit.poi, obj->p, sub), axis, sub));
+// 	hit.hit = 1;
+// 	hit.dist = distance(hit.poi, origin);
+// 	hit.color = get_color(hit.poi, obj);
+// 	hit.obj = obj;
+// 	hit.light = 0;
+// 	return (hit);
+// }
 
 
