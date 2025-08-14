@@ -1,8 +1,8 @@
 CC:=cc
-CFLAGS:= -Wextra -Wall -Werror -O3 -g
+CFLAGS:= -Wextra -Wall -Werror -g
 NAME:= minirt
 INC = -I./includes
-LIB = -L./mlx -L./libft -lft mlx/libmlx.a -lXext -lX11 -lm -lpthread
+LIB = -L./mlx -L./libft -lft -lmlx_Linux -lXext -lX11 -lm -lpthread
 BIN_DIR:=bin
 SRC_DIRS= src $(patsubst %/, %, $(dir $(wildcard src/*/)))
 SRC:= $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/*.c))

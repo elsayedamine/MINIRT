@@ -53,7 +53,7 @@ void init_pool(t_pool *pool)
 	pthread_mutex_init(&pool->thread, NULL);
 	pool->running = 1;
 	pool->pending = 0;
-	pool->count = sysconf(_SC_NPROCESSORS_ONLN) * 2;
+	pool->count = sysconf(_SC_NPROCESSORS_ONLN);
 	if (pool->count < 1)
 		pool->count = 4;
 	pool->workers = malloc(sizeof(pthread_t) * pool->count);	

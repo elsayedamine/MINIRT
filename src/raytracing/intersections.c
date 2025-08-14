@@ -134,7 +134,7 @@ t_hit_info	calculate_intersection_with_bases(t_object *cylinder, t_hit_info hit[
 	t_vec3	bottome_center = cylinder->p;
 	t_object	plane;
 	plane.t = cylinder->t;
-	plane.class = PLAN;
+	plane.class = PLANE;
 	plane.n = cylinder->o;
 	plane.p = top_center;
 	hit[1] = intersect_plane(ray.origin, ray.dir, &plane);

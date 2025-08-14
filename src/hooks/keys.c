@@ -51,7 +51,7 @@ int keyhook(int key, t_minirt *vars)
 
 	if (key == 65307)
 		quit(vars);
-	if (key == '\t')
+	if (key == 36)
 		vars->selected.mouse = NO_CLICK;
 	wasdqe = ft_strchr("wasdqe", key) != NULL;
 	if (wasdqe && vars->selected.mouse == LEFT_CLICK)
@@ -100,9 +100,9 @@ void	camera_translation(t_minirt *vars, int c)
 
 void	camera_rotation(t_minirt *vars, int c)
 {
-	vars->cam[vars->cam_id].fw = rotate_x(vars->cam[vars->cam_id].fw, ((c == 'w') - (c == 's')) * 0.05f);
-	vars->cam[vars->cam_id].fw = rotate_y(vars->cam[vars->cam_id].fw, ((c == 'd') - (c == 'a')) * 0.05f);
-	vars->cam[vars->cam_id].fw = rotate_z(vars->cam[vars->cam_id].fw, ((c == 'q') - (c == 'e')) * 0.05f);
+	vars->cam[vars->cam_id].fw = rotate_x(vars->cam[vars->cam_id].fw, ((c == 'w') - (c == 's')) / 10);
+	vars->cam[vars->cam_id].fw = rotate_y(vars->cam[vars->cam_id].fw, ((c == 'd') - (c == 'a')) / 10);
+	vars->cam[vars->cam_id].fw = rotate_z(vars->cam[vars->cam_id].fw, ((c == 'q') - (c == 'e')) / 10);
 	setup(vars, vars->cam_id);
 	raytracing(vars);
 }

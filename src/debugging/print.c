@@ -19,7 +19,7 @@ void	print_data(t_object *obj)
 	if (obj->class != 0)
 		printf("crd      : %.1f,%.1f,%.1f\n", obj->p.x, \
 			obj->p.y, obj->p.z);
-	if (obj->class == PLAN)
+	if (obj->class == PLANE)
 		printf("n_nvt    : %.1f,%.1f,%.1f\n", \
 			obj->n.x, obj->n.y, obj->n.z);
 	if (obj->class == CYLINDER || obj->class == CAMERA)

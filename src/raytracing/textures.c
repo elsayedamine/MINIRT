@@ -46,21 +46,12 @@ t_vec3 get_uv_cylinder(t_vec3 poi, t_object *obj)
 
 t_vec3 get_uv_plane(t_vec3 poi, t_object *obj)
 {
-	t_vec3 up;
 	t_vec3 local;
 	t_vec3 uv;
-	t_vec3 ref;
-	t_vec3 right;
 
 	local = vec_op_vec(poi, obj->p, sub);
-	if (obj->n.y < .999f)
-		ref = (t_vec3){0, 1, 0};
-	else
-		ref = (t_vec3){0, 0, -1};
-	right = normalize(cross(ref, obj->n));
-	up = normalize(cross(right, obj->n));
-	uv.x = dot(local, right) * .1f;
-	uv.y = dot(local, up) * .1f;
+	uv.x = dot(local, obj->tan) * .1f;
+	uv.y = dot(local, obj->bitan) * .1f;
 	uv.x = uv.x - floorf(uv.x);
 	uv.y = uv.y - floorf(uv.y);
 	return (uv);

@@ -5,7 +5,7 @@ void setup_cam(t_minirt *vars, int cam_id)
 	t_vec3 wup;
 
 	if (fabs(vars->cam[cam_id].fw.x) == 0 && fabs(vars->cam[cam_id].fw.y) == 0)
-		wup = (t_vec3){0, 1, 0}; // use Y axis if fw is colinear with Z
+		wup = (t_vec3){0, 1, 0};
 	else
 		wup = (t_vec3){0, 0, 1};
 	vars->cam[cam_id].rt = normalize(cross(vars->cam[cam_id].fw, wup));
@@ -50,7 +50,6 @@ void setup_rays(t_minirt *vars, int cam_id)
 		while (j < M_HEIGHT)
 		{
 			vars->rays[i][j] = calc_ray(u, j, vars, cam_id);
-			// print_vec(vars->rays[i][j].dir, 1);
 			j++;
 		}
 		i++;
@@ -60,6 +59,6 @@ void setup_rays(t_minirt *vars, int cam_id)
 void	setup(t_minirt *vars, int cam_id)
 {
 	vars->cam_id = cam_id;
-	setup_cam(vars, cam_id);
+	// setup_cam(vars, cam_id);
 	setup_rays(vars, cam_id);
 }

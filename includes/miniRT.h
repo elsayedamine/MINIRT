@@ -51,7 +51,7 @@ typedef enum e_type
 	LIGHT,
 	SPHERE,
 	CYLINDER,
-	PLAN,
+	PLANE,
 	CONE,
 	ERR = -1,
 	TOO_MANY_CAM = -2
@@ -307,7 +307,7 @@ t_color get_color(t_vec3 poi, t_object *obj);
 t_vec3	rotate_z(t_vec3 vec, float angle);
 t_vec3	rotate_x(t_vec3 vec, float angle);
 t_vec3	rotate_y(t_vec3 vec, float angle);
-void set_object_vec(t_object *obj);
+void set_obj_vec(void *object, int type);
 
 //multithreading
 void	*worker(void *args);

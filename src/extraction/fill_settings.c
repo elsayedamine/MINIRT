@@ -58,6 +58,7 @@ int	fill_camera(char *line, t_minirt *vars)
 	if (++cam_number >= 11)
 		return (ft_free("2", fields), throw_error(TOO_MANY_CAM), 1);
 	vars->cam[cam_number - 1].exist = 1;
+	set_obj_vec(vars->cam + cam_number - 1, CAMERA);
 	return (ft_free("2", fields), 2);
 }
 
