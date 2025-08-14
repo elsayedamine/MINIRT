@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:38:23 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/13 17:38:15 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/14 18:12:52 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,13 @@ int keyhook(int key, t_minirt *vars)
 
 void	resize(t_minirt *vars)
 {
-	int	scale;
+	float	scale;
 
-	scale = (vars->selected.mouse == 4) - (vars->selected.mouse == 5);
+	// we need to protect the resize
+	scale = ((vars->selected.mouse == 4) - (vars->selected.mouse == 5)) / 2.0f;
 	if (vars->selected.obj->class == SPHERE)
-		vars->selected.obj->r += scale;
+		if (vars->selected.obj->r + scale > 0)
+			vars->selected.obj->r += scale;
 	if (vars->selected.obj->class == CYLINDER)
 	{
 		vars->selected.obj->h += scale;

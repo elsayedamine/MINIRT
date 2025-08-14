@@ -6,3 +6,5 @@
 
 # linked list to array
 # norminette raytracing
+
+# resize protection
