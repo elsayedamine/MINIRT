@@ -63,6 +63,7 @@ int	assign_object(t_minirt *vars, char *file, t_object *obj)
 
 void set_obj_vec(void *object, int type)
 {
+	t_vec3 vec;
 	t_object *obj;
 	t_camera *cam;
 	t_vec3 ref;
@@ -78,12 +79,13 @@ void set_obj_vec(void *object, int type)
 		return ;
 	}
 	obj = (t_object *)object;
+	vec = obj->o;
 	if (type == PLANE)
-		obj->o = obj->n;
-	if (obj->o.y < .999f)
+		vec = obj->n;
+	if (vec.y < .999f)
 		ref = (t_vec3){0, 1, 0};
-	obj->tan = normalize(cross(ref, obj->o));
-	obj->bitan = normalize(cross(obj->tan, obj->o));
+	obj->tan = normalize(cross(ref, vec));
+	obj->bitan = normalize(cross(obj->tan, vec));
 }
 
 int	extract_data(t_minirt *vars, char *filename)

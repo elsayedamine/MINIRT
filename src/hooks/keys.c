@@ -28,18 +28,17 @@ void rotation(t_minirt *vars, int c)
 	t_vec3 rot;
 	t_vec3 temp;
 	
-	rot.x = (c == 's') - (c == 'w');
-	rot.z = (c == 'a') - (c == 'd');
-	rot.y = (c == 'e') - (c == 'q');
+	rot.x = ((c == 's') - (c == 'w')) / 10.0f;
+	rot.z = ((c == 'a') - (c == 'd')) / 10.0f;
+	rot.y = ((c == 'e') - (c == 'q')) / 10.0f;
 	s = vars->selected.obj;
 	temp = vec_op_vec(sc_op_vec(s->h * 0.5f, s->o, mul), s->p, add);
-	s->o = rotate_z(s->o, rot.z / 10);
-	s->o = rotate_x(s->o, rot.x / 10);
-	s->o = rotate_y(s->o, rot.y / 10);
-	s->tan = rotate_y(s->tan, rot.y / 10);
-	s->tan = rotate_x(s->tan, rot.x / 10);
-	s->tan = rotate_z(s->tan, rot.z / 10);
-	s->bitan = normalize(cross(s->o, s->tan));
+	if (s->class == PLANE)
+		rotate(&s->n, rot);
+	else 
+		rotate(&s->o, rot);
+	rotate(&s->tan, rot);
+	rotate(&s->bitan, rot);
 	if (s->class == 4 || s->class == 6)
 		s->p = vec_op_vec(sc_op_vec(s->h * -0.5f, s->o, mul), temp, add);
 	raytracing(vars);
@@ -51,7 +50,7 @@ int keyhook(int key, t_minirt *vars)
 
 	if (key == 65307)
 		quit(vars);
-	if (key == 36)
+	if (key == '\t')
 		vars->selected.mouse = NO_CLICK;
 	wasdqe = ft_strchr("wasdqe", key) != NULL;
 	if (wasdqe && vars->selected.mouse == LEFT_CLICK)

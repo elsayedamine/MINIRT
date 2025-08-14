@@ -307,6 +307,7 @@ t_color get_color(t_vec3 poi, t_object *obj);
 t_vec3	rotate_z(t_vec3 vec, float angle);
 t_vec3	rotate_x(t_vec3 vec, float angle);
 t_vec3	rotate_y(t_vec3 vec, float angle);
+void rotate(t_vec3 *vec, t_vec3 rot);
 void set_obj_vec(void *object, int type);
 
 //multithreading
