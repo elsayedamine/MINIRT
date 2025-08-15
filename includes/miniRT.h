@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 19:24:13 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 23:08:06 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,6 +264,8 @@ void		resize_fov(t_minirt *vars);
 void		translation(t_minirt *vars, int c);
 void		rotation(t_minirt *vars, int c);
 void		resize(t_minirt *vars);
+void		shininess(t_minirt *vars, int key);
+
 /* intersections */
 t_hit_info	get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars);
 t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj);

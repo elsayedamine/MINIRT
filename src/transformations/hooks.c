@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 17:37:54 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/15 19:28:50 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 23:07:40 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,7 @@ int	keyhook(int key, t_minirt *vars)
 	else if (wasdqe && vars->selected.mouse == MIDDLE_CLICK)
 		camera_rotation(vars, key);
 	else if ((key == '=' || key == '-') && vars->selected.mouse == LEFT_CLICK)
-	{
-		int delta;
-		if (vars->selected.obj->shininess > 100)
-			delta = 10 * ((key == '-') - (key == '='));
-		else if (vars->selected.obj->shininess > 10)
-			delta = ((key == '-') - (key == '=')) * 10;
-		else
-			delta = ((key == '-') - (key == '='));
-		vars->selected.obj->shininess += delta;
-		if (vars->selected.obj->shininess < 1)
-			return (vars->selected.obj->shininess = 1, TRUE);
-		if (vars->selected.obj->shininess > 1000000000.0f)
-			return (vars->selected.obj->shininess = 1000000000.0f, TRUE);
-		raytracing(vars);
-	}
+		shininess(vars, key);
 	return (TRUE);
 }
 

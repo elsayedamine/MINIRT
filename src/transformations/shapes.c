@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:38:23 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/15 17:29:28 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 23:07:45 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,23 @@ void	resize(t_minirt *vars)
 		vars->selected.obj->h += scale;
 		vars->selected.obj->angle += scale;
 	}
+	raytracing(vars);
+}
+
+void	shininess(t_minirt *vars, int key)
+{
+	int	delta;
+
+	if (vars->selected.obj->shininess > 100)
+		delta = 10 * ((key == '-') - (key == '='));
+	else if (vars->selected.obj->shininess > 10)
+		delta = ((key == '-') - (key == '=')) * 10;
+	else
+		delta = ((key == '-') - (key == '='));
+	vars->selected.obj->shininess += delta;
+	if (vars->selected.obj->shininess < 1)
+		return (vars->selected.obj->shininess = 1, TRUE);
+	if (vars->selected.obj->shininess > 1000000000.0f)
+		return (vars->selected.obj->shininess = 1000000000.0f, TRUE);
 	raytracing(vars);
 }
