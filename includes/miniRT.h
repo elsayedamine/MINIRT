@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 17:25:59 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 17:57:55 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,8 @@ void		put_pixel(t_minirt *vars, int x, int y, int color);
 /* raytracing */
 void		setup(t_minirt *vars, int cam_id);
 void		raytracing(t_minirt *vars);
+t_color		compute_lighting(t_hit_info hit, t_object *light, t_ray ray);
+int			is_shadowed(t_minirt *vars, t_hit_info hit, t_object *light);
 
 /* debugging */
 void		print_vec(t_vec3 vec, int nl);
