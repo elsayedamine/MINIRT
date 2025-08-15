@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 17:57:55 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 19:24:13 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define RAD 0.0174533
 # define EPSILON 1e-3f
 # define EPS_HIT 1e-3f
+# define SHININESS 100.0f
 
 /* **************************************** */
 /*                 ENUMS                    */
@@ -131,6 +132,7 @@ typedef struct s_object
 	float		facing;
 	float		r;
 	float		h;
+	float		shininess;
 	t_vec3		p;
 	t_vec3		n;
 	t_vec3		o;

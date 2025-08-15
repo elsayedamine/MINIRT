@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 17:00:40 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 16:37:35 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 19:02:24 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	auxilliary_fill_cone(t_minirt *vars, t_object *obj, char **fields)
 	if (!(type >= RATIO))
 		return (ft_free("2", fields), throw_error(CONE), 1);
 	obj->h = data.r;
+	obj->shininess = SHININESS;
 	data = classifier(fields[5], &type, RGB);
 	if (!(type == RGB || (type == RGB1 && obj->t.c1.r >= 0 && \
 		obj->t.c1.g >= 0 && obj->t.c1.b >= 0)))

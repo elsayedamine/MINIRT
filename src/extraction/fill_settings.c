@@ -6,12 +6,11 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:36:35 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 16:10:18 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 19:01:36 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
-#include "../../includes/miniRT.h"
 
 int	fill_ambiance(char *line, t_minirt *vars)
 {

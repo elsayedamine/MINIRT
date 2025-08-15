@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 16:32:37 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 16:38:12 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 19:02:19 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	auxilliary_fill_cylinder(t_minirt *vars, t_object *obj, char **fields)
 	if (!(type >= RATIO))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);
 	obj->r = data.r / 2.0f;
+	obj->shininess = SHININESS;
 	data = classifier(fields[4], &type, CYLINDER);
 	if (!(type >= RATIO))
 		return (ft_free("2", fields), throw_error(CYLINDER), 1);

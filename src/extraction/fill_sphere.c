@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 16:33:22 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 16:38:21 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 19:01:58 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	auxilliary_fill_sphere(t_minirt *vars, t_object *obj, char **fields)
 
 	data = classifier(fields[3], &type, RGB);
 	obj->t.c1 = data.t.c1;
+	obj->shininess = SHININESS;
 	if (!(type == RGB || (type == RGB1 && obj->t.c1.r >= 0 && \
 		obj->t.c1.g >= 0 && obj->t.c1.b >= 0)))
 		return (ft_free("2", fields), throw_error(SPHERE), 1);

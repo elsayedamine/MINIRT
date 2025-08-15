@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 18:00:08 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 19:23:15 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,5 @@ t_color	compute_lighting(t_hit_info hit, t_object *light, t_ray ray)
 	dotrv = dot(r, vect);
 	dotrv = (dotrv < 0) * 0 + (dotrv >= 0) * dotrv;
 	return (col_add_col(col_mul_col(col_mul_sc(light->t.c1, dotnl), \
-		hit.color), col_mul_sc(light->t.c1, powf(dotrv, 100.0f))));
+		hit.color), col_mul_sc(light->t.c1, powf(dotrv, hit.obj->shininess))));
 }
