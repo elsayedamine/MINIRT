@@ -1,5 +1,9 @@
 {
     "files.associations": {
-        "random": "c"
+        "random": "c",
+        "minirt.h": "c",
+        "pthread.h": "c",
+        "libft.h": "c",
+        "stdatomic.h": "c"
     }
 }

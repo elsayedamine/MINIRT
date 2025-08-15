@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/07/28 16:21:17 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 17:04:03 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <stdio.h>
 # include <stdarg.h>
 # include <limits.h>
+# include <pthread.h>
+# include <stdatomic.h>
 
 # define STDIN	0
 # define STDOUT	1
@@ -54,6 +56,21 @@ typedef struct s_data
 	char	*s;
 	char	**arr;
 }			t_alloc;
+
+typedef struct s_pool
+{
+	t_list			*tasks;
+	pthread_t		*workers;
+	pthread_mutex_t	thread;
+	atomic_int		pending;
+	int				running;
+	int				count;
+	pthread_mutex_t	queue_mutex;
+	pthread_cond_t	queue_cond;
+	pthread_mutex_t	wait_mutex;
+	pthread_cond_t	wait_cond;
+    
+}	t_pool;
 
 // memory functions
 void	ft_init(int count, ...);
@@ -161,5 +178,21 @@ int		ft_printf(const char *format, ...);
 
 //new added functions
 void	ft_swap(int *a, int *b);
+
+
+typedef struct s_task
+{
+	void	(*f)(void *args);
+	void	*args;
+}	t_task;
+
+// multithreading
+void		*worker(void *args);
+void		pool_wait(t_pool *pool);
+void		init_pool(t_pool *pool);
+void		add_task(t_pool *pool, void (*f)(void *args), void *args);
+void		pool_destroy(t_pool *pool);
+void		*mk_args(int count, ...);
+void		free_args(void **args);
 
 #endif

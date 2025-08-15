@@ -94,6 +94,10 @@ SOURCES = \
 		1.base/ft_lstmap_bonus.c \
 		1.base/ft_lstnew_bonus.c \
 		1.base/ft_lstsize_bonus.c \
+		\
+		\
+		4.multithreading/threads_pool.c \
+		4.multithreading/threads_tasks.c \
 
 OBJECTS = $(SOURCES:.c=.o)
 
