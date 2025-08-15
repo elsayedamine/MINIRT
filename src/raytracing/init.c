@@ -1,23 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/15 17:30:46 by aelsayed          #+#    #+#             */
+/*   Updated: 2025/08/15 17:31:29 by aelsayed         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <miniRT.h>
 
-void setup_cam(t_minirt *vars, int cam_id)
+void	setup_cam(t_minirt *vars, int cam_id)
 {
-	t_vec3 wup;
+	t_vec3	wup;
 
 	if (fabs(vars->cam[cam_id].fw.x) == 0 && fabs(vars->cam[cam_id].fw.y) == 0)
 		wup = (t_vec3){0, 1, 0};
 	else
 		wup = (t_vec3){0, 0, 1};
 	vars->cam[cam_id].rt = normalize(cross(vars->cam[cam_id].fw, wup));
-	vars->cam[cam_id].up = normalize(cross(vars->cam[cam_id].rt, vars->cam[cam_id].fw));
+	vars->cam[cam_id].up = normalize(cross(vars->cam[cam_id].rt, \
+		vars->cam[cam_id].fw));
 }
 
-t_ray calc_ray(float u, int y, t_minirt *vars, int cam_id)
+t_ray	calc_ray(float u, int y, t_minirt *vars, int cam_id)
 {
-	t_ray ray;
-	float v;
-	t_vec3 offsetx;
-	t_vec3 offsety;
+	t_ray	ray;
+	float	v;
+	t_vec3	offsetx;
+	t_vec3	offsety;
 
 	v = 1 - ((((float)y + .5) / M_HEIGHT) * 2);
 	offsetx = sc_op_vec(u * (vars->plane_w / 2), vars->cam[cam_id].rt, mul);
@@ -31,11 +44,11 @@ t_ray calc_ray(float u, int y, t_minirt *vars, int cam_id)
 	return (ray);
 }
 
-void setup_rays(t_minirt *vars, int cam_id)
+void	setup_rays(t_minirt *vars, int cam_id)
 {
-	float u;
-	int i;
-	int j;
+	float	u;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -59,6 +72,5 @@ void setup_rays(t_minirt *vars, int cam_id)
 void	setup(t_minirt *vars, int cam_id)
 {
 	vars->cam_id = cam_id;
-	// setup_cam(vars, cam_id);
 	setup_rays(vars, cam_id);
 }

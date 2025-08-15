@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 16:57:53 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 17:25:59 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,14 +249,17 @@ void		raytracing(t_minirt *vars);
 /* debugging */
 void		print_vec(t_vec3 vec, int nl);
 
-/* key_hooks */
+/* transformations */
 int			keyhook(int key, t_minirt *vars);
 int			quit(t_minirt *vars);
 void		hook_manipulation(t_minirt *vars);
 int			mouse_click(int button, int x, int y, t_minirt *vars);
 void		camera_translation(t_minirt *vars, int c);
 void		camera_rotation(t_minirt *vars, int c);
-
+void		resize_fov(t_minirt *vars);
+void		translation(t_minirt *vars, int c);
+void		rotation(t_minirt *vars, int c);
+void		resize(t_minirt *vars);
 /* intersections */
 t_hit_info	get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars);
 t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj);
@@ -266,7 +269,6 @@ t_hit_info	intersect_plane(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj);
 
 /* colors */
-t_color		init_color(int r, int g, int b);
 t_color		int_to_color(int in);
 int			color_to_int(t_color color);
 t_color		col_mul_col(t_color c1, t_color c2);

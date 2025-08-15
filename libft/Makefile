@@ -98,6 +98,7 @@ SOURCES = \
 		\
 		4.multithreading/threads_pool.c \
 		4.multithreading/threads_tasks.c \
+		4.multithreading/pool_utils.c \
 
 OBJECTS = $(SOURCES:.c=.o)
 
