@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:35:55 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 17:04:03 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 23:46:14 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_pool
 	pthread_cond_t	queue_cond;
 	pthread_mutex_t	wait_mutex;
 	pthread_cond_t	wait_cond;
-    
+
 }	t_pool;
 
 // memory functions
@@ -128,6 +128,7 @@ int		ft_toupper(int c);
 int		ft_tolower(int c);
 int		ft_isspace(int c);
 int		ft_iswhitespace(char *str);
+void	ft_swap(int *a, int *b);
 
 // file desriptor
 void	ft_putchar_fd(char c, int ft);
@@ -173,12 +174,7 @@ int		fd_putstr(int fd, char const *s);
 int		fd_putptr(int fd, void *s);
 int		fd_checker(int fd, int c, ...);
 int		printfd(int fd, char const *s, ...);
-// ft_printf
 int		ft_printf(const char *format, ...);
-
-//new added functions
-void	ft_swap(int *a, int *b);
-
 
 typedef struct s_task
 {
@@ -187,12 +183,12 @@ typedef struct s_task
 }	t_task;
 
 // multithreading
-void		*worker(void *args);
-void		pool_wait(t_pool *pool);
-void		init_pool(t_pool *pool);
-void		add_task(t_pool *pool, void (*f)(void *args), void *args);
-void		pool_destroy(t_pool *pool);
-void		*mk_args(int count, ...);
-void		free_args(void **args);
+void	*worker(void *args);
+void	pool_wait(t_pool *pool);
+void	init_pool(t_pool *pool);
+void	add_task(t_pool *pool, void (*f)(void *args), void *args);
+void	pool_destroy(t_pool *pool);
+void	*mk_args(int count, ...);
+void	free_args(void **args);
 
 #endif

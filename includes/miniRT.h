@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 23:33:39 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/16 00:43:29 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,21 @@ typedef struct s_hit_info
 	t_object	*obj;
 }	t_hit_info;
 
-extern char			g_strs[7][12];
+typedef struct	s_cyl
+{
+	t_object	*obj;
+	t_vec3		origin;
+	t_vec3		dir;
+	t_vec3		base;
+	t_vec3		axis;
+}	t_cyl;
+
+typedef struct s_hit
+{
+	t_hit_info	*best;
+	float		*min_dist;
+}	t_hit;
+
 typedef t_hit_info	(*t_intersect)(t_vec3 origin, t_vec3 dir, t_object *obj);
 typedef t_vec3		(*t_get_uv)(t_vec3 poi, t_object *obj);
 
@@ -214,7 +228,7 @@ int			extract_data(t_minirt *vars, char *filename);
 int			valid_filename(char *s);
 float		ft_atof(char *str);
 t_object	classifier(char *s, int *type, int class);
-int			throw_error(int err);
+int			throw_error(int err, char strs[7][12]);
 t_object	*new_object(void);
 void		print_members(t_list *lst, void (*f)(t_object *));
 void		cleanup(t_minirt *vars, int n);
@@ -224,13 +238,13 @@ int			split_3_parts(char *s, char p1[8], char p2[8], char p3[8]);
 int			is_int(char *s);
 
 /* fillers */
-int			fill_cone(t_minirt *vars, char *line, t_object *obj);
-int			fill_plan(t_minirt *vars, char *data, t_object *obj);
-int			fill_sphere(t_minirt *vars, char *data, t_object *obj);
-int			fill_cylinder(t_minirt *vars, char *data, t_object *obj);
-int			fill_ambiance(char *data, t_minirt *vars);
-int			fill_light(char *data, t_object *obj);
-int			fill_camera(char *data, t_minirt *vars);
+int			fill_cone(t_minirt *vars, char *line, t_object *obj, char s[7][12]);
+int			fill_plan(t_minirt *vars, char *data, t_object *obj, char s[7][12]);
+int			fill_sphere(t_minirt *vars, char *data, t_object *obj, char s[7][12]);
+int			fill_cylinder(t_minirt *vars, char *data, t_object *obj, char s[7][12]);
+int			fill_light(char *data, t_object *obj, char s[7][12]);
+int			fill_ambiance(char *data, t_minirt *vars, char s[7][12]);
+int			fill_camera(char *data, t_minirt *vars, char s[7][12]);
 int			fill_rgb(t_color *c, char p1[8], char p2[8], char p3[8]);
 int			fill_float(float *f, char *s);
 int			fill_vector(t_vec3 *v, char p[3][8], int class, int *type);

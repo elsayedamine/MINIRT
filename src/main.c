@@ -6,15 +6,12 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:29:26 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 19:22:09 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 23:48:07 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
 #include <time.h>
-
-char	g_strs[7][12] = {"AMBIANCE", "CAMERA", "LIGHT", \
-	"SPHERE", "CYLINDER", "PLANE", "CONE"}; // only for printing
 
 int	valid_filename(char *s)
 {
@@ -33,8 +30,7 @@ int	main(int ac, char **av)
 	if (ac == 2 && valid_filename(av[1]))
 	{
 		if (extract_data(&vars, av[1]) == FALSE)
-			return (130);
-		// print_members(vars.members, print_data);
+			return (1);
 		setup(&vars, 0);
 		init_window(&vars);
 		raytracing(&vars);
@@ -44,4 +40,5 @@ int	main(int ac, char **av)
 	}
 	printfd(2, "Invalid Argument: Stop Playing Around\n");
 	printfd(2, "\tExpected Format: ./miniRT <filename.rt>\n");
+	return (1);
 }

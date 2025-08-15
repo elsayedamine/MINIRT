@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 16:37:04 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/16 00:41:27 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,23 @@ t_object	*new_object(void)
 
 int	parse_object_line(t_minirt *vars, char *file, t_object *obj, int *seen)
 {
+	static char	strs[7][12] = {"AMBIANCE", "CAMERA", "LIGHT", \
+	"SPHERE", "CYLINDER", "PLAN", "CONE"};
+
 	if (!ft_strncmp("A ", file, 2) && !(*seen)++)
-		return (fill_ambiance(file, vars));
+		return (fill_ambiance(file, vars, strs));
 	if (!ft_strncmp("c ", file, 2))
-		return (fill_camera(file, vars));
+		return (fill_camera(file, vars, strs));
 	if (!ft_strncmp("l ", file, 2))
-		return (fill_light(file, obj));
+		return (fill_light(file, obj, strs));
 	if (!ft_strncmp("sp ", file, 3))
-		return (fill_sphere(vars, file, obj));
+		return (fill_sphere(vars, file, obj, strs));
 	if (!ft_strncmp("cy ", file, 3))
-		return (fill_cylinder(vars, file, obj));
+		return (fill_cylinder(vars, file, obj, strs));
 	if (!ft_strncmp("pl ", file, 3))
-		return (fill_plan(vars, file, obj));
+		return (fill_plan(vars, file, obj, strs));
 	if (!ft_strncmp("co ", file, 3))
-		return (fill_cone(vars, file, obj));
+		return (fill_cone(vars, file, obj, strs));
 	return (-1);
 }
 
@@ -58,7 +61,7 @@ int	assign_object(t_minirt *vars, char *file, t_object *obj)
 		return (free(obj), TRUE);
 	err = parse_object_line(vars, file, obj, &seen);
 	if (err == -1)
-		return (cleanup(vars, 3), free(obj), throw_error(ERR), 0);
+		return (cleanup(vars, 3), free(obj), throw_error(ERR, NULL), 0);
 	if (err == 1)
 		return (cleanup(vars, 3), free(obj), 0);
 	if (err == 2)
