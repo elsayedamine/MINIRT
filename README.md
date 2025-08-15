@@ -1,7 +1,6 @@
 ## what left in the project
 
 # the cone normal when flipped
-# shininess - specular
 
 # linked list to array
 # norminette raytracing

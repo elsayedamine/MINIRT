@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:38:23 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/15 23:07:45 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 23:10:32 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	shininess(t_minirt *vars, int key)
 		delta = ((key == '-') - (key == '='));
 	vars->selected.obj->shininess += delta;
 	if (vars->selected.obj->shininess < 1)
-		return (vars->selected.obj->shininess = 1, TRUE);
+		return (vars->selected.obj->shininess = 1, (void)delta);
 	if (vars->selected.obj->shininess > 1000000000.0f)
-		return (vars->selected.obj->shininess = 1000000000.0f, TRUE);
+		return (vars->selected.obj->shininess = 1000000000.0f, (void)delta);
 	raytracing(vars);
 }
