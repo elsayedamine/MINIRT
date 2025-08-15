@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 23:08:06 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 23:33:39 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ typedef enum e_type
 	ERR = -1,
 	TOO_MANY_CAM = -2
 }	t_type;
+
+typedef enum e_equation
+{
+	A,
+	B,
+	C,
+	DELTA
+}	t_equation;
 
 typedef enum e_mouse
 {
@@ -288,5 +296,8 @@ t_vec3		rotate_x(t_vec3 vec, float angle);
 t_vec3		rotate_y(t_vec3 vec, float angle);
 void		rotate(t_vec3 *vec, t_vec3 rot);
 void		set_obj_vec(void *object, int type);
-
+t_vec3		get_uv_cone(t_vec3 poi, t_object *obj);
+t_vec3		get_uv_cylinder(t_vec3 poi, t_object *obj);
+t_vec3		get_uv_plane(t_vec3 poi, t_object *obj);
+t_vec3		get_uv_sphere(t_vec3 poi, t_object *obj);
 #endif

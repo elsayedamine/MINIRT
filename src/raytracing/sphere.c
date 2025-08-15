@@ -1,46 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intersections.c                                    :+:      :+:    :+:   */
+/*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 16:52:53 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 17:41:48 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 23:43:08 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
 
-t_hit_info intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj)
+t_hit_info	fill_hit_sphere(t_vec3 origin, t_vec3 dir, t_object *obj, float x)
 {
-    t_hit_info hit;
-    float a = dot(dir, dir);
-    t_vec3 oc = vec_op_vec(origin, obj->p, sub);
-    float b = 2 * dot(oc, dir);
-    float c = dot(oc, oc) - obj->r * obj->r;
-    float delta = b * b - 4 * a * c;
+	t_hit_info	hit;
 
-    if (delta < 0.0f)
-        return (hit.hit = 0, hit);
-    float sqrt_delta = sqrtf(fmaxf(delta, 0.0f));
-    float x1 = (-b - sqrt_delta) / (2 * a);
-    float x2 = (-b + sqrt_delta) / (2 * a);
-    float x = 0;
-    if (x1 > EPS_HIT && (x1 < x2 || x2 <= EPS_HIT))
-        x = x1;
-    else if (x2 > EPS_HIT)
-        x = x2;
-    else
-        return (hit.hit = 0, hit);
-    hit.poi = vec_op_vec(origin, sc_op_vec(x, dir, mul), add);
-    hit.normal = normalize(vec_op_vec(hit.poi, obj->p, sub));
-    if (dot(hit.normal, dir) > 0)
-        hit.normal = sc_op_vec(-1, hit.normal, mul);
-    hit.dist = distance(hit.poi, origin);
-    hit.color = get_color(hit.poi, obj);
-    hit.obj = obj;
-    hit.light = 0;
-    hit.hit = 1;
-    return (hit);
+	hit.hit = 1;
+	hit.poi = vec_op_vec(origin, sc_op_vec(x, dir, mul), add);
+	hit.normal = normalize(vec_op_vec(hit.poi, obj->p, sub));
+	if (dot(hit.normal, dir) > 0)
+		hit.normal = sc_op_vec(-1, hit.normal, mul);
+	hit.dist = distance(hit.poi, origin);
+	hit.color = get_color(hit.poi, obj);
+	hit.obj = obj;
+	hit.light = 0;
+	return (hit);
+}
+
+t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj)
+{
+	t_hit_info	hit;
+	t_vec3		oc;
+	float		sqrt_delta;
+	float		equation[4];
+	float		x[3];
+
+	oc = vec_op_vec(origin, obj->p, sub);
+	equation[A] = dot(dir, dir);
+	equation[B] = 2 * dot(oc, dir);
+	equation[C] = dot(oc, oc) - obj->r * obj->r;
+	equation[DELTA] = equation[B] * equation[B] - 4 * equation[A] * equation[C];
+	if (equation[DELTA] < 0.0f)
+		return (hit.hit = 0, hit);
+	sqrt_delta = sqrtf(fmaxf(equation[DELTA], 0.0f));
+	x[1] = (-equation[B] - sqrt_delta) / (2 * equation[A]);
+	x[2] = (-equation[B] + sqrt_delta) / (2 * equation[A]);
+	if (x[1] > EPS_HIT && (x[1] < x[2] || x[2] <= EPS_HIT))
+		x[0] = x[1];
+	else if (x[2] > EPS_HIT)
+		x[0] = x[2];
+	else
+		return (hit.hit = 0, hit);
+	return (fill_hit_sphere(origin, dir, obj, x[0]));
 }
