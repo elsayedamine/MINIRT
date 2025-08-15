@@ -1,6 +1,6 @@
 #include <miniRT.h>
 
-void free_args(void **args)
+void	free_args(void **args)
 {
 	void **cpy;
 
@@ -10,7 +10,7 @@ void free_args(void **args)
 	free(args);
 }
 
-void *mk_args(int count, ...)
+void	*mk_args(int count, ...)
 {
 	va_list	args;
 	int		i;
