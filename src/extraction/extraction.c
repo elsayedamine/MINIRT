@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extraction.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/09 18:29:37 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/15 16:37:04 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,44 +29,51 @@ t_object	*new_object(void)
 	return (obj);
 }
 
+int	parse_object_line(t_minirt *vars, char *file, t_object *obj, int *seen)
+{
+	if (!ft_strncmp("A ", file, 2) && !(*seen)++)
+		return (fill_ambiance(file, vars));
+	if (!ft_strncmp("c ", file, 2))
+		return (fill_camera(file, vars));
+	if (!ft_strncmp("l ", file, 2))
+		return (fill_light(file, obj));
+	if (!ft_strncmp("sp ", file, 3))
+		return (fill_sphere(vars, file, obj));
+	if (!ft_strncmp("cy ", file, 3))
+		return (fill_cylinder(vars, file, obj));
+	if (!ft_strncmp("pl ", file, 3))
+		return (fill_plan(vars, file, obj));
+	if (!ft_strncmp("co ", file, 3))
+		return (fill_cone(vars, file, obj));
+	return (-1);
+}
+
 int	assign_object(t_minirt *vars, char *file, t_object *obj)
 {
-	static int	err = 0;
+	static int	err;
 	static int	seen;
 
 	ft_strcompress(file);
 	if (!file[0] || *file == '#')
 		return (free(obj), TRUE);
-	if (!ft_strncmp("A ", file, 2) && !seen++)
-		err = fill_ambiance(file, vars);
-	else if (!ft_strncmp("c ", file, 2))
-		err = fill_camera(file, vars);
-	else if (!ft_strncmp("l ", file, 2))
-		err = fill_light(file, obj);
-	else if (!ft_strncmp("sp ", file, 3))
-		err = fill_sphere(vars, file, obj);
-	else if (!ft_strncmp("cy ", file, 3))
-		err = fill_cylinder(vars, file, obj);
-	else if (!ft_strncmp("pl ", file, 3))
-		err = fill_plan(vars, file, obj);
-	else if (!ft_strncmp("co ", file, 3))
-		err = fill_cone(vars, file, obj);
-	else
+	err = parse_object_line(vars, file, obj, &seen);
+	if (err == -1)
 		return (cleanup(vars, 3), free(obj), throw_error(ERR), 0);
 	if (err == 1)
 		return (cleanup(vars, 3), free(obj), 0);
 	if (err == 2)
 		return (free(obj), TRUE);
 	set_obj_vec(obj, obj->class);
-	return (ft_lstadd_back(&vars->members, ft_lstnew(obj)), 1);
+	ft_lstadd_back(&vars->members, ft_lstnew(obj));
+	return (1);
 }
 
-void set_obj_vec(void *object, int type)
+void	set_obj_vec(void *object, int type)
 {
-	t_vec3 vec;
-	t_object *obj;
-	t_camera *cam;
-	t_vec3 ref;
+	t_vec3		vec;
+	t_object	*obj;
+	t_camera	*cam;
+	t_vec3		ref;
 
 	ref = (t_vec3){0, 0, 1};
 	if (type == CAMERA)
@@ -90,7 +97,6 @@ void set_obj_vec(void *object, int type)
 
 int	extract_data(t_minirt *vars, char *filename)
 {
-	t_object *obj;
 	int			i;
 	int			fd;
 	char		**file;
@@ -106,20 +112,7 @@ int	extract_data(t_minirt *vars, char *filename)
 	vars->selected.mouse = NO_CLICK;
 	i = -1;
 	while (file[++i])
-	{
-		obj = new_object();
-		if (assign_object(vars, file[i], obj) == FALSE)
+		if (assign_object(vars, file[i], new_object()) == FALSE)
 			return (close(fd), ft_free("2", file), FALSE);
-	}
 	return (close(fd), ft_free("2", file), TRUE);
-}
-
-void	cleanup(t_minirt *vars, int n)
-{
-	if (1 & n)
-		ft_lstclear(&vars->members, free);
-	// if (4 & n)
-		//
-	// if (8 & n)
-		//
 }

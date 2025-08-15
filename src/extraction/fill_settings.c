@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_settings.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:36:35 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/09 17:57:59 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/15 16:10:18 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 int	fill_ambiance(char *line, t_minirt *vars)
 {
-	char	**fields;
-	int		type;
+	char		**fields;
+	int			type;
 	t_object	data;
 
 	fields = ft_split(line, WHITE);
@@ -35,9 +35,9 @@ int	fill_ambiance(char *line, t_minirt *vars)
 
 int	fill_camera(char *line, t_minirt *vars)
 {
-	char	**fields;
+	char		**fields;
 	t_object	data;
-	int		type;
+	int			type;
 	static int	cam_number;
 
 	fields = ft_split(line, WHITE);
@@ -64,9 +64,9 @@ int	fill_camera(char *line, t_minirt *vars)
 
 int	fill_light(char *line, t_object *obj)
 {
-	char	**fields;
+	char		**fields;
 	t_object	data;
-	int		type;
+	int			type;
 
 	fields = ft_split(line, WHITE);
 	if (!fields || ft_arrlen(fields) > 4)
@@ -82,7 +82,8 @@ int	fill_light(char *line, t_object *obj)
 	obj->ratio = data.r;
 	data = classifier(fields[3], &type, RGB);
 	obj->t.c1 = data.t.c1;
-	if (type != RGB && (type != RGB1 || obj->t.c1.r < 0 || obj->t.c1.g < 0 || obj->t.c1.b < 0))
+	if (type != RGB && (type != RGB1 || obj->t.c1.r < 0 || \
+		obj->t.c1.g < 0 || obj->t.c1.b < 0))
 		return (ft_free("2", fields), throw_error(LIGHT), 1);
 	return (ft_free("2", fields), 0);
 }

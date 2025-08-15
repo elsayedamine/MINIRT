@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   classifier.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sayed <sayed@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 22:48:49 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/09 15:33:13 by sayed            ###   ########.fr       */
+/*   Updated: 2025/08/15 16:05:15 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ int	split_3_parts(char *s, char part1[8], char part2[8], char part3[8])
 
 t_object	classifier(char *s, int *type, int class)
 {
-	char	p[3][8];
-	t_object obj;
+	char		p[3][8];
+	t_object	obj;
+
 	obj.class = -1;
 	obj.ratio = -2.0f;
 	obj.r = -2.0f;
@@ -79,31 +80,3 @@ t_object	classifier(char *s, int *type, int class)
 			obj.class = fill_float(&obj.r, s), obj);
 	return (*type = UNKNOWN, obj.class = UNKNOWN, obj);
 }
-
-// t_mode set_mode(t_minirt *vars, char *str, t_object *obj)
-// {
-// 	int len;
-// 	char *cpy;
-	
-// 	if (!ft_strncmp("c", str, 1))
-// 	{
-// 		obj->t.mode = CHECKERED;
-// 		return (CHECKERED);
-// 	}
-// 	cpy = str;
-// 	len = ft_strlen(cpy) - 1;
-// 	if (len + 1 < 7)
-// 		return (NONE);
-// 	if (!ft_strncmp(&cpy[len - 3], ".xpm", 4))
-// 	{
-// 		if (!ft_strncmp(&cpy[len - 5], "_t", 2))
-// 			obj->t.mode = TEXTURE;
-// 		else if (!ft_strncmp(&cpy[len - 5], "_b", 2))
-// 			obj->t.mode = BRUMPMAP;
-// 		else
-// 			return (NONE);
-// 		obj->t.img = mlx_xpm_file_to_image(vars->win.mlx, str, obj->t.w, obj->t.h);
-// 		return (obj->t.mode);
-// 	}
-// 	return (NONE);
-// }

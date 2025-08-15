@@ -10,3 +10,6 @@
 # resize protection
 # cone textures 
 # when the plan is rotated the back of the plan is not enlightened
+
+
+# valgrind 
