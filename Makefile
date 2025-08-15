@@ -24,6 +24,7 @@ $(BIN_DIR)/%.o: %.c $(INCLUDES) | $(BIN_DIR)
 
 clean:
 	rm -rf $(BIN_DIR)
+	make clean -C libft
 
 fclean: clean
 	rm -rf $(NAME)

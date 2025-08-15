@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 17:21:14 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 15:55:38 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/15 18:25:54 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ t_hit_info intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj)
     float OO = dot(co, co);
     float DO = dot(dir, co);
 
-    float a = Da * Da - cos2 * DD;
-    float b = 2.0f * (Oa * Da - cos2 * DO);
-    float c = Oa * Oa - cos2 * OO;
-    float delta = b * b - 4.0f * a * c;
+    float a = Da*Da - cos2 * DD;
+    float b = 2.0f * (Oa*Da - cos2 * DO);
+    float c = Oa*Oa - cos2 * OO;
+    float delta = b*b - 4.0f*a*c;
 
     if (delta >= 0.0f && fabsf(a) > EPSILON)
     {
@@ -54,10 +54,9 @@ t_hit_info intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj)
         float t2 = (-b + sd) / (2.0f * a);
 
         float t_side = 0.0f;
-        if (t1 > EPS && (t1 < t2 || t2 <= EPS))
-            t_side = t1;
-        else if (t2 > EPS)
-            t_side = t2;
+        if (t1 > EPS && (t1 < t2 || t2 <= EPS)) t_side = t1;
+        else if (t2 > EPS)                      t_side = t2;
+
         if (t_side > EPS)
         {
             t_vec3 p = vec_op_vec(origin, sc_op_vec(t_side, dir, mul), add);
@@ -101,11 +100,11 @@ t_hit_info intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj)
 
             if (dist2 <= r2 + EPS)
             {
-                if (t_cap < best_t + EPS)
+                if (t_cap < best_t + EPS) // allow tiny overlap with side
                 {
                     best_t  = t_cap;
                     best_poi = p;
-                    best_n   = axis;
+                    best_n   = axis; // base normal
                 }
             }
         }
