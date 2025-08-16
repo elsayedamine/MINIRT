@@ -1,6 +1,7 @@
 ## what left in the project
 
 # the cone normal when flipped
+# the cone angle/ width doesnt change
 
 # resize protection
 # cone textures

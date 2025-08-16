@@ -28,4 +28,30 @@ sp  6,28,-39      23   250,250,180
 sp -6,30,-41      25   110,60,0 
 
 # Cone (upright, tip on the floor, pointing up)
-co  0,-30,-40     0,1,0   1 50  210,180,140
+co  0,-30,-40     0,1,0   
+t_hit_info	get_object(t_minirt *vars, t_vec3 origin, \
+	t_vec3 dir, t_intersect *f)
+{
+	int			i;
+	t_hit_info	hit_info;
+	t_hit_info	closest;
+
+	closest.hit = 0;
+	closest.dist = INFINITY;
+	closest.obj = NULL;
+	i = 0;
+	while (vars->arr[i])
+	{
+		if (vars->arr[i]->class != LIGHT)
+		{
+			hit_info = f[vars->arr[i]->class - 2](origin, dir, vars->arr[i]);
+			if (hit_info.hit && hit_info.dist > EPS_HIT && \
+				hit_info.dist < closest.dist)
+				closest = hit_info;
+		}
+		i++;
+	}
+	return (closest);
+}
+
+t_hit_info	get_hit_info(t_1 50  210,180,140
