@@ -2,9 +2,6 @@
 
 # the cone normal when flipped
 
-# linked list to array
-# norminette raytracing
-
 # resize protection
 # cone textures
 # cylinder texture 
