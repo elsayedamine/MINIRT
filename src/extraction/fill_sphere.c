@@ -6,13 +6,13 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 16:33:22 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 00:44:48 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/16 15:53:33 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
 
-int	auxilliary_fill_sphere(t_minirt *vars, t_object *obj, 
+int	auxilliary_fill_sphere(t_minirt *vars, t_object *obj, \
 	char **fields, char s[7][12])
 {
 	int			type;
@@ -31,7 +31,8 @@ int	auxilliary_fill_sphere(t_minirt *vars, t_object *obj,
 	return (ft_free("2", fields), 0);
 }
 
-int	fill_sphere(t_minirt *vars, char *line, t_object *obj, char strs[7][12])
+int	fill_sphere(t_minirt *vars, char *line, t_object *obj, \
+	char strs[7][12])
 {
 	char		**fields;
 	t_object	data;

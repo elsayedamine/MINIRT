@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_light.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 08:40:16 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/16 15:56:56 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_hit_info	get_object(t_minirt *vars, t_vec3 origin, \
 			hit_info = f[vars->arr[i]->class - 2](origin, dir, vars->arr[i]);
 			if (hit_info.hit && hit_info.dist > EPS_HIT && \
 				hit_info.dist < closest.dist)
-				closest = hit_info;			
+				closest = hit_info;
 		}
 		i++;
 	}

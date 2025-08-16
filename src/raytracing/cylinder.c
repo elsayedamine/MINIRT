@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 17:18:22 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 08:21:02 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/16 15:52:00 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	hit_cylinder_side(t_hit hctx, t_cyl cyl)
 	t_vec3	vecs[3];
 	float	equation[4];
 	float	racine;
-	// float	solution[2];
 
 	vecs[0] = vec_op_vec(cyl.origin, cyl.base, sub);
 	vecs[1] = vec_op_vec(cyl.dir, sc_op_vec(dot(cyl.dir, \
@@ -78,8 +77,6 @@ void	hit_cylinder_side(t_hit hctx, t_cyl cyl)
 	if (equation[DELTA] < 0.0f)
 		return ;
 	racine = sqrtf(fmaxf(equation[DELTA], 0.0f));
-	// solution[0] = (-equation[B] - racine) / (2.0f * equation[A]);
-	// solution[1] = (-equation[B] + racine) / (2.0f * equation[A]);
 	choose_solution(racine, hctx, cyl, equation);
 }
 

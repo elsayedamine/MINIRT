@@ -6,125 +6,125 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 17:21:14 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 18:25:54 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/16 16:03:35 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
 
-t_hit_info intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj)
+void	set_hit_info(t_hit_info *hit, t_vec3 *vec, t_object *obj, t_vec3 origin)
 {
-    t_hit_info hit;
-    hit.hit = 0;
+	hit->poi = vec[0];
+	hit->normal = vec[1];
+	hit->dist = distance(vec[0], origin);
+	hit->color = get_color(vec[0], obj);
+	hit->obj = obj;
+	hit->light = 0;
+	hit->hit = 1;
+}
 
-    const float INF_DIST = 1e30f;
-    const float EPS = 1e-5f; // small bias for seam and apex
+float	cone_root(t_ray ray, t_object *obj, t_vec3 axis, t_vec3 co)
+{
+	float	equation[5];
+	float	x[3];
+	float	da;
+	float	oa;
+	float	cos2;
 
-    float best_t = INF_DIST;
-    t_vec3 best_poi = (t_vec3){0,0,0};
-    t_vec3 best_n   = (t_vec3){0,0,0};
+	cos2 = (obj->h * obj->h > 0.0f) * (obj->h * obj->h / \
+		(obj->h * obj->h + obj->r * obj->r)) + 0.0f;
+	da = dot(ray.dir, axis);
+	oa = dot(co, axis);
+	equation[A] = da * da - cos2 * dot(ray.dir, ray.dir);
+	equation[B] = 2.0f * (oa * da - cos2 * dot(ray.dir, co));
+	equation[C] = oa * oa - cos2 * dot(co, co);
+	equation[DELTA] = equation[B] * equation[B] - 4.0f
+		* equation[A] * equation[C];
+	if (equation[DELTA] < 0.0f || fabsf(equation[A]) <= EPSILON)
+		return (-1);
+	equation[SQRT] = sqrtf(fmaxf(equation[DELTA], 0.0f));
+	x[1] = (-equation[B] - equation[SQRT]) / (2.0f * equation[A]);
+	x[2] = (-equation[B] + equation[SQRT]) / (2.0f * equation[A]);
+	if (x[1] > EPSILON && (x[1] < x[2] || x[2] <= EPSILON))
+		return (x[1]);
+	else if (x[2] > EPSILON)
+		return (x[2]);
+	return (-1);
+}
 
-    // Compute axis and base
-    t_vec3 axis = normalize(obj->o);        // apex -> base
-    t_vec3 apex = obj->p;
-    t_vec3 base = vec_op_vec(apex, sc_op_vec(obj->h, axis, mul), add);
+int	side_intersection(t_ray ray, t_object *obj, t_hit_info *best, float *b)
+{
+	t_vec3	p;
+	t_vec3	n;
+	t_vec3	v;
+	float	x[2];
 
-    // Precompute cone slope
-    float h2 = obj->h * obj->h;
-    float r2 = obj->r * obj->r;
-    float cos2 = (h2 > 0.0f) ? (h2 / (h2 + r2)) : 0.0f;
+	obj->o = normalize(obj->o);
+	x[0] = cone_root(ray, obj, obj->o, vec_op_vec(ray.origin, obj->p, sub));
+	if (x[0] < 0)
+		return (0);
+	p = vec_op_vec(ray.origin, sc_op_vec(x[0], ray.dir, mul), add);
+	x[1] = dot(vec_op_vec(p, obj->p, sub), obj->o);
+	if (x[1] < 0.0f || x[1] > obj->h)
+		return (0);
+	if (x[0] < *b)
+	{
+		*b = x[0];
+		v = vec_op_vec(p, obj->p, sub);
+		n = vec_op_vec(sc_op_vec(dot(v, obj->o), obj->o, mul), \
+			sc_op_vec(obj->h * obj->h / (obj->h * obj->h + \
+				obj->r * obj->r), v, mul), sub);
+		if (magnitude(n) < EPSILON)
+			n = obj->o;
+		*best = (t_hit_info){.poi = p, .normal = normalize(n)};
+	}
+	return (1);
+}
 
-    // ===== 1) Side intersection =====
-    t_vec3 co = vec_op_vec(origin, apex, sub);
-    float Da = dot(dir, axis);
-    float Oa = dot(co, axis);
-    float DD = dot(dir, dir);
-    float OO = dot(co, co);
-    float DO = dot(dir, co);
+int	base_intersection(t_ray ray, t_object *obj, t_hit_info *best, float *b)
+{
+	t_vec3		base;
+	t_vec3		p;
+	t_vec3		diff;
+	float		cap;
 
-    float a = Da*Da - cos2 * DD;
-    float b = 2.0f * (Oa*Da - cos2 * DO);
-    float c = Oa*Oa - cos2 * OO;
-    float delta = b*b - 4.0f*a*c;
+	base = vec_op_vec(obj->p, sc_op_vec(obj->h, obj->o, mul), add);
+	if (fabsf(dot(ray.dir, obj->o)) <= EPSILON)
+		return (0);
+	cap = dot(vec_op_vec(base, ray.origin, sub), obj->o) / dot(ray.dir, obj->o);
+	if (cap <= EPSILON)
+		return (0);
+	p = vec_op_vec(ray.origin, sc_op_vec(cap, ray.dir, mul), add);
+	diff = vec_op_vec(p, base, sub);
+	if (dot(diff, diff) > obj->r * obj->r + EPSILON || cap >= *b + EPSILON)
+		return (0);
+	*b = cap;
+	*best = (t_hit_info){.poi = p, .normal = obj->o};
+	return (1);
+}
 
-    if (delta >= 0.0f && fabsf(a) > EPSILON)
-    {
-        float sd = sqrtf(fmaxf(delta, 0.0f));
-        float t1 = (-b - sd) / (2.0f * a);
-        float t2 = (-b + sd) / (2.0f * a);
+t_hit_info	intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj)
+{
+	float		best_t;
+	t_hit_info	best;
+	t_hit_info	hit;
+	t_ray		ray;
+	t_vec3		vec[2];
 
-        float t_side = 0.0f;
-        if (t1 > EPS && (t1 < t2 || t2 <= EPS)) t_side = t1;
-        else if (t2 > EPS)                      t_side = t2;
-
-        if (t_side > EPS)
-        {
-            t_vec3 p = vec_op_vec(origin, sc_op_vec(t_side, dir, mul), add);
-            float u  = dot(vec_op_vec(p, apex, sub), axis); // height along axis from apex
-
-            // Allow apex and base hits (0..h) including EPS
-            if (u >= 0.0f && u <= obj->h)
-            {
-                if (t_side < best_t)
-                {
-                    best_t  = t_side;
-                    best_poi = p;
-
-                    // Normal for side
-                    t_vec3 v = vec_op_vec(p, apex, sub);
-                    t_vec3 n = vec_op_vec(sc_op_vec(dot(v, axis), axis, mul),
-                                          sc_op_vec(cos2, v, mul), sub);
-
-                    // Handle apex degenerate case
-                    if (magnitude(n) < EPS)
-                    {
-                        // small offset along axis if too small
-                        n = axis;
-                    }
-                    best_n = normalize(n);
-                }
-            }
-        }
-    }
-
-    // ===== 2) Base cap intersection =====
-    float denom = dot(dir, axis);
-    if (fabsf(denom) > EPS)
-    {
-        float t_cap = dot(vec_op_vec(base, origin, sub), axis) / denom;
-        if (t_cap > EPS)
-        {
-            t_vec3 p = vec_op_vec(origin, sc_op_vec(t_cap, dir, mul), add);
-            t_vec3 diff = vec_op_vec(p, base, sub);
-            float dist2 = dot(diff, diff);
-
-            if (dist2 <= r2 + EPS)
-            {
-                if (t_cap < best_t + EPS) // allow tiny overlap with side
-                {
-                    best_t  = t_cap;
-                    best_poi = p;
-                    best_n   = axis; // base normal
-                }
-            }
-        }
-    }
-
-    // ===== 3) Finalize hit =====
-    if (best_t == INF_DIST)
-        return (hit.hit = 0, hit);
-
-    // Flip normal to face the ray
-    if (dot(best_n, dir) > 0.0f)
-        best_n = sc_op_vec(-1.0f, best_n, mul);
-
-    hit.poi    = best_poi;
-    hit.normal = best_n;
-    hit.dist   = distance(best_poi, origin);
-    hit.color  = get_color(best_poi, obj);
-    hit.obj    = obj;
-    hit.light  = 0;
-    hit.hit    = 1;
-
-    return hit;
+	hit.hit = 0;
+	best_t = 1e30f;
+	best = (t_hit_info){0};
+	ray.origin = origin;
+	ray.dir = dir;
+	obj->o = normalize(obj->o);
+	side_intersection(ray, obj, &best, &best_t);
+	base_intersection(ray, obj, &best, &best_t);
+	if (best_t == 1e30f)
+		return (hit);
+	if (dot(best.normal, dir) > 0.0f)
+		best.normal = sc_op_vec(-1.0f, best.normal, mul);
+	vec[0] = best.poi;
+	vec[1] = best.normal;
+	set_hit_info(&hit, vec, obj, origin);
+	return (hit);
 }

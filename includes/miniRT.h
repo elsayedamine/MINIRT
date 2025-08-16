@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 08:28:02 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/16 15:57:49 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ typedef enum e_equation
 	A,
 	B,
 	C,
-	DELTA
+	DELTA,
+	SQRT
 }	t_equation;
 
 typedef enum e_mouse
@@ -201,7 +202,7 @@ typedef struct s_hit_info
 	t_object	*obj;
 }	t_hit_info;
 
-typedef struct	s_cyl
+typedef struct s_cyl
 {
 	t_object	*obj;
 	t_vec3		origin;
@@ -237,12 +238,19 @@ void		print_data(t_object *obj);
 t_texture	extract_texture(char *texture, t_minirt *vars);
 int			split_3_parts(char *s, char p1[8], char p2[8], char p3[8]);
 int			is_int(char *s);
+t_object	*new_object(void);
+int			assign_object(t_minirt *vars, char *file, \
+	t_object *obj, t_list **list);
+int			parse_object_line(t_minirt *vars, char *file, \
+	t_object *obj, int *seen);
 
 /* fillers */
 int			fill_cone(t_minirt *vars, char *line, t_object *obj, char s[7][12]);
 int			fill_plan(t_minirt *vars, char *data, t_object *obj, char s[7][12]);
-int			fill_sphere(t_minirt *vars, char *data, t_object *obj, char s[7][12]);
-int			fill_cylinder(t_minirt *vars, char *data, t_object *obj, char s[7][12]);
+int			fill_sphere(t_minirt *vars, char *data, t_object *obj, \
+	char s[7][12]);
+int			fill_cylinder(t_minirt *vars, char *data, t_object *obj, \
+	char s[7][12]);
 int			fill_light(char *data, t_object *obj, char s[7][12]);
 int			fill_ambiance(char *data, t_minirt *vars, char s[7][12]);
 int			fill_camera(char *data, t_minirt *vars, char s[7][12]);

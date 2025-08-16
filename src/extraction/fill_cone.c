@@ -6,13 +6,14 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 17:00:40 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 00:43:56 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/16 15:45:30 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
 
-int	auxilliary_fill_cone(t_minirt *vars, t_object *obj, char **fields, char s[7][12])
+int	auxilliary_fill_cone(t_minirt *vars, t_object *obj, char **fields, \
+	char s[7][12])
 {
 	int			type;
 	t_object	data;
