@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 15:54:39 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/16 20:44:58 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,15 @@ int	extract_data(t_minirt *vars, char *filename, t_list **list)
 	while (++i < 11)
 		vars->cam[i].exist = 0;
 	vars->selected.mouse = NO_CLICK;
+	vars->amb = 0;
 	i = -1;
 	while (file[++i])
 	{
 		if (assign_object(vars, file[i], new_object(), list) == FALSE)
 			return (close(fd), ft_free("2", file), FALSE);
 	}
+	if (vars->amb == 0)
+		return (throw_error(NO_AMB, NULL), FALSE);
 	return (close(fd), ft_free("2", file), TRUE);
 }
 

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:36:35 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 00:43:18 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/16 20:47:39 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	fill_ambiance(char *line, t_minirt *vars, char strs[7][12])
 	if (type != RGB && type != RGB1)
 		return (ft_free("2", fields), throw_error(AMBIANCE, strs), 1);
 	vars->amb_rgb = data.t.c1;
+	vars->amb = 1;
 	return (ft_free("2", fields), 2);
 }
 

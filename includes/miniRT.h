@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 15:57:49 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/16 20:41:41 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ typedef enum e_type
 	PLANE,
 	CONE,
 	ERR = -1,
-	TOO_MANY_CAM = -2
+	TOO_MANY_CAM = -2,
+	NO_AMB = -3
 }	t_type;
 
 typedef enum e_equation
@@ -188,6 +189,7 @@ typedef struct s_minirt
 	float		plane_h;
 	float		amb_ratio;
 	t_color		amb_rgb;
+	int			amb;
 	t_select	selected;
 }	t_minirt;
 
