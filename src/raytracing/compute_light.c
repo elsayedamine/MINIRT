@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_light.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 19:23:15 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/16 08:40:16 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,24 @@
 t_hit_info	get_object(t_minirt *vars, t_vec3 origin, \
 	t_vec3 dir, t_intersect *f)
 {
-	t_list				*curr;
-	t_object			*obj;
-	t_hit_info			hit_info;
-	t_hit_info			closest;
+	int			i;
+	t_hit_info	hit_info;
+	t_hit_info	closest;
 
 	closest.hit = 0;
 	closest.dist = INFINITY;
 	closest.obj = NULL;
-	curr = vars->members;
-	while (curr)
+	i = 0;
+	while (vars->arr[i])
 	{
-		obj = (t_object *)curr->content;
-		if (obj->class == LIGHT)
+		if (vars->arr[i]->class != LIGHT)
 		{
-			curr = curr->next;
-			continue ;
+			hit_info = f[vars->arr[i]->class - 2](origin, dir, vars->arr[i]);
+			if (hit_info.hit && hit_info.dist > EPS_HIT && \
+				hit_info.dist < closest.dist)
+				closest = hit_info;			
 		}
-		hit_info = f[obj->class - 2](origin, dir, obj);
-		if (hit_info.hit && hit_info.dist > EPS_HIT && \
-			hit_info.dist < closest.dist)
-			closest = hit_info;
-		curr = curr->next;
+		i++;
 	}
 	return (closest);
 }
@@ -54,7 +50,7 @@ t_hit_info	get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars)
 	return (get_object(vars, origin, dir, f));
 }
 
-int	is_shadowed(t_minirt *vars, t_hit_info hit, t_object *light)
+int	is_shaded(t_minirt *vars, t_hit_info hit, t_object *light)
 {
 	t_vec3		light_dir;
 	t_ray		shadow_ray;

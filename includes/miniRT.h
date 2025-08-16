@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 00:43:29 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/16 08:28:02 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,8 @@ typedef struct s_select
 typedef struct s_minirt
 {
 	t_win		win;
-	t_list		*members;
+	// t_list		*members;
+	t_object	**arr;
 	t_camera	cam[11];
 	int			cam_id;
 	t_ray		**rays;
@@ -224,14 +225,14 @@ typedef t_vec3		(*t_get_uv)(t_vec3 poi, t_object *obj);
 
 /* init & data */
 void		init_window(t_minirt *vars);
-int			extract_data(t_minirt *vars, char *filename);
+int			extract_data(t_minirt *vars, char *filename, t_list **list);
+int			set_objects(t_minirt *vars, char *filename);
 int			valid_filename(char *s);
 float		ft_atof(char *str);
 t_object	classifier(char *s, int *type, int class);
 int			throw_error(int err, char strs[7][12]);
 t_object	*new_object(void);
 void		print_members(t_list *lst, void (*f)(t_object *));
-void		cleanup(t_minirt *vars, int n);
 void		print_data(t_object *obj);
 t_texture	extract_texture(char *texture, t_minirt *vars);
 int			split_3_parts(char *s, char p1[8], char p2[8], char p3[8]);
@@ -270,7 +271,7 @@ void		put_pixel(t_minirt *vars, int x, int y, int color);
 void		setup(t_minirt *vars, int cam_id);
 void		raytracing(t_minirt *vars);
 t_color		compute_lighting(t_hit_info hit, t_object *light, t_ray ray);
-int			is_shadowed(t_minirt *vars, t_hit_info hit, t_object *light);
+int			is_shaded(t_minirt *vars, t_hit_info hit, t_object *light);
 
 /* debugging */
 void		print_vec(t_vec3 vec, int nl);

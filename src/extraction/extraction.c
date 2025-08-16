@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extraction.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 00:41:27 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/16 10:40:10 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	parse_object_line(t_minirt *vars, char *file, t_object *obj, int *seen)
 	return (-1);
 }
 
-int	assign_object(t_minirt *vars, char *file, t_object *obj)
+int	assign_object(t_minirt *vars, char *file, t_object *obj, t_list **list)
 {
 	static int	err;
 	static int	seen;
@@ -61,13 +61,13 @@ int	assign_object(t_minirt *vars, char *file, t_object *obj)
 		return (free(obj), TRUE);
 	err = parse_object_line(vars, file, obj, &seen);
 	if (err == -1)
-		return (cleanup(vars, 3), free(obj), throw_error(ERR, NULL), 0);
+		return (free(obj), throw_error(ERR, NULL), 0);
 	if (err == 1)
-		return (cleanup(vars, 3), free(obj), 0);
+		return (free(obj), 0);
 	if (err == 2)
 		return (free(obj), TRUE);
 	set_obj_vec(obj, obj->class);
-	ft_lstadd_back(&vars->members, ft_lstnew(obj));
+	ft_lstadd_back(list, ft_lstnew(obj));
 	return (1);
 }
 
@@ -98,13 +98,12 @@ void	set_obj_vec(void *object, int type)
 	obj->bitan = normalize(cross(obj->tan, vec));
 }
 
-int	extract_data(t_minirt *vars, char *filename)
+int	extract_data(t_minirt *vars, char *filename, t_list **list)
 {
 	int			i;
 	int			fd;
 	char		**file;
 
-	vars->members = NULL;
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (perror("Failed to open file"), FALSE);
@@ -115,7 +114,37 @@ int	extract_data(t_minirt *vars, char *filename)
 	vars->selected.mouse = NO_CLICK;
 	i = -1;
 	while (file[++i])
-		if (assign_object(vars, file[i], new_object()) == FALSE)
+	{
+		if (assign_object(vars, file[i], new_object(), list) == FALSE)
 			return (close(fd), ft_free("2", file), FALSE);
+	}
 	return (close(fd), ft_free("2", file), TRUE);
+}
+
+int set_objects(t_minirt *vars, char *filename)
+{
+	int i;
+	int size;
+	t_list *list;
+	t_list *curr;
+
+	list = NULL;
+	if (!extract_data(vars, filename, &list))
+	{
+		ft_lstclear(&list, free);
+		return (0);
+	}
+	size = ft_lstsize(list);
+	vars->arr = malloc(sizeof(t_object *) * (size + 1));
+	vars->arr[size] = NULL;
+	curr = list;
+	i = 0;
+	while (curr)
+	{
+		vars->arr[i] = malloc(sizeof(t_object));
+		ft_memcpy(vars->arr[i++], curr->content, sizeof(t_object));
+		curr = curr->next;
+	}
+	ft_lstclear(&list, free);
+	return (1);
 }

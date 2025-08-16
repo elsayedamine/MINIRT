@@ -19,7 +19,7 @@ int	quit(t_minirt *vars)
 	mlx_destroy_display(vars->win.mlx);
 	if (vars->win.mlx)
 		free(vars->win.mlx);
-	return (cleanup(vars, 1), exit(0), 0);
+	return (exit(0), 0);
 }
 
 void	init_window(t_minirt *vars)

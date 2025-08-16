@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:48:10 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 17:51:09 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/16 10:40:36 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,20 @@ int	trace(t_minirt *vars, t_ray ray)
 {
 	t_hit_info	hit;
 	t_color		final_color;
-	t_list		*curr;
-	t_object	*obj;
+	int			i;
 
 	hit = get_hit_info(ray.origin, ray.dir, vars);
 	if (!hit.hit)
 		return (0);
 	final_color = col_mul_col(hit.color, \
 		col_mul_sc(vars->amb_rgb, vars->amb_ratio));
-	curr = vars->members;
-	while (curr)
+	i = 0;
+	while (vars->arr[i])
 	{
-		obj = (t_object *)curr->content;
-		if (obj->class == LIGHT && !is_shadowed(vars, hit, obj))
+		if (vars->arr[i]->class == LIGHT && !is_shaded(vars, hit, vars->arr[i]))
 			final_color = col_add_col(final_color, \
-				compute_lighting(hit, obj, ray));
-		curr = curr->next;
+				compute_lighting(hit, vars->arr[i], ray));
+		i++;
 	}
 	return (color_to_int(final_color));
 }

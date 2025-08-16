@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 16:42:47 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 00:45:53 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/16 08:16:09 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
-
-void	cleanup(t_minirt *vars, int n)
-{
-	if (1 & n)
-		ft_lstclear(&vars->members, free);
-}
 
 int	throw_error(int err, char strs[7][12])
 {
