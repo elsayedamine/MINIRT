@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 17:21:14 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 16:03:35 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/16 18:55:30 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,28 +54,27 @@ float	cone_root(t_ray ray, t_object *obj, t_vec3 axis, t_vec3 co)
 
 int	side_intersection(t_ray ray, t_object *obj, t_hit_info *best, float *b)
 {
+	t_vec3	axis;
 	t_vec3	p;
 	t_vec3	n;
-	t_vec3	v;
 	float	x[2];
 
-	obj->o = normalize(obj->o);
-	x[0] = cone_root(ray, obj, obj->o, vec_op_vec(ray.origin, obj->p, sub));
+	axis = normalize(obj->o);
+	x[0] = cone_root(ray, obj, axis, vec_op_vec(ray.origin, obj->p, sub));
 	if (x[0] < 0)
 		return (0);
 	p = vec_op_vec(ray.origin, sc_op_vec(x[0], ray.dir, mul), add);
-	x[1] = dot(vec_op_vec(p, obj->p, sub), obj->o);
+	x[1] = dot(vec_op_vec(p, obj->p, sub), axis);
 	if (x[1] < 0.0f || x[1] > obj->h)
 		return (0);
 	if (x[0] < *b)
 	{
 		*b = x[0];
-		v = vec_op_vec(p, obj->p, sub);
-		n = vec_op_vec(sc_op_vec(dot(v, obj->o), obj->o, mul), \
-			sc_op_vec(obj->h * obj->h / (obj->h * obj->h + \
-				obj->r * obj->r), v, mul), sub);
+		n = vec_op_vec(sc_op_vec(dot(vec_op_vec(p, obj->p, sub), axis), \
+			axis, mul), sc_op_vec(obj->h * obj->h / (obj->h * obj->h + \
+				obj->r * obj->r), vec_op_vec(p, obj->p, sub), mul), sub);
 		if (magnitude(n) < EPSILON)
-			n = obj->o;
+			n = axis;
 		*best = (t_hit_info){.poi = p, .normal = normalize(n)};
 	}
 	return (1);
@@ -86,12 +85,14 @@ int	base_intersection(t_ray ray, t_object *obj, t_hit_info *best, float *b)
 	t_vec3		base;
 	t_vec3		p;
 	t_vec3		diff;
+	t_vec3		axis;
 	float		cap;
 
-	base = vec_op_vec(obj->p, sc_op_vec(obj->h, obj->o, mul), add);
-	if (fabsf(dot(ray.dir, obj->o)) <= EPSILON)
+	axis = normalize(obj->o);
+	base = vec_op_vec(obj->p, sc_op_vec(obj->h, axis, mul), add);
+	if (fabsf(dot(ray.dir, axis)) <= EPSILON)
 		return (0);
-	cap = dot(vec_op_vec(base, ray.origin, sub), obj->o) / dot(ray.dir, obj->o);
+	cap = dot(vec_op_vec(base, ray.origin, sub), axis) / dot(ray.dir, axis);
 	if (cap <= EPSILON)
 		return (0);
 	p = vec_op_vec(ray.origin, sc_op_vec(cap, ray.dir, mul), add);
@@ -99,7 +100,7 @@ int	base_intersection(t_ray ray, t_object *obj, t_hit_info *best, float *b)
 	if (dot(diff, diff) > obj->r * obj->r + EPSILON || cap >= *b + EPSILON)
 		return (0);
 	*b = cap;
-	*best = (t_hit_info){.poi = p, .normal = obj->o};
+	*best = (t_hit_info){.poi = p, .normal = axis};
 	return (1);
 }
 
@@ -116,7 +117,6 @@ t_hit_info	intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj)
 	best = (t_hit_info){0};
 	ray.origin = origin;
 	ray.dir = dir;
-	obj->o = normalize(obj->o);
 	side_intersection(ray, obj, &best, &best_t);
 	base_intersection(ray, obj, &best, &best_t);
 	if (best_t == 1e30f)
