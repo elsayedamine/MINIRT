@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:38:23 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/17 12:38:10 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/17 13:22:42 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,29 @@
 void	translation(t_minirt *vars, int c)
 {
 	t_vec3	trans;
+	t_vec3	new_pos;
+	t_vec3	dir;
+	float	dist_to_light;
+	int		i;
 
-	trans = (t_vec3){((c == 'd') - (c == 'a')) / 2.0f,
-		((c == 'w') - (c == 's')) / 2.0f, ((c == 'q') - (c == 'e')) / 2.0f};
-	vars->selected.obj->p = vec_op_vec(vars->selected.obj->p, trans, add);
+	trans = (t_vec3){
+		((c == 'd') - (c == 'a')) / 2.0f,
+		((c == 'w') - (c == 's')) / 2.0f,
+		((c == 'q') - (c == 'e')) / 2.0f
+	};
+	new_pos = vec_op_vec(vars->selected.obj->p, trans, add);
+	dir = normalize(trans);
+	i = -1;
+	while (vars->arr[++i])
+	{
+		if (vars->arr[i]->class != LIGHT)
+			continue ;
+		dist_to_light = distance(new_pos, vars->arr[i]->p);
+		if (dist_to_light < 2.5f)
+			new_pos = vec_op_vec(new_pos, sc_op_vec((2.5f - \
+				dist_to_light + 0.1f), dir, mul), add);
+	}
+	vars->selected.obj->p = new_pos;
 	raytracing(vars);
 }
 
@@ -51,11 +70,8 @@ void	resize(t_minirt *vars)
 
 	obj = vars->selected.obj;
 	scale = ((vars->selected.mouse == 4) - (vars->selected.mouse == 5)) * 0.5f;
-	if (obj->class == SPHERE)
-	{
-		if (obj->r + scale > 1.0f)
-			obj->r += scale;
-	}
+	if (obj->class == SPHERE && obj->r + scale > 1.0f)
+		obj->r += scale;
 	else if (obj->class == CYLINDER)
 	{
 		if (obj->r + scale > 1.0f && obj->h + scale > 1.0f)
@@ -63,13 +79,8 @@ void	resize(t_minirt *vars)
 		if (obj->r + scale > 1.0f && obj->h + scale > 1.0f)
 			obj->h += scale;
 	}
-	else if (obj->class == CONE)
-	{
-		if (obj->h + scale > 1.0f)
-			obj->h += scale;
-		if (obj->angle + scale > 0.1f && obj->angle + scale < M_PI)
-			obj->angle += scale;
-	}
+	else if (obj->class == CONE && obj->h + scale > 1.0f)
+		obj->h += scale;
 	raytracing(vars);
 }
 

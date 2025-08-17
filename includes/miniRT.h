@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/17 11:54:15 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/17 12:59:17 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,7 +302,6 @@ void		translate_light(t_minirt *vars, int c);
 
 /* intersections */
 t_hit_info	get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars);
-t_hit_info	intersect_light(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_cylinder(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_plane(t_vec3 origin, t_vec3 dir, t_object *obj);

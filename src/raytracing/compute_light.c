@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/17 10:37:55 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/17 12:58:42 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_hit_info	get_object(t_minirt *vars, t_vec3 origin, \
 	{
 		if (vars->arr[i]->class != LIGHT)
 		{
-			hit_info = f[vars->arr[i]->class - 2](origin, dir, vars->arr[i]);
+			hit_info = f[vars->arr[i]->class - 3](origin, dir, vars->arr[i]);
 			if (hit_info.hit && hit_info.dist > EPS_HIT && \
 				hit_info.dist < closest.dist)
 				closest = hit_info;
@@ -40,7 +40,6 @@ t_hit_info	get_object(t_minirt *vars, t_vec3 origin, \
 t_hit_info	get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars)
 {
 	static t_intersect	f[] = {
-		intersect_light,
 		intersect_sphere,
 		intersect_cylinder,
 		intersect_plane,
