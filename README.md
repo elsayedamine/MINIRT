@@ -11,7 +11,7 @@
 ```bash 
 ./minirt test.rt
 [1]    479327 bus error (core dumped)  ./minirt test.rt
-A 	0.1							255,255,255
+A 	0.1				255,255,255
 c 	0,0,27		0,0,-1	70
 c 	0,0,40		0,0,-1	70
 c 	-60,0,0		1,0,0	70

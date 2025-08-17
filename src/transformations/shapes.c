@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:38:23 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/17 13:22:42 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/17 14:03:36 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ void	rotation(t_minirt *vars, int c)
 
 void	resize(t_minirt *vars)
 {
-	float		scale;
-	t_object	*obj;
+	float			scale;
+	t_object		*obj;
+	float			max_scale;
 
 	obj = vars->selected.obj;
 	scale = ((vars->selected.mouse == 4) - (vars->selected.mouse == 5)) * 0.5f;
@@ -74,10 +75,14 @@ void	resize(t_minirt *vars)
 		obj->r += scale;
 	else if (obj->class == CYLINDER)
 	{
-		if (obj->r + scale > 1.0f && obj->h + scale > 1.0f)
-			obj->r += scale;
-		if (obj->r + scale > 1.0f && obj->h + scale > 1.0f)
-			obj->h += scale;
+		if (scale < 0)
+			max_scale = obj->r - 1.0f;
+		else
+			max_scale = 1e30f;
+		if (scale < -max_scale)
+			scale = -max_scale;
+		obj->h += scale;
+		obj->r = obj->h * obj->ratio;
 	}
 	else if (obj->class == CONE && obj->h + scale > 1.0f)
 		obj->h += scale;

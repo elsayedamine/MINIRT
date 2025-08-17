@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 16:32:37 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 00:45:10 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/17 13:59:31 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	auxilliary_fill_cylinder(t_minirt *vars, t_object *obj, \
 		obj->t = extract_texture(fields[6], vars);
 	if (fields[6] && obj->t.mode == NONE)
 		return (ft_free("2", fields), throw_error(CYLINDER, s), 1);
+	obj->ratio = obj->r / obj->h;
 	return (ft_free("2", fields), 0);
 }
 
