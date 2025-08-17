@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:38:23 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/17 11:10:12 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/17 12:38:10 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	translation(t_minirt *vars, int c)
 {
 	t_vec3	trans;
 
-	trans = (t_vec3){(c == 'd') - (c == 'a') / 2.0f,
-		(c == 'w') - (c == 's') / 2.0f, (c == 'q') - (c == 'e') / 2.0f};
+	trans = (t_vec3){((c == 'd') - (c == 'a')) / 2.0f,
+		((c == 'w') - (c == 's')) / 2.0f, ((c == 'q') - (c == 'e')) / 2.0f};
 	vars->selected.obj->p = vec_op_vec(vars->selected.obj->p, trans, add);
 	raytracing(vars);
 }
@@ -90,5 +90,22 @@ void	shininess(t_minirt *vars, int key)
 		return (vars->selected.obj->shininess = 1, (void)delta);
 	if (vars->selected.obj->shininess > 1000000000.0f)
 		return (vars->selected.obj->shininess = 1000000000.0f, (void)delta);
+	raytracing(vars);
+}
+
+void	translate_light(t_minirt *vars, int c)
+{
+	t_vec3	trans;
+	int		i;
+
+	trans = (t_vec3){((c == 'l') - (c == 'j')) / 2.0f,
+		((c == 'i') - (c == 'k')) / 2.0f, ((c == 'u') - (c == 'o')) / 2.0f};
+	i = -1;
+	while (vars->arr[++i])
+		if (vars->arr[i]->class == LIGHT)
+			break ;
+	if (!vars->arr[i])
+		return ;
+	vars->arr[i]->p = vec_op_vec(vars->arr[i]->p, trans, add);
 	raytracing(vars);
 }
