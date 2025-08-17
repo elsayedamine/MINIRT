@@ -1,13 +1,12 @@
-## what left in the project
+## what left in the project 
 
-# the cone normal when flipped
-# the cone angle/ width doesnt change
+# the cone normal when flipped (partially fixed)
+# the cone angle/ width doesnt change (new / big issue that we forgot)
+# light translation (easy)
+# light diffusion when an object hits it (slightly fixed)
 
-# resize protection
-# cone textures
+# cone textures 
 # cylinder texture 
-# when the plan is rotated the back of the plan is not enlightened
-# the errors in discord images
 
 # valgrind
 

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:38:23 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/15 23:11:31 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/17 11:10:12 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,29 +39,36 @@ void	rotation(t_minirt *vars, int c)
 		rotate(&s->o, rot);
 	rotate(&s->tan, rot);
 	rotate(&s->bitan, rot);
-	if (s->class == 4 || s->class == 6)
+	if (s->class == CYLINDER || s->class == CONE)
 		s->p = vec_op_vec(sc_op_vec(s->h * -0.5f, s->o, mul), temp, add);
 	raytracing(vars);
 }
 
-// we must to protect the resize
 void	resize(t_minirt *vars)
 {
-	float	scale;
+	float		scale;
+	t_object	*obj;
 
-	scale = ((vars->selected.mouse == 4) - (vars->selected.mouse == 5)) / 2.0f;
-	if (vars->selected.obj->class == SPHERE)
-		if (vars->selected.obj->r + scale > 0)
-			vars->selected.obj->r += scale;
-	if (vars->selected.obj->class == CYLINDER)
+	obj = vars->selected.obj;
+	scale = ((vars->selected.mouse == 4) - (vars->selected.mouse == 5)) * 0.5f;
+	if (obj->class == SPHERE)
 	{
-		vars->selected.obj->h += scale;
-		vars->selected.obj->r += scale;
+		if (obj->r + scale > 1.0f)
+			obj->r += scale;
 	}
-	if (vars->selected.obj->class == CONE)
+	else if (obj->class == CYLINDER)
 	{
-		vars->selected.obj->h += scale;
-		vars->selected.obj->angle += scale;
+		if (obj->r + scale > 1.0f && obj->h + scale > 1.0f)
+			obj->r += scale;
+		if (obj->r + scale > 1.0f && obj->h + scale > 1.0f)
+			obj->h += scale;
+	}
+	else if (obj->class == CONE)
+	{
+		if (obj->h + scale > 1.0f)
+			obj->h += scale;
+		if (obj->angle + scale > 0.1f && obj->angle + scale < M_PI)
+			obj->angle += scale;
 	}
 	raytracing(vars);
 }
@@ -70,7 +77,9 @@ void	shininess(t_minirt *vars, int key)
 {
 	int	delta;
 
-	if (vars->selected.obj->shininess > 100)
+	if (vars->selected.obj->shininess > 1000000)
+		delta = 100 * ((key == '-') - (key == '='));
+	else if (vars->selected.obj->shininess > 100)
 		delta = 10 * ((key == '-') - (key == '='));
 	else if (vars->selected.obj->shininess > 10)
 		delta = ((key == '-') - (key == '=')) * 10;

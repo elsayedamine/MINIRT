@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 17:37:54 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/16 17:10:48 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/17 10:06:08 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	keyhook(int key, t_minirt *vars)
 
 	if (key == 65307)
 		quit(vars);
-	if (key == '\t')
+	if (key == 'c')
 		vars->selected.mouse = NO_CLICK;
 	wasdqe = ft_strchr("wasdqe", key) != NULL;
 	if (wasdqe && vars->selected.mouse == LEFT_CLICK)

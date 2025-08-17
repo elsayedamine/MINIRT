@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:15:45 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 17:11:25 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/17 10:20:30 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,29 @@ void	camera_translation(t_minirt *vars, int c)
 	raytracing(vars);
 }
 
-void	camera_rotation(t_minirt *vars, int c)
+void	camera_rotation(t_minirt *vars, int a)
 {
-	vars->cam[vars->cam_id].fw = rotate_x(vars->cam[vars->cam_id].fw, \
-		((c == 'w') - (c == 's')) / 10);
-	vars->cam[vars->cam_id].fw = rotate_y(vars->cam[vars->cam_id].fw, \
-		((c == 'd') - (c == 'a')) / 10);
-	vars->cam[vars->cam_id].fw = rotate_z(vars->cam[vars->cam_id].fw, \
-		((c == 'q') - (c == 'e')) / 10);
-	setup(vars, vars->cam_id);
-	raytracing(vars);
+	t_vec3		rot;
+	t_camera	*cam;
+
+	cam = &vars->cam[vars->cam_id];
+	rot = (t_vec3){
+		((a == 'w') - (a == 's')) * 0.1f,
+		((a == 'a') - (a == 'd')) * 0.1f,
+		((a == 'q') - (a == 'e')) * 0.1f
+	};
+	if (rot.x || rot.y || rot.z)
+	{
+		rotate(&cam->fw, rot);
+		rotate(&cam->up, rot);
+		rotate(&cam->rt, rot);
+		cam->fw = normalize(cam->fw);
+		cam->rt = normalize(cam->rt);
+		cam->up = normalize(cross(cam->rt, cam->fw));
+		cam->rt = normalize(cross(cam->fw, cam->up));
+		setup(vars, vars->cam_id);
+		raytracing(vars);
+	}
 }
 
 void	resize_fov(t_minirt *vars)
