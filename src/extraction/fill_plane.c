@@ -21,6 +21,7 @@ int	auxilliary_fill_plan(t_minirt *vars, t_object *obj, \
 	data = classifier(fields[3], &type, RGB);
 	obj->t.c1 = data.t.c1;
 	obj->shininess = SHININESS;
+	obj->ratio = .1f;
 	if (!(type == RGB || (type == RGB1 && obj->t.c1.r >= 0 && \
 		obj->t.c1.g >= 0 && obj->t.c1.b >= 0)))
 		return (ft_free("2", fields), throw_error(PLANE, strs), 1);

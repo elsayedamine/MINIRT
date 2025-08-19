@@ -17,14 +17,16 @@ t_vec3	get_uv_cone(t_vec3 poi, t_object *obj)
 	t_vec3	local;
 	t_vec3	uv;
 	t_vec3	rel;
+	float	slant;
 
 	rel = vec_op_vec(poi, obj->p, sub);
 	local.x = dot(rel, obj->tan);
 	local.y = dot(rel, obj->o);
 	local.z = dot(rel, obj->bitan);
 	local = sc_op_vec(1.0f / obj->r, local, mul);
+	slant = sqrtf(obj->h * obj->h + obj->r * obj->r);
 	uv.x = obj->facing + atan2(local.z, local.x) / (2.0f * M_PI);
-	uv.y = (local.y + obj->h / 2.0f) / obj->h;
+	uv.y = (local.y + obj->h / 2.0f) / slant;
 	return (uv);
 }
 
@@ -50,8 +52,8 @@ t_vec3	get_uv_plane(t_vec3 poi, t_object *obj)
 	t_vec3	uv;
 
 	local = vec_op_vec(poi, obj->p, sub);
-	uv.x = dot(local, obj->tan) * .1f;
-	uv.y = dot(local, obj->bitan) * .1f;
+	uv.x = dot(local, obj->tan) * obj->ratio;
+	uv.y = dot(local, obj->bitan) * obj->ratio;
 	uv.x = uv.x - floorf(uv.x);
 	uv.y = uv.y - floorf(uv.y);
 	return (uv);

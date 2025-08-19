@@ -29,10 +29,10 @@ int	main(int ac, char **av)
 
 	if (ac == 2 && valid_filename(av[1]))
 	{
+		init_window(&vars);
 		if (!set_objects(&vars, av[1]))
 			return (1);
 		setup(&vars, 0);
-		init_window(&vars);
 		raytracing(&vars);
 		hook_manipulation(&vars);
 		return (0);

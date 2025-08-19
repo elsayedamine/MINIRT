@@ -73,6 +73,10 @@ void	resize(t_minirt *vars)
 	scale = ((vars->selected.mouse == 4) - (vars->selected.mouse == 5)) * 0.5f;
 	if (obj->class == SPHERE && obj->r + scale > 1.0f)
 		obj->r += scale;
+	if (obj->class == PLANE)
+	{
+		obj->ratio -= scale / 100.0f;
+	}
 	else if (obj->class == CYLINDER)
 	{
 		if (scale < 0)
@@ -81,8 +85,8 @@ void	resize(t_minirt *vars)
 			max_scale = 1e30f;
 		if (scale < -max_scale)
 			scale = -max_scale;
-		obj->h += scale;
 		obj->r = obj->h * obj->ratio;
+		obj->h += scale;
 	}
 	else if (obj->class == CONE && obj->h + scale > 1.0f)
 		obj->h += scale;
