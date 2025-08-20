@@ -17,7 +17,6 @@ t_vec3	get_uv_cone(t_vec3 poi, t_object *obj)
 	t_vec3	local;
 	t_vec3	uv;
 	t_vec3	rel;
-	float	slant;
 
 	rel = vec_op_vec(poi, obj->p, sub);
 	local.x = dot(rel, obj->tan);
@@ -26,8 +25,7 @@ t_vec3	get_uv_cone(t_vec3 poi, t_object *obj)
 	uv.x = obj->facing + atan2(local.z, local.x) / (2.0f * M_PI);
 	if (uv.x < 0.0f)
 		uv.x += 1.0f;
-	slant = sqrtf(obj->h * obj->h + obj->r * obj->r);
-	uv.y = 1.0f - local.y / slant;
+	uv.y = 1.0f - local.y / obj->h;
 	return (uv);
 }
 
