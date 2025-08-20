@@ -22,7 +22,6 @@ t_object	*new_object(void)
 	obj->o = (t_vec3){0, 0, 1};
 	obj->facing = 0;
 	obj->class = -1;
-	obj->angle = -1;
 	obj->r = -2.0;
 	obj->h = -2.0;
 	obj->ratio = -2.0;

@@ -57,6 +57,6 @@ int	fill_cone(t_minirt *vars, char *line, t_object *obj, char strs[7][12])
 	data = classifier(fields[3], &type, CONE);
 	if (!(type >= RATIO))
 		return (ft_free("2", fields), throw_error(CONE, strs), 1);
-	obj->angle = data.r;
+	obj->r = data.r;
 	return (auxilliary_fill_cone(vars, obj, fields, strs));
 }

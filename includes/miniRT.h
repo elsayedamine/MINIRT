@@ -138,7 +138,6 @@ typedef struct s_object
 {
 	int			class;
 	float		ratio;
-	float		angle;
 	float		facing;
 	float		r;
 	float		h;

@@ -74,9 +74,7 @@ void	resize(t_minirt *vars)
 	if (obj->class == SPHERE && obj->r + scale > 1.0f)
 		obj->r += scale;
 	if (obj->class == PLANE)
-	{
 		obj->ratio -= scale / 100.0f;
-	}
 	else if (obj->class == CYLINDER)
 	{
 		if (scale < 0)
