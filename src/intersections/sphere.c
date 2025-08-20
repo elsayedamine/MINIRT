@@ -32,10 +32,12 @@ t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj)
 {
 	t_hit_info	hit;
 	t_vec3		oc;
-	float		sqrt_delta;
 	float		equation[4];
-	float		x[3];
+	float		x[4];
 
+	hit = (t_hit_info){.poi = (t_vec3){0.0f, 0.0f, 0.0f}, \
+		.normal = (t_vec3){0, 0, 0}, .color = (t_color){0, 0, 0}, .obj = NULL};
+	ft_init(3, &hit.hit, &hit.light, &hit.dist);
 	oc = vec_op_vec(origin, obj->p, sub);
 	equation[A] = dot(dir, dir);
 	equation[B] = 2 * dot(oc, dir);
@@ -43,9 +45,9 @@ t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj)
 	equation[DELTA] = equation[B] * equation[B] - 4 * equation[A] * equation[C];
 	if (equation[DELTA] < 0.0f)
 		return (hit.hit = 0, hit);
-	sqrt_delta = sqrtf(fmaxf(equation[DELTA], 0.0f));
-	x[1] = (-equation[B] - sqrt_delta) / (2 * equation[A]);
-	x[2] = (-equation[B] + sqrt_delta) / (2 * equation[A]);
+	x[3] = sqrtf(fmaxf(equation[DELTA], 0.0f));
+	x[1] = (-equation[B] - x[3]) / (2 * equation[A]);
+	x[2] = (-equation[B] + x[3]) / (2 * equation[A]);
 	if (x[1] > EPS_HIT && (x[1] < x[2] || x[2] <= EPS_HIT))
 		x[0] = x[1];
 	else if (x[2] > EPS_HIT)

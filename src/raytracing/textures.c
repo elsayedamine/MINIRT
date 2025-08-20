@@ -23,12 +23,10 @@ t_vec3	get_uv_cone(t_vec3 poi, t_object *obj)
 	local.x = dot(rel, obj->tan);
 	local.y = dot(rel, obj->o);
 	local.z = dot(rel, obj->bitan);
-	// local = sc_op_vec(1.0f / obj->r, local, mul);
 	uv.x = obj->facing + atan2(local.z, local.x) / (2.0f * M_PI);
 	if (uv.x < 0.0f)
 		uv.x += 1.0f;
 	slant = sqrtf(obj->h * obj->h + obj->r * obj->r);
-	// uv.y = (local.y + obj->h / 2.0f) / slant;
 	uv.y = 1.0f - local.y / slant;
 	return (uv);
 }

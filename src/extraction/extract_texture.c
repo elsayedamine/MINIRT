@@ -25,14 +25,14 @@ t_texture	extract_checker(char *texture)
 	colors = ft_split(texture + 8, "-");
 	if (!colors || ft_arrlen(colors) > 3 || \
 		!is_int(colors[0]) || ft_atoi(colors[0]) <= 0)
-		return (t.mode = NONE, t);
+		return (ft_free("2", colors), t.mode = NONE, t);
 	if (!split_3_parts(colors[1], p[0], p[1], p[2]) || \
-			fill_rgb(&t.c1, p[0], p[1], p[2]) != 3)
-		return (t.mode = NONE, t);
+			fill_rgb(&t.c1, p[0], p[1], p [2]) != 3)
+		return (ft_free("2", colors), t.mode = NONE, t);
 	if (!split_3_parts(colors[2], p[0], p[1], p[2]) || \
 		fill_rgb(&t.c2, p[0], p[1], p[2]) == 5)
-		return (t.mode = NONE, t);
-	return (t.w = ft_atoi(colors[0]), t);
+		return (ft_free("2", colors), t.mode = NONE, t);
+	return (t.w = ft_atoi(colors[0]), ft_free("2", colors), t);
 }
 
 t_texture	extract_texture(char *texture, t_minirt *vars)

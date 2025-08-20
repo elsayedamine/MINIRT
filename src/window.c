@@ -14,11 +14,17 @@
 
 int	quit(t_minirt *vars)
 {
+	int	i;
+
 	mlx_destroy_image(vars->win.mlx, vars->win.img);
 	mlx_destroy_window(vars->win.mlx, vars->win.win);
 	mlx_destroy_display(vars->win.mlx);
 	if (vars->win.mlx)
 		free(vars->win.mlx);
+	i = -1;
+	while (vars->arr[++i])
+		free(vars->arr[i]);
+	free(vars->arr);
 	return (exit(0), 0);
 }
 
