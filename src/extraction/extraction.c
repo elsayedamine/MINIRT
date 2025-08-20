@@ -63,7 +63,6 @@ int	extract_data(t_minirt *vars, char *filename, t_list **list)
 int	set_objects(t_minirt *vars, char *filename)
 {
 	int		i;
-	int		size;
 	t_list	*list;
 	t_list	*curr;
 
@@ -71,11 +70,12 @@ int	set_objects(t_minirt *vars, char *filename)
 	if (!extract_data(vars, filename, &list))
 	{
 		ft_lstclear(&list, free);
-		return (0);
+		mlx_destroy_image(vars->win.mlx, vars->win.img);
+		mlx_destroy_window(vars->win.mlx, vars->win.win);
+		mlx_destroy_display(vars->win.mlx);
+		return (free(vars->win.mlx), 0);
 	}
-	size = ft_lstsize(list);
-	vars->arr = malloc(sizeof(t_object *) * (size + 1));
-	vars->arr[size] = NULL;
+	vars->arr = malloc(sizeof(t_object *) * (ft_lstsize(list) + 1));
 	curr = list;
 	i = 0;
 	while (curr)
@@ -84,6 +84,7 @@ int	set_objects(t_minirt *vars, char *filename)
 		ft_memcpy(vars->arr[i++], curr->content, sizeof(t_object));
 		curr = curr->next;
 	}
+	vars->arr[i] = NULL;
 	ft_lstclear(&list, free);
 	return (1);
 }
