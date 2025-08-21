@@ -51,5 +51,6 @@ int	fill_sphere(t_minirt *vars, char *line, t_object *obj, \
 	if (!(type >= RATIO))
 		return (ft_free("2", fields), throw_error(SPHERE, strs), 1);
 	obj->r = data.r / 2.0f;
+	obj->o = (t_vec3){0, 1, 0};
 	return (auxilliary_fill_sphere(vars, obj, fields, strs));
 }

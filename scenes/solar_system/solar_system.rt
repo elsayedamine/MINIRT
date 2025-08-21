@@ -1,0 +1,31 @@
+# Setting
+A 	0.3							255,255,255
+c 	0,0,3000			0,0,-1		45
+l 	500,0,1000			0.1			255,255,255
+
+# Sun
+sp 2500.0,0,150					2786		255,255,255 bump=scenes/solar_system/sun.xpm
+
+# Mercury
+sp 891.61,234.85,150			80			255,255,255 bump=scenes/solar_system/mercury.xpm
+
+# Venus
+sp 791.27,-301.86,150			120			255,255,255 bump=scenes/solar_system/venus.xpm
+
+# Earth
+sp 692.35,146.14,150			130			255,255,255 bump=scenes/solar_system/earth.xpm
+
+# Mars
+sp 513.94,-115.86,150			90			255,255,255 bump=scenes/solar_system/mars.xpm
+
+# Jupiter
+sp 69.98,145.81,150				600			255,255,255 bump=scenes/solar_system/jupiter.xpm
+
+# Saturn
+sp -451.94,-252.37,150			400			255,255,255 bump=scenes/solar_system/saturn.xpm
+
+# Uranus
+sp -781.84,104.17,150			200			255,255,255 bump=scenes/solar_system/uranus.xpm
+
+# Neptune
+sp -1029.9,-104.29,150			190			255,255,255 bump=scenes/solar_system/neptune.xpm
