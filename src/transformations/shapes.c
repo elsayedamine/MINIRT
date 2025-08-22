@@ -72,10 +72,7 @@ void	resize(t_minirt *vars)
 	obj = vars->selected.obj;
 	scale = ((vars->selected.mouse == 4) - (vars->selected.mouse == 5)) * 0.5f;
 	if (obj->class == SPHERE && obj->r + scale > 1.0f)
-	{
-		printf("%f\n", obj->r);
 		obj->r += scale;
-	}
 	if (obj->class == PLANE)
 		obj->ratio -= scale / 100.0f;
 	else if (obj->class == CYLINDER)
