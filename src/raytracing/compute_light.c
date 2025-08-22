@@ -84,7 +84,7 @@ t_color	compute_lighting(t_hit_info hit, t_object *light, t_ray ray)
 	dotrv = fmaxf(0.0f, dot(r, vect));
 	dotrv = (dotrv < 0) * 0 + (dotrv >= 0) * dotrv;
 	return (col_add_col(
-			col_mul_col(col_mul_sc(light->t.c1, dotnl), hit.color),
-			col_mul_sc(light->t.c1, powf(dotrv, hit.obj->shininess))
+			col_mul_col(col_mul_sc(light->t.c1, dotnl * light->ratio), hit.color),
+			col_mul_sc(light->t.c1, powf(dotrv, hit.obj->shininess) * light->ratio)
 		));
 }

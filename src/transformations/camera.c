@@ -42,8 +42,6 @@ void	camera_rotation(t_minirt *vars, int a)
 		rotate(&cam->rt, rot);
 		cam->fw = normalize(cam->fw);
 		cam->rt = normalize(cam->rt);
-		cam->up = normalize(cross(cam->rt, cam->fw));
-		cam->rt = normalize(cross(cam->fw, cam->up));
 		setup(vars, vars->cam_id);
 		raytracing(vars);
 	}

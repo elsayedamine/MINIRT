@@ -1,0 +1,10 @@
+A		0.5				255,255,255
+
+c	0,0,0		0,0,-1		45
+l	-4,6,-30		0.6			255,255,255
+
+# Earth
+sp 2,-1,-30		9			255,255,255 bump=scenes/earth/earth.xpm
+
+# Moon
+sp -9,6,-50		4			255,255,255 bump=scenes/earth/moon.xpm

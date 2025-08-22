@@ -27,11 +27,13 @@ t_color	get_pixel_bump(int x, int y, void *img)
 
 t_color	get_pixel_checkered(float x, float y, t_texture texture)
 {
+	float tile_size;
 	int	u;
 	int	v;
 
-	u = (int)floor(x * (float)texture.w);
-	v = (int)floor(y * (float)texture.w);
+	tile_size = texture.w / 100.0f;
+	u = (int)floor(x / tile_size);
+	v = (int)floor(y / tile_size);
 	if ((u + v) % 2 == 0)
 		return (texture.c1);
 	else
@@ -57,6 +59,8 @@ t_color	get_color(t_vec3 poi, t_object *obj)
 		return (get_pixel_checkered(uv.x, uv.y, obj->t));
 	x = (1.0f - uv.x) * (float)(obj->t.w - 1);
 	y = uv.y * (float)(obj->t.h - 1);
+	x = (x > 0) * x;
+	y = (y > 0) * y;
 	if (obj->t.mode == BUMPMAP)
 		return (get_pixel_bump(x, y, obj->t.img));
 	return (obj->t.c1);

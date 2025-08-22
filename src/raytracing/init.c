@@ -63,7 +63,11 @@ void	setup(t_minirt *vars, int cam_id)
 
 	i = -1;
 	if (!not_first_time)
+	{
+		vars->cam[cam_id].rt = rotate_y(vars->cam[cam_id].fw, M_PI / -2);
+		vars->cam[cam_id].up = rotate_x(vars->cam[cam_id].fw, M_PI / 2);
 		not_first_time = 1;
+	}
 	else if (not_first_time)
 	{
 		while (++i < M_WIDTH)

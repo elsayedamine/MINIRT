@@ -1,0 +1,28 @@
+# Setting
+A			0.3				41,18,0
+c	0,4,11		0,0,-1		70
+c	21.50,6.50,3.50		-0.84,0,-0.50		90
+
+# Desert ground
+pl	6,0,0		0,1,0				255,255,255	bump=scenes/benguerir/sand.xpm
+
+# Rocks
+co	-8.00,2.47,-4.15		0,-1,-0.14		2 5 	180,180,180	bump=scenes/benguerir/rock1.xpm
+co	-7.65,3.47,-5.00		-0.14,-1,0		2 5 	180,180,180	bump=scenes/benguerir/rock1.xpm
+co	-9.20,3.34,-5.54		0.28,-0.94,0.22		2 5 	180,180,180	bump=scenes/benguerir/rock1.xpm
+
+
+co	7.59,2.97,-4.00		-0.16,-0.99,0.00	2 5 	190,170,140	bump=scenes/benguerir/rock2.xpm
+co	6.20,2.43,-3.90		0.00,-0.97,-0.24	2 5 	190,170,140	bump=scenes/benguerir/rock2.xpm
+co	7.20,1.97,-4.85		0.00,-0.99,0.14	2 5 	190,170,140	bump=scenes/benguerir/rock2.xpm
+
+co	-1.33,3.47,-10.71			0.33,-0.79,-0.52	2 5 	160,160,160	bump=scenes/benguerir/rock3.xpm
+co	-2.67,5.16,-12.93			0.27,-0.86,-0.43	2 5 	160,160,160	bump=scenes/benguerir/rock3.xpm
+co	-3.58,5.81,-12.75			0.23,-0.93,-0.30	3 6 	160,160,160	bump=scenes/benguerir/rock3.xpm
+
+# Sky
+sp	-3.0,2.0,-8.0		150			255,255,255	bump=scenes/benguerir/mars.xpm
+
+# Lighting
+l	10,15,10			0.9			250,167,102
+l	-10,15,10			0.9			250,167,102
