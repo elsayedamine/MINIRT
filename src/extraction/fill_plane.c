@@ -6,14 +6,14 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 16:32:05 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 00:45:30 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:17:44 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
 
 int	auxilliary_fill_plan(t_minirt *vars, t_object *obj, \
-	char **fields, char strs[7][12])
+	char **fields, char strs[8][12])
 {
 	int			type;
 	t_object	data;
@@ -32,7 +32,7 @@ int	auxilliary_fill_plan(t_minirt *vars, t_object *obj, \
 	return (ft_free("2", fields), 0);
 }
 
-int	fill_plan(t_minirt *vars, char *line, t_object *obj, char strs[7][12])
+int	fill_plan(t_minirt *vars, char *line, t_object *obj, char strs[8][12])
 {
 	char		**fields;
 	t_object	data;

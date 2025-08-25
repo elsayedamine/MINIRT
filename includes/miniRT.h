@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/17 12:59:17 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:26:55 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef enum e_type
 	CYLINDER,
 	PLANE,
 	CONE,
+	RECTANGLE,
 	ERR = -1,
 	TOO_MANY_CAM = -2,
 	NO_AMB = -3
@@ -141,6 +142,7 @@ typedef struct s_object
 	float		facing;
 	float		r;
 	float		h;
+	float		w;
 	float		shininess;
 	t_vec3		p;
 	t_vec3		n;
@@ -232,7 +234,7 @@ int			set_objects(t_minirt *vars, char *filename);
 int			valid_filename(char *s);
 float		ft_atof(char *str);
 t_object	classifier(char *s, int *type, int class);
-int			throw_error(int err, char strs[7][12]);
+int			throw_error(int err, char strs[8][12]);
 t_object	*new_object(void);
 void		print_members(t_list *lst, void (*f)(t_object *));
 void		print_data(t_object *obj);
@@ -246,6 +248,8 @@ int			parse_object_line(t_minirt *vars, char *file, \
 	t_object *obj, int *seen);
 
 /* fillers */
+int			fill_rectangle(t_minirt *vars, char *line, t_object *obj, \
+	char strs[8][12]);
 int			fill_cone(t_minirt *vars, char *line, t_object *obj, char s[7][12]);
 int			fill_plan(t_minirt *vars, char *data, t_object *obj, char s[7][12]);
 int			fill_sphere(t_minirt *vars, char *data, t_object *obj, \

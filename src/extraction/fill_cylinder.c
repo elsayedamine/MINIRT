@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 16:32:37 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/17 13:59:31 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:17:35 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	auxilliary_fill_cylinder(t_minirt *vars, t_object *obj, \
 	return (ft_free("2", fields), 0);
 }
 
-int	fill_cylinder(t_minirt *vars, char *line, t_object *obj, char strs[7][12])
+int	fill_cylinder(t_minirt *vars, char *line, t_object *obj, char strs[8][12])
 {
 	char		**fields;
 	t_object	data;

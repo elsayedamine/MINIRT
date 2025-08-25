@@ -6,13 +6,13 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 18:36:35 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 20:47:39 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:18:12 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
 
-int	fill_ambiance(char *line, t_minirt *vars, char strs[7][12])
+int	fill_ambiance(char *line, t_minirt *vars, char strs[8][12])
 {
 	char		**fields;
 	int			type;
@@ -33,7 +33,7 @@ int	fill_ambiance(char *line, t_minirt *vars, char strs[7][12])
 	return (ft_free("2", fields), 2);
 }
 
-int	fill_camera(char *line, t_minirt *vars, char strs[7][12])
+int	fill_camera(char *line, t_minirt *vars, char strs[8][12])
 {
 	char		**fields;
 	t_object	data;
@@ -62,7 +62,7 @@ int	fill_camera(char *line, t_minirt *vars, char strs[7][12])
 	return (ft_free("2", fields), 2);
 }
 
-int	fill_light(char *line, t_object *obj, char strs[7][12])
+int	fill_light(char *line, t_object *obj, char strs[8][12])
 {
 	char		**fields;
 	t_object	data;

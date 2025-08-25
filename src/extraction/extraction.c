@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 20:44:58 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:17:16 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	parse_object_line(t_minirt *vars, char *file, t_object *obj, int *seen)
 {
-	static char	strs[7][12] = {"AMBIANCE", "CAMERA", "LIGHT", \
-	"SPHERE", "CYLINDER", "PLAN", "CONE"};
+	static char	strs[8][12] = {"AMBIANCE", "CAMERA", "LIGHT", \
+	"SPHERE", "CYLINDER", "PLAN", "CONE", "RECTANGLE"};
 
 	if (!ft_strncmp("A ", file, 2) && !(*seen)++)
 		return (fill_ambiance(file, vars, strs));

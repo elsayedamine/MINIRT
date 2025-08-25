@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 16:33:22 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/16 15:53:33 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:18:31 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	auxilliary_fill_sphere(t_minirt *vars, t_object *obj, \
 }
 
 int	fill_sphere(t_minirt *vars, char *line, t_object *obj, \
-	char strs[7][12])
+	char strs[8][12])
 {
 	char		**fields;
 	t_object	data;
