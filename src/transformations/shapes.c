@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:38:23 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/17 14:03:36 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:45:47 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	rotation(t_minirt *vars, int c)
 	rot.y = ((c == 'e') - (c == 'q')) / 10.0f;
 	s = vars->selected.obj;
 	temp = vec_op_vec(sc_op_vec(s->h * 0.5f, s->o, mul), s->p, add);
-	if (s->class == PLANE)
+	if (s->class == PLANE || s->class == RECTANGLE)
 		rotate(&s->n, rot);
 	else
 		rotate(&s->o, rot);
@@ -73,6 +73,11 @@ void	resize(t_minirt *vars)
 	scale = ((vars->selected.mouse == 4) - (vars->selected.mouse == 5)) * 0.5f;
 	if (obj->class == SPHERE && obj->r + scale > 1.0f)
 		obj->r += scale;
+	else if (obj->class == RECTANGLE)
+	{
+        obj->h = obj->h + scale;
+        obj->w = obj->h * obj->ratio;
+	}
 	if (obj->class == PLANE)
 		obj->ratio -= scale / 100.0f;
 	else if (obj->class == CYLINDER)

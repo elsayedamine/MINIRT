@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 23:28:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 23:43:37 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:39:21 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ t_color	get_pixel_bump(int x, int y, void *img)
 
 t_color	get_pixel_checkered(float x, float y, t_texture texture)
 {
-	float tile_size;
-	int	u;
-	int	v;
+	float	tile_size;
+	int		u;
+	int		v;
 
 	tile_size = texture.w / 100.0f;
 	u = (int)floor(x / tile_size);

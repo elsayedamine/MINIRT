@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:49:00 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/17 12:58:42 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:39:04 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_hit_info	get_hit_info(t_vec3 origin, t_vec3 dir, t_minirt *vars)
 		intersect_cylinder,
 		intersect_plane,
 		intersect_cone,
+		intersect_rectangle,
 	};
 
 	return (get_object(vars, origin, dir, f));
@@ -84,7 +85,9 @@ t_color	compute_lighting(t_hit_info hit, t_object *light, t_ray ray)
 	dotrv = fmaxf(0.0f, dot(r, vect));
 	dotrv = (dotrv < 0) * 0 + (dotrv >= 0) * dotrv;
 	return (col_add_col(
-			col_mul_col(col_mul_sc(light->t.c1, dotnl * light->ratio), hit.color),
-			col_mul_sc(light->t.c1, powf(dotrv, hit.obj->shininess) * light->ratio)
+			col_mul_col(col_mul_sc(light->t.c1, dotnl * \
+				light->ratio), hit.color),
+			col_mul_sc(light->t.c1, powf(dotrv, hit.obj->shininess) * \
+				light->ratio)
 		));
 }

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 13:20:48 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/25 18:17:16 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:33:51 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	parse_object_line(t_minirt *vars, char *file, t_object *obj, int *seen)
 		return (fill_plan(vars, file, obj, strs));
 	if (!ft_strncmp("co ", file, 3))
 		return (fill_cone(vars, file, obj, strs));
+	if (!ft_strncmp("rt ", file, 3))
+		return (fill_rectangle(vars, file, obj, strs));
 	return (-1);
 }
 

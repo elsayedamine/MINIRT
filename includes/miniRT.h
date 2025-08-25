@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/25 18:26:55 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:35:48 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,6 +309,7 @@ t_hit_info	intersect_sphere(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_cylinder(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_plane(t_vec3 origin, t_vec3 dir, t_object *obj);
 t_hit_info	intersect_cone(t_vec3 origin, t_vec3 dir, t_object *obj);
+t_hit_info	intersect_rectangle(t_vec3 origin, t_vec3 dir, t_object *obj);
 
 /* colors */
 t_color		int_to_color(int in);
