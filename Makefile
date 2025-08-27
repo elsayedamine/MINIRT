@@ -1,5 +1,5 @@
 CC:=cc
-CFLAGS:= -Ofast -g
+CFLAGS:= -Ofast
 NAME:= minirt
 INC = -I./includes
 LIB = -L./mlx -L./libft -lft -lmlx -lXext -lX11 -lm -lpthread
