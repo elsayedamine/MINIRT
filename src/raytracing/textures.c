@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 15:30:34 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/15 23:29:13 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:15:30 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,19 @@ t_vec3	get_uv_plane(t_vec3 poi, t_object *obj)
 	uv.y = dot(local, obj->bitan) * obj->ratio;
 	uv.x = uv.x - floorf(uv.x);
 	uv.y = uv.y - floorf(uv.y);
+	return (uv);
+}
+
+t_vec3	get_uv_rectangle(t_vec3 poi, t_object *obj)
+{
+	t_vec3	local;
+	t_vec3	uv;
+
+	local = vec_op_vec(poi, obj->p, sub);
+	uv.x = (dot(local, obj->tan) / (obj->w * 2)) + .5;
+	uv.y = (dot(local, obj->bitan) / (obj->h / 2)) + .5;
+	uv.x = fminf(fmaxf(uv.x, 0.0f), 1.0f);
+	uv.y = fminf(fmaxf(uv.y, 0.0f), 1.0f);
 	return (uv);
 }
 

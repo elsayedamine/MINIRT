@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_getters.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 23:28:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/25 18:39:21 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/26 16:39:41 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ t_color	get_color(t_vec3 poi, t_object *obj)
 	t_vec3			uv;
 	int				x;
 	int				y;
-	static t_get_uv	f[4] = {
+	static t_get_uv	f[5] = {
 		get_uv_sphere,
 		get_uv_cylinder,
 		get_uv_plane,
-		get_uv_cone
+		get_uv_cone,
+		get_uv_rectangle
 	};
 
 	if (obj->t.mode == NONE)

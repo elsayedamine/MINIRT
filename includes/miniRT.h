@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/25 18:35:48 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/26 16:35:33 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,4 +329,6 @@ t_vec3		get_uv_cone(t_vec3 poi, t_object *obj);
 t_vec3		get_uv_cylinder(t_vec3 poi, t_object *obj);
 t_vec3		get_uv_plane(t_vec3 poi, t_object *obj);
 t_vec3		get_uv_sphere(t_vec3 poi, t_object *obj);
+t_vec3		get_uv_rectangle(t_vec3 poi, t_object *obj);
+
 #endif
