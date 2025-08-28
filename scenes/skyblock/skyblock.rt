@@ -1,14 +1,14 @@
 A 	1										255,255,255
-c 77.6,42.4,51.7			-0.713,-0.445,-0.541 45
-# c	30,15,75 		-0.4794,0.0,-0.8775		45
-# c	-50,15,-75 		0.705,-0.000,0.708		45
+c	77.6,55,51.7		-0.713,-0.445,-0.541		70
+c	7.5,15,15			0,0,-1						110
+
 l	57,37,45			0.1					255,255,255
 sp	127,150,-17			3000				255,255,255 bump=scenes/skyblock/sky.xpm
 
 # grass 6x3
 rt	0,10,-7.5			0,1,0	30	15		11,247,15 bump=scenes/skyblock/grass_top_6x3.xpm
 # grass 3x3
-rt	7.5,10,-22.5		0,1,0	15	15		255,255,255 bump=scenes/skyblock/grass_top_3x3.xpm
+rt	7.5,10,-22.5		0,1,0	15	15		0,0,0 bump=scenes/skyblock/grass_top_3x3.xpm
 # dirt 6x3				
 rt 0,2.5,0				0,0,1	30	15		127,58,4  bump=scenes/skyblock/grass_side_6x3.xpm
 # dirt 6x3
@@ -31,5 +31,30 @@ rt 7.5,-5,-22.5			0,1,0	15 15		127,58,4
 # dirt 6x3
 rt 0,-5,-7.5			0,1,0	30 15		127,58,4 bump=scenes/skyblock/grass_side_6x3.xpm
 
+# tree
+cy	7.5,10,-27.5		0,1,0 5 20		0,0,0 bump=scenes/skyblock/wood.xpm
+
+# leaves 5x5
+rt	7.5,20,-27.5		0,1,0	25	25	0,0,0	bump=scenes/skyblock/leaves_5x5.xpm
+rt	7.5,30,-27.5		0,1,0	25	25	0,0,0	bump=scenes/skyblock/leaves_5x5.xpm
+rt	7.5,40,-27.5		0,1,0	15	15	0,0,0	bump=scenes/skyblock/leaves_3x3.xpm
+
+
+rt	20,25,-27.5			1,0,0	25	10	0,0,0	bump=scenes/skyblock/leaves_5x2.xpm
+rt	-5,25,-27.5			1,0,0	25	10	0,0,0	bump=scenes/skyblock/leaves_5x2.xpm
+rt	7.5,25,-15			0,0,1	25	10	0,0,0	bump=scenes/skyblock/leaves_5x2.xpm
+rt	7.5,25,-40			0,0,1	25	10	0,0,0	bump=scenes/skyblock/leaves_5x2.xpm
+
+rt	15,35,-27.5			1,0,0	15	10	0,0,0	bump=scenes/skyblock/leaves_3x2.xpm
+rt	0,35,-27.5			1,0,0	15	10	0,0,0	bump=scenes/skyblock/leaves_3x2.xpm
+rt	7.5,35,-20			0,0,1	15	10	0,0,0	bump=scenes/skyblock/leaves_3x2.xpm
+rt	7.5,35,-35			0,0,1	15	10	0,0,0	bump=scenes/skyblock/leaves_3x2.xpm
+
+# chest
+rt	-12.5,15,-7.5		0,1,0 	5	 5	 0,0,0 bump=scenes/skyblock/chest_top.xpm
+rt	-12.5,12.5,-5		0,0,1 	5	 5	 0,0,0 bump=scenes/skyblock/chest_side.xpm
+rt	-12.5,12.5,-10		0,0,1 	5	 5	 0,0,0 bump=scenes/skyblock/chest_side.xpm
+rt	-10,12.5,-7.5		1,0,0 	5	 5	 0,0,0 bump=scenes/skyblock/chest_lock.xpm
+rt	-15,12.5,-7.5		1,0,0 	5	 5	 0,0,0 bump=scenes/skyblock/chest_side.xpm
 
 # grass color: 568d2d
