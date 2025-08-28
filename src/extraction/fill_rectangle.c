@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 18:14:49 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/25 18:26:46 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/28 21:17:53 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,15 @@ int	auxilliary_fill_rectangle(t_minirt *vars, t_object *obj, \
 	data = classifier(fields[3], &type, RECTANGLE);
 	if (!(type >= RATIO))
 		return (ft_free("2", fields), throw_error(RECTANGLE, strs), 1);
-	obj->h = data.r;
+	obj->w = data.r;
 	data = classifier(fields[4], &type, RECTANGLE);
 	if (!(type >= RATIO))
 		return (ft_free("2", fields), throw_error(RECTANGLE, strs), 1);
-	obj->w = data.r;
+	obj->h = data.r;
 	data = classifier(fields[5], &type, RGB);
 	obj->t.c1 = data.t.c1;
 	obj->shininess = SHININESS;
+	obj->ratio = obj->w / obj->h;
 	if (!(type == RGB || (type == RGB1 && obj->t.c1.r >= 0 && \
 		obj->t.c1.g >= 0 && obj->t.c1.b >= 0)))
 		return (ft_free("2", fields), throw_error(RECTANGLE, strs), 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:15:45 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/27 12:10:55 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/28 16:15:34 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	camera_rotation(t_minirt *vars, int a)
 		rotate(&cam->rt, rot);
 		cam->fw = normalize(cam->fw);
 		cam->rt = normalize(cam->rt);
-		print_vec(cam->fw, 1);
 		setup(vars, vars->cam_id);
 		raytracing(vars);
 	}

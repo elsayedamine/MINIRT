@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 15:54:09 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/27 20:40:11 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/28 18:00:12 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,10 @@ void	set_obj_vec(void *object, int type)
 
 	ref = (t_vec3){0, 0, 1};
 	if (type == CAMERA)
-	{
-		cam = (t_camera *)object;
-		if (fabs(cam->fw.x) == 0 && fabs(cam->fw.y) == 0)
-			ref = (t_vec3){0, 1, 0};
-		cam->rt = normalize(cross(cam->fw, ref));
-		cam->up = normalize(cross(cam->rt, cam->fw));
 		return ;
-	}
 	obj = (t_object *)object;
 	vec = obj->o;
-	if (type == PLANE)
+	if (type == PLANE || type == RECTANGLE)
 		vec = obj->n;
 	if (vec.y < .999f)
 		ref = (t_vec3){0, 1, 0};

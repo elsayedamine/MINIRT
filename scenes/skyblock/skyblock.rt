@@ -6,16 +6,16 @@ l	57,37,45			0.1					255,255,255
 sp	127,150,-17			3000				255,255,255 bump=scenes/skyblock/sky.xpm
 
 # grass 6x3
-rt	0,10,-7.5			0,1,0	30	15		11,247,15 
+rt	0,10,-7.5			0,1,0	30	15		11,247,15 bump=scenes/skyblock/grass_top_6x3.xpm
 # grass 3x3
-rt	7.5,5,-22.5		0,1,0	15	15		255,255,255 bump=scenes/skyblock/grass_top_3x3.xpm
+rt	7.5,10,-22.5		0,1,0	15	15		255,255,255 bump=scenes/skyblock/grass_top_3x3.xpm
 # dirt 6x3				
-rt 0,2.5,0				0,0,1	30	15		127,58,4
-# dirt 3x6
-rt 15,2.5,-15			-1,0,0	15	30		127,58,4
+rt 0,2.5,0				0,0,1	30	15		127,58,4  bump=scenes/skyblock/grass_side_6x3.xpm
+# dirt 6x3
+rt 15,2.5,-15			-1,0,0	30  15		127,58,4 bump=scenes/skyblock/grass_side_6x3.xpm
 
 # dirt 3x3
-rt -15,2.5,-7.5			1,0,0	15 15		127,58,4
+rt -15,2.5,-7.5			1,0,0	15 15		127,58,4    
 
 # dirt 3x3
 rt -7.5,2.5,-15			0,0,1	15 15		127,58,4
@@ -29,7 +29,7 @@ rt 7.5,2.5,-30			0,0,1	15 15		127,58,4
 # dirt 3x3
 rt 7.5,-5,-22.5			0,1,0	15 15		127,58,4
 # dirt 6x3
-rt 0,-5,-7.5			0,1,0	30 15		127,58,4 bump=scenes/skyblock/dirt_3x3.xpm
+rt 0,-5,-7.5			0,1,0	30 15		127,58,4 bump=scenes/skyblock/grass_side_6x3.xpm
 
 
 # grass color: 568d2d

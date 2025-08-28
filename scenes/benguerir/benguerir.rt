@@ -1,7 +1,6 @@
 # Setting
 A			0.3				41,18,0
 c	0,4,11		0,0,-1		70
-c	21.50,6.50,3.50		-0.84,0,-0.50		90
 
 # Desert ground
 pl	6,0,0		0,1,0				255,255,255	bump=scenes/benguerir/sand.xpm
