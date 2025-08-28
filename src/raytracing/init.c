@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:30:46 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 17:31:29 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:20:13 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,10 @@ void	setup(t_minirt *vars, int cam_id)
 	i = -1;
 	if (!not_first_time)
 	{
-		vars->cam[cam_id].rt = rotate_y(vars->cam[cam_id].fw, M_PI / -2);
-		vars->cam[cam_id].up = rotate_x(vars->cam[cam_id].fw, M_PI / 2);
+		// vars->cam[cam_id].rt = rotate_y(vars->cam[cam_id].fw, M_PI / -2);
+		// vars->cam[cam_id].up = rotate_x(vars->cam[cam_id].fw, M_PI / 2);
+		vars->cam[cam_id].rt = normalize(cross(vars->cam[cam_id].fw, (t_vec3){0, 1, 0}));
+		vars->cam[cam_id].up = normalize(cross(vars->cam[cam_id].rt, vars->cam[cam_id].fw));
 		not_first_time = 1;
 	}
 	else if (not_first_time)

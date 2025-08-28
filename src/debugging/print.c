@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:09:41 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/15 18:05:35 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/27 14:55:47 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_vec(t_vec3 vec, int nl)
 {
-	printf("(%f, %f, %f)", vec.x, vec.y, vec.z);
+	printf("(%.2f, %.2f, %.2f)", vec.x, vec.y, vec.z);
 	if (nl)
 		printf("\n");
 }

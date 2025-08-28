@@ -5,7 +5,7 @@ c   0,40,260                   0.0,0.0,-1     50
 l   75,50,100             0.6         255,255,255
 l   -75,50,100             0.6         255,255,255
 
-sp  0,15,40           15         255,20,20 bump=textures/world_map.xpm
+sp  0,15,40           15         255,20,20 bump=scenes/earth/earth.xpm
 
 
 #front wall

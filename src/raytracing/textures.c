@@ -6,7 +6,7 @@
 /*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 15:30:34 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/26 17:15:30 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/27 20:39:37 by gnxrly           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ t_vec3	get_uv_rectangle(t_vec3 poi, t_object *obj)
 	local = vec_op_vec(poi, obj->p, sub);
 	uv.x = (dot(local, obj->tan) / (obj->w * 2)) + .5;
 	uv.y = (dot(local, obj->bitan) / (obj->h / 2)) + .5;
-	uv.x = fminf(fmaxf(uv.x, 0.0f), 1.0f);
-	uv.y = fminf(fmaxf(uv.y, 0.0f), 1.0f);
+	uv.x -= floorf(uv.x);
+	uv.y -= floorf(uv.y);
 	return (uv);
 }
 
