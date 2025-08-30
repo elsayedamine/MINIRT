@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 18:31:58 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/28 18:49:35 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:04:24 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_hit_info	intersect_rectangle(t_vec3 origin, t_vec3 dir, t_object *obj)
 {
 	t_hit_info	hit;
 	t_vec3		u[2];
-	t_vec3		axis;
 	t_vec3		vec;
 	float		x[2];
 

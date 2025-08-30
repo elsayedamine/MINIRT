@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 16:38:23 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/25 18:45:47 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:01:32 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,15 @@ void	resize(t_minirt *vars)
 		obj->r += scale;
 	else if (obj->class == RECTANGLE)
 	{
-        obj->h = obj->h + scale;
-        obj->w = obj->h * obj->ratio;
+		obj->h = obj->h + scale;
+		obj->w = obj->h * obj->ratio;
 	}
-	if (obj->class == PLANE)
+	else if (obj->class == PLANE)
 		obj->ratio -= scale / 100.0f;
 	else if (obj->class == CYLINDER)
 	{
-		if (scale < 0)
-			max_scale = obj->r - 1.0f;
-		else
-			max_scale = 1e30f;
-		if (scale < -max_scale)
-			scale = -max_scale;
+		max_scale = (obj->r - 1.0f) * (scale < 0) + 1e30f * (scale >= 0);
+		scale = scale - (scale + max_scale) * (scale < -max_scale);
 		obj->r = obj->h * obj->ratio;
 		obj->h += scale;
 	}
