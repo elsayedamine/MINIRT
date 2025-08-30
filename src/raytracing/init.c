@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:30:46 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/30 15:52:07 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:35:59 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_ray	calc_ray(float u, int y, t_minirt *vars, int cam_id)
 	t_vec3	offsetx;
 	t_vec3	offsety;
 
-	v = 1 - ((((float)y + .5) / M_HEIGHT) * 2);
+	v = 1 - ((((float)y + .5) / HEIGHT) * 2);
 	offsetx = sc_op_vec(u * (vars->plane_w / 2), vars->cam[cam_id].rt, mul);
 	offsety = sc_op_vec(v * (vars->plane_h / 2), vars->cam[cam_id].up, mul);
 	ray.dir = vec_op_vec(vars->cam[cam_id].p, vars->cam[cam_id].fw, add);
@@ -40,14 +40,14 @@ void	setup_rays(t_minirt *vars, int cam_id)
 	i = 0;
 	j = 0;
 	vars->plane_w = 2 * tan((vars->cam[cam_id].fov * RAD) / 2);
-	vars->plane_h = vars->plane_w * (float)M_HEIGHT / (float)M_WIDTH;
-	vars->rays = malloc(sizeof(t_ray *) * M_WIDTH);
-	while (i < M_WIDTH)
+	vars->plane_h = vars->plane_w * (float)HEIGHT / (float)WIDTH;
+	vars->rays = malloc(sizeof(t_ray *) * WIDTH);
+	while (i < WIDTH)
 	{
-		u = (((i + .5) / M_WIDTH) * 2) - 1;
-		vars->rays[i] = malloc(sizeof(t_ray) * M_HEIGHT);
+		u = (((i + .5) / WIDTH) * 2) - 1;
+		vars->rays[i] = malloc(sizeof(t_ray) * HEIGHT);
 		j = 0;
-		while (j < M_HEIGHT)
+		while (j < HEIGHT)
 		{
 			vars->rays[i][j] = calc_ray(u, j, vars, cam_id);
 			j++;
@@ -72,7 +72,7 @@ void	setup(t_minirt *vars, int cam_id)
 	}
 	else if (not_first_time)
 	{
-		while (++i < M_WIDTH)
+		while (++i < WIDTH)
 			free(vars->rays[i]);
 		free(vars->rays);
 	}

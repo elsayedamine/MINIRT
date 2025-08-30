@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gnxrly <gnxrly@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:22:07 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/26 16:35:33 by gnxrly           ###   ########.fr       */
+/*   Updated: 2025/08/30 16:32:18 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@
 /* **************************************** */
 
 # define RTX "miniRT"
-# define M_PI 3.14159265358979323846
-# define M_WIDTH 1280
-# define M_HEIGHT 720
-# define M_THETA 0.76842396884
+# define PI 3.14159265358979323846
+# define WIDTH 1280
+# define HEIGHT 720
+# define THETA 0.76842396884
 # define RAD 0.0174533
 # define EPSILON 1e-3f
 # define EPS_HIT 1e-3f

@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 15:30:34 by sayed             #+#    #+#             */
-/*   Updated: 2025/08/28 18:50:27 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:31:25 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_vec3	get_uv_cone(t_vec3 poi, t_object *obj)
 	local.x = dot(rel, obj->tan);
 	local.y = dot(rel, obj->o);
 	local.z = dot(rel, obj->bitan);
-	uv.x = obj->facing + atan2(local.z, local.x) / (2.0f * M_PI);
+	uv.x = obj->facing + atan2(local.z, local.x) / (2.0f * PI);
 	if (uv.x < 0.0f)
 		uv.x += 1.0f;
 	uv.y = 1.0f - local.y / obj->h;
@@ -39,7 +39,7 @@ t_vec3	get_uv_cylinder(t_vec3 poi, t_object *obj)
 	local.x = dot(rel, obj->tan);
 	local.y = dot(rel, obj->o);
 	local.z = dot(rel, obj->bitan);
-	uv.x = obj->facing + atan2(local.z, local.x) / (2.0f * M_PI);
+	uv.x = obj->facing + atan2(local.z, local.x) / (2.0f * PI);
 	if (uv.x < 0.0f)
 		uv.x += 1.0f;
 	uv.y = 1.0f - local.y / obj->h;
@@ -83,7 +83,7 @@ t_vec3	get_uv_sphere(t_vec3 poi, t_object *obj)
 	local.y = dot(rel, obj->o);
 	local.z = dot(rel, obj->bitan);
 	local = sc_op_vec(1.0f / obj->r, local, mul);
-	uv.x = obj->facing + atan2(local.z, local.x) / (2.0f * M_PI);
-	uv.y = acos(local.y) / M_PI;
+	uv.x = obj->facing + atan2(local.z, local.x) / (2.0f * PI);
+	uv.y = acos(local.y) / PI;
 	return (uv);
 }

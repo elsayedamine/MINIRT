@@ -6,7 +6,7 @@
 /*   By: aelsayed <aelsayed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:48:10 by aelsayed          #+#    #+#             */
-/*   Updated: 2025/08/17 12:59:06 by aelsayed         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:31:25 by aelsayed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	trace_vertical(void *args)
 	vars = (t_minirt *)(new_args[0]);
 	i = *(int *)(new_args[1]);
 	j = -1;
-	while (++j < M_HEIGHT)
+	while (++j < HEIGHT)
 	{
 		color = trace(vars, vars->rays[i][j]);
 		put_pixel(vars, i, j, color);
@@ -61,7 +61,7 @@ void	raytracing(t_minirt *vars)
 
 	init_pool(&pool);
 	i = -1;
-	while (++i < M_WIDTH)
+	while (++i < WIDTH)
 	{
 		args = mk_args(2, vars, sizeof(t_minirt), &i, 4);
 		add_task(&pool, trace_vertical, args);
